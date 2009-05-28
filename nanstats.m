@@ -21,7 +21,7 @@ function [me, st, md, no] = nanstats(D)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% check arguments
 
-(nargchk(1, 1, nargin));  % check no. of input args is correct
+error(nargchk(1, 1, nargin));  % check no. of input args is correct
 
 if isstruct(D), 
   if strcmp(D.type,'som_map'), D = D.codebook;

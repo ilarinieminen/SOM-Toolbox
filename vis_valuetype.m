@@ -76,6 +76,8 @@ numeric=isnumeric(value);
 character=ischar(value);
 
 % main loop: go through all types in arg. 'valid'
+
+flag = zeros(1, length(valid));
 for i=1:length(valid),
   if isnumeric(valid{i}), % numeric size for double matrix
     if numeric && length(valid{i}) == dims,

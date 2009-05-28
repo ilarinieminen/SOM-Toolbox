@@ -58,12 +58,12 @@ end
 noc_x_1  = ones(noc, 1); % used frequently
 me = zeros(1,dim); st = zeros(1,dim);
 for i=1:dim,
-  me(i) = mean(D(find(isfinite(D(:,i))),i));
-  st(i) = std(D(find(isfinite(D(:,i))),i));
+  me(i) = mean(D(isfinite(D(:,i)))); % ZZZ: me(i) = mean(D(find(isfinite(D(:,i))),i));
+  st(i) = std(D(isfinite(D(:,i)))); % ZZZ: st(i) = std(D(find(isfinite(D(:,i))),i));
 end
 
 % initial projection
-if prod(size(P))==1, 
+if numel(P)==1, 
   P = (2*rand(noc,P)-1).*st(noc_x_1,1:P) + me(noc_x_1,1:P); 
 else
   % replace unknown projections with known values
@@ -76,7 +76,7 @@ odim_x_1  = ones(odim, 1); % this is used frequently
 train_len = epochs*noc;
 
 % random sample order
-rand('state',sum(100*clock));
+rand('state',sum(100*clock)); %% TODO: FIX
 sample_inds = ceil(noc*rand(train_len,1));
 
 % mutual distances
@@ -153,8 +153,8 @@ end
 %% clear up
 
 % calculate error
-error = cca_error(P,Mdist,lambda(train_len));
-fprintf(2,'%d iterations, error %f          \n', epochs, error);
+c_error = cca_error(P,Mdist,lambda(train_len));
+fprintf(2,'%d iterations, error %f          \n', epochs, c_error);
 
 % set projections of totally unknown vectors as unknown
 unknown = find(sum(isnan(D)')==dim);
@@ -198,13 +198,13 @@ function vals = potency_curve(v0,vn,l)
   vals = v0 * (vn/v0).^([0:(l-1)]/(l-1));
 
 
-function error = cca_error(P,Mdist,lambda)
+function c_error = cca_error(P,Mdist,lambda)
 
   [noc odim] = size(P);
   noc_x_1 = ones(noc,1);
   odim_x_1 = ones(odim,1);
 
-  error = 0;
+  c_error = 0;
   for i=1:noc,
     known = find(~isnan(Mdist(:,i)));
     if ~isempty(known),   
@@ -212,10 +212,10 @@ function error = cca_error(P,Mdist,lambda)
       Dy = P(known,:) - y(noc_x_1(known),:);
       dy = sqrt((Dy.^2)*odim_x_1);
       fy = exp(-dy/lambda);
-      error = error + sum(((Mdist(known,i) - dy).^2).*fy);
+      c_error = c_error + sum(((Mdist(known,i) - dy).^2).*fy);
     end
   end
-  error = error/2;
+  c_error = c_error/2;
 
 
 function [] = dydxplot(P,Mdist)

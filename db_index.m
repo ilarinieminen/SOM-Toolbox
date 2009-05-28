@@ -48,7 +48,8 @@ if nargin <5, q = 2; end % dispersion = standard deviation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% action
 
-% dispersion in each cluster 
+% dispersion in each cluster
+S = zeros(1, c);
 for i = 1:c
   ind = find(cl==u(i)); % points in this cluster
   l   = length(ind);
