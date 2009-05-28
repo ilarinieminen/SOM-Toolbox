@@ -66,7 +66,7 @@ else
   % map, topol, cell
   
   [tmp,ok,tmp]=som_set(m);
-  if isstruct(m) & all(ok)
+  if isstruct(m) && all(ok)
     switch m.type
     case 'som_topol'              % topol 
       msize=m.msize;
@@ -80,8 +80,8 @@ else
 
   % cell  
     
-  elseif iscell(m) & vis_valuetype(size(m),{[1 2]}),
-    if vis_valuetype(m{2},{[1 2]}) & vis_valuetype(m{1},{'string'}),
+  elseif iscell(m) && vis_valuetype(size(m),{[1 2]}),
+    if vis_valuetype(m{2},{[1 2]}) && vis_valuetype(m{1},{'string'}),
       lattice=m{1};    
       msize=m{2}; 
     else
@@ -114,7 +114,7 @@ end
 
 % Check colorcode
 
-if nargin < 2 | isempty(colorcode),
+if nargin < 2 || isempty(colorcode),
   colorcode='rgb1';
 end
 if ~ischar(colorcode)
@@ -129,7 +129,7 @@ end
 
 % Check scaling
 
-if nargin < 3 | isempty(scaling) 
+if nargin < 3 || isempty(scaling) 
   scaling=1;
 end
 
@@ -233,7 +233,7 @@ function coords=get_coords(coords)
 % coords (3x1 vector) x,y and z-coordinates.
 %
 
-if ~(all(size(coords) == [1 2]) | all(size(coords) == [2 1]))
+if ~(all(size(coords) == [1 2]) || all(size(coords) == [2 1]))
   error('Argument ''coords'' must be an 2x1 or 1x2 vector.');
 end
 

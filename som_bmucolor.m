@@ -45,7 +45,7 @@ if vis_valuetype(m,{'1x2'}),
   msize=m;  
 else
   [tmp,ok,tmp]=som_set(m);
-  if isstruct(m) & all(ok)        % check m type
+  if isstruct(m) && all(ok)        % check m type
     switch m.type
     case 'som_topol'
       msize=m.msize;
@@ -77,7 +77,7 @@ if ~vis_valuetype(bmus,{'nx1'}),
   error('Need a column vector of BMU indexes!');
 else
   bmus=round(bmus);
-  if max(bmus) > n | min(bmus) < 1
+  if max(bmus) > n || min(bmus) < 1
     error('BMU indexes exeed the map size!')
   end
 end

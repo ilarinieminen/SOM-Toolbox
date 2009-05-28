@@ -147,7 +147,7 @@ todata = strcmp(sTo.type,'som_data');
 [dummy m] = size(sFrom.labels);
 
 % mode
-if nargin<3 | isempty(mode), mode = 'add'; end
+if nargin<3 || isempty(mode), mode = 'add'; end
 
 % inds
 if nargin<4, inds = 1:m; end
@@ -179,7 +179,7 @@ end
 %% insert the labels to sTo
 
 
-if strcmp(mode,'add1') | strcmp(mode,'freq') | strcmp(mode,'vote'),
+if strcmp(mode,'add1') || strcmp(mode,'freq') || strcmp(mode,'vote'),
 
   % modify the Labels array apprpriately
   

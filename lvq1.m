@@ -128,7 +128,7 @@ for t=1:rlen
 
     [foo,ind] = min(di);
 
-    if d_class(j) & d_class(j) == c_class(ind) % 0 is for unclassified vectors
+    if d_class(j) && d_class(j) == c_class(ind) % 0 is for unclassified vectors
       tmp(ind,:) = cod(ind,:) + alpha * (dat(j,:) - cod(ind,:));
     elseif d_class(j)
       tmp(ind,:) = cod(ind,:) - alpha*(dat(j,:) - cod(ind,:));
@@ -163,7 +163,7 @@ names = {};
 nos = zeros(length(class),1);
 
 for i=1:length(class)
-  if ~isempty(class{i}) & ~any(strcmp(class{i},names))
+  if ~isempty(class{i}) && ~any(strcmp(class{i},names))
     names=cat(1,names,class(i));
   end
 end

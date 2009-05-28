@@ -93,7 +93,7 @@ switch action,
   norm = 0; 
   indsto = []; 
   for i=2:length(varargin),
-    if ischar(varargin{i}) & strcmp(varargin{i},'norm'), norm = 1; 
+    if ischar(varargin{i}) && strcmp(varargin{i},'norm'), norm = 1; 
     elseif isnumeric(varargin{i}), 
       indsto = varargin{i}; 
       if length(indsto) ~= n, 
@@ -113,12 +113,12 @@ switch action,
                          'Components', 'Name', 'Remove components', 'uh', 25);
     if ~ok, return; end
   end
-  if min(inds)<1 | max(inds)>dim, 
+  if min(inds)<1 || max(inds)>dim, 
     error('The component indeces must be within [1,dim]'); 
   end
  case 'removesamp',
   inds = varargin{1};
-  if min(inds)<1 | max(inds)>dlen, 
+  if min(inds)<1 || max(inds)>dlen, 
     error('The sample indeces must be within [1,dlen]'); 
   end
  case 'extractcomp',
@@ -129,24 +129,24 @@ switch action,
                          'Components', 'Name', 'Extract components', 'uh', 25);
     if ~ok, return; end
   end
-  if min(inds)<1 | max(inds)>dim, 
+  if min(inds)<1 || max(inds)>dim, 
     error('The component indeces must be within [1,dim]'); 
   end
  case 'extractsamp',
   inds = varargin{1};
-  if min(inds)<1 | max(inds)>dlen, 
+  if min(inds)<1 || max(inds)>dlen, 
     error('The sample indeces must be within [1,dlen]'); 
   end
  case 'movecomp',
   inds = varargin{1};
   indsto = varargin{2};
-  if min(inds)<1 | max(inds)>dim | min(indsto)<1 | max(indsto)>dim, 
+  if min(inds)<1 || max(inds)>dim || min(indsto)<1 || max(indsto)>dim, 
     error('The component indeces must be within [1,dim]'); 
   end
  case 'movesamp',
   inds = varargin{1};
   indsto = varargin{2};
-  if min(inds)<1 | max(inds)>dlen | min(indsto)<1 | max(indsto)>dlen, 
+  if min(inds)<1 || max(inds)>dlen || min(indsto)<1 || max(indsto)>dlen, 
     error('The sample indeces must be within [1,dlen]'); 
   end
  otherwise, 

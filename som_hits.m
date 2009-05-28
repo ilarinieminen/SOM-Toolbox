@@ -139,7 +139,7 @@ case 'crisp',
 case 'kernel',
 
  % check that sMap really is a map 
- if ~isstruct(sMap) & ~strcmp(sMap.type,'som_map'), 
+ if ~isstruct(sMap) && ~strcmp(sMap.type,'som_map'), 
    error('Kernel mode can only be used for maps.');
  end	   
 
@@ -148,7 +148,7 @@ case 'kernel',
  sTrain = sMap.trainhist(end); 
  if ~isempty(sTrain), 
    rad = sTrain.radius_fin; 
-   if isempty(rad) | isnan(rad), rad = 1; end 
+   if isempty(rad) || isnan(rad), rad = 1; end 
  else 
    rad = 1; 
  end    

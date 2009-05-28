@@ -33,7 +33,7 @@ else
 end
 [l dim]   = size(data);
 
-if nargin < 4 | isempty(epochs) | isnan(epochs), epochs = 100; end
+if nargin < 4 || isempty(epochs) || isnan(epochs), epochs = 100; end
 if nargin < 5, verbose = 0; end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -122,7 +122,7 @@ function [y,bm,qe] = scalar_kmeans(x,k,maxepochs)
     bm = ones(n,1); 
     bmold = zeros(n,1); 
     i = 0; 
-    while ~all(bm==bmold) & i<maxepochs, 
+    while ~all(bm==bmold) && i<maxepochs, 
         bmold  = bm;  
         [c bm] = histc(x,[-Inf; (y(2:end)+y(1:end-1))/2; Inf]);
         y      = full(sum(sparse(bm,1:n,x,k,n),2));

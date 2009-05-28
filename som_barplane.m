@@ -180,7 +180,7 @@ error(nargchk(3, 7, nargin))   % check that no. of input args is correct
 
 % Check pos
 
-if nargin < 7 | isempty(pos)
+if nargin < 7 || isempty(pos)
   pos=NaN;                            % default value for pos (no translation) 
 elseif ~vis_valuetype(pos,{'1x2'})
   error('Position of origin has to be given as an 1x2 vector');
@@ -188,19 +188,19 @@ end
 
 % Check gap
 
-if nargin < 6 | isempty(gap),  
+if nargin < 6 || isempty(gap),  
   gap=0.25;                           % default value for gap
 elseif ~vis_valuetype(gap, {'1x1'}),
   error('Gap value must be scalar.');
-elseif ~(gap >= 0 & gap<=1) 
+elseif ~(gap >= 0 && gap<=1) 
   error('Gap value must be in interval [0,1].')
 end
 
 % Check scaling
 
-if nargin < 5 | isempty(scaling),
+if nargin < 5 || isempty(scaling),
   scaling='varwise';
-elseif ~vis_valuetype(scaling,{'string'}) | ... 
+elseif ~vis_valuetype(scaling,{'string'}) || ... 
       ~any(strcmp(scaling,{'none','unitwise','varwise'})),
   error('scaling sholud be ''none'', ''unitwise'' or ''varwise''.');
 end
@@ -229,14 +229,14 @@ case 'none'
   % no scaling: don't scale
   % Check data max and min values
   positive=any(data(:)>0); negative=any(data(:)<0);
-  if (positive & negative) | (~positive & ~negative),
+  if (positive && negative) || (~positive && ~negative),
     % Data contains both negative and positive values (or is
     % completely zero) baseline to centre
     zeroline='zero';
-  elseif positive & ~negative
+  elseif positive && ~negative
     % Data contains only positive values: baseline to bottom
     zeroline='bottom';
-  elseif ~positive & negative
+  elseif ~positive && negative
     % Data contains only negative values: baseline to top
     zeroline='top';
   end
@@ -249,18 +249,18 @@ case 'unitwise'
  case 'varwise'
   % Check data max and min values
   positive=any(data(:)>0); negative=any(data(:)<0);
-  if (positive & negative) | (~positive & ~negative),
+  if (positive && negative) || (~positive && ~negative),
     % Data contains both negative and positive values (or is
     % completely zero) baseline to
     % centre, scale data so that it doesn't overflow
     data=data./repmat(max(abs([max(data); min(data)])),N,1)*.5;
     zeroline='zero';
-  elseif positive & ~negative
+  elseif positive && ~negative
     % Data contains only positive values: baseline to
     % bottom, scale data so that it doesn't overflow
     data=data./repmat(max(abs([max(data); min(data)])),N,1)*.5;
     zeroline='bottom';
-  elseif ~positive & negative
+  elseif ~positive && negative
     % Data contains only negative values: baseline to
     % top, scale data so that it doesn't overflow
     zeroline='top';
@@ -316,13 +316,13 @@ end
 % Check color
 % C_FLAG is for color 'none'
 
-if nargin < 4 | isempty(color)
+if nargin < 4 || isempty(color)
   color=hsv(d);                       % default n hsv colors
 end
-if ~vis_valuetype(color, {[d 3],'nx3rgb'},'all') & ...
+if ~vis_valuetype(color, {[d 3],'nx3rgb'},'all') && ...
   ~vis_valuetype(color,{'colorstyle','1x3rgb'})
 error('The color matrix has wrong size or has invalid values.');
-elseif ischar(color) & strcmp(color,'none')
+elseif ischar(color) && strcmp(color,'none')
   C_FLAG=1;
   color='w';
 else
@@ -361,7 +361,7 @@ vis_PlaneAxisProperties(ax,lattice, msize, pos);
 
 %% Rearrange dx3 color matrix
 
-if ~isstr(color) & size(color,1)~=1,
+if ~isstr(color) && size(color,1)~=1,
   color=reshape(repmat(color,N,1),[1 N*d 3]);
 end
 
@@ -371,7 +371,7 @@ if isnumeric(color),
   % explicit color settings by RGB-triplets won't work with 
   % patch in 'painters' mode, unless there only a single triplet
   si = size(color); 
-  if length(si)~=2 | any(si==[1 3]), set(gcf,'renderer','zbuffer'); end
+  if length(si)~=2 || any(si==[1 3]), set(gcf,'renderer','zbuffer'); end
 end
 
 h_=patch(x,y,color);

@@ -93,16 +93,16 @@ else
   inds = find(isnan(P)); 
   if length(inds), P(inds) = rand(size(inds)); end
 end
-if odim > dim | odim < 2, 
+if odim > dim || odim < 2, 
   error('Output dimension must be within [2, dimension of data]');
 end
 
 % determine operating mode
-if nargin < 3 | isempty(varargin{1}) | isnan(varargin{1}), value=100;
+if nargin < 3 || isempty(varargin{1}) || isnan(varargin{1}), value=100;
 else value = varargin{1}; 
 end
   
-if nargin < 4 | isempty(varargin{2}) | isnan(varargin{2}), mode='steps';
+if nargin < 4 || isempty(varargin{2}) || isnan(varargin{2}), mode='steps';
 else mode = varargin{2}; 
 end  
 switch mode,
@@ -115,7 +115,7 @@ end
 
 % iteration step size
 if nargin > 4, alpha = varargin{3}; else alpha = NaN; end
-if isempty(alpha) | isnan(alpha), alpha = 0.2; end
+if isempty(alpha) || isnan(alpha), alpha = 0.2; end
 
 % mutual distances
 if nargin > 5, Mdist = varargin{4}; else Mdist = []; end
@@ -128,7 +128,7 @@ noc_x_1  = ones(noc, 1);
 odim_x_1 = ones(odim,1); 
 
 % compute mutual distances between vectors
-if isempty(Mdist) | all(isnan(Mdist(:))),  
+if isempty(Mdist) || all(isnan(Mdist(:))),  
   fprintf(2, 'computing mutual distances\r');
   dim_x_1 = ones(dim,1);
   for i = 1:noc,

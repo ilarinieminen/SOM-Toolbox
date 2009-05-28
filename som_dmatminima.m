@@ -44,7 +44,7 @@ if nargin<2, U = []; end
 if nargin<3, Ne = som_neighbors(sM); end
 
 % distance matrix
-if nargin<2 | isempty(U), U = som_dmat(sM,Ne,'median'); end
+if nargin<2 || isempty(U), U = som_dmat(sM,Ne,'median'); end
 if prod(size(U))>munits, U = U(1:2:size(U,1),1:2:size(U,2)); end
 U = U(:); 
 if length(U) ~= munits, error('Distance matrix has incorrect size.'); end
@@ -53,7 +53,7 @@ if length(U) ~= munits, error('Distance matrix has incorrect size.'); end
 minima = []; 
 for i=1:munits, 
   ne = find(Ne(i,:));
-  if all(U(i)<=U(ne)) & ~anycommon(ne,minima), minima(end+1)=i; end
+  if all(U(i)<=U(ne)) && ~anycommon(ne,minima), minima(end+1)=i; end
 end
 
 return; 
@@ -61,7 +61,7 @@ return;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function t = anycommon(i1,i2)
-  if isempty(i1) | isempty(i2), t = 0; 
+  if isempty(i1) || isempty(i2), t = 0; 
   else 
     m = max(max(i1),max(i2));
     t = any(sparse(i1,1,1,m,1) & sparse(i2,1,1,m,1)); 

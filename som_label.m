@@ -147,10 +147,10 @@ end
 maxl = size(sTo.labels,2); % maximum number of labels for a single vector
 
 % inds
-if ischar(inds) & strcmp(inds,'all'), 
+if ischar(inds) && strcmp(inds,'all'), 
   inds = [1:dlen]'; 
 end
-if length(inds)>2 & size(inds,2)>2, inds = inds'; end
+if length(inds)>2 && size(inds,2)>2, inds = inds'; end
 ni = size(inds,1);
 n = ni; 
 
@@ -226,7 +226,7 @@ switch mode,
   for i=1:n, 
     v = inds(i,1); s = inds(i,2); l = length(labels{i});
     for j=1:l, 
-      while s<=size(sTo.labels,2) & ~isempty(sTo.labels{v,s}), s=s+1; end
+      while s<=size(sTo.labels,2) && ~isempty(sTo.labels{v,s}), s=s+1; end
       sTo.labels{v,s} = labels{i}{j}; 
       s=s+1; 
     end
@@ -249,7 +249,7 @@ sTo.labels = remove_empty_columns(sTo.labels);
 [dlen maxl] = size(sTo.labels);
 for i=1:dlen, 
   for j=1:maxl, 
-    if isempty(sTo.labels{i,j}) & ~ischar(sTo.labels{i,j}), 
+    if isempty(sTo.labels{i,j}) && ~ischar(sTo.labels{i,j}), 
       sTo.labels{i,j} = ''; 
     end
   end
@@ -272,7 +272,7 @@ function labels = remove_empty_columns(labels)
       cols(j) = cols(j) + ~isempty(labels{i,j}); 
     end
   end
-  while maxl>0 & cols(maxl)==0, maxl = maxl-1; end % check starting from end
+  while maxl>0 && cols(maxl)==0, maxl = maxl-1; end % check starting from end
 
   if maxl==0, labels = cell(dlen,1); 
   elseif maxl<size(labels,2), labels = labels(:,1:maxl); 

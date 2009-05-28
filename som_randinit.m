@@ -143,7 +143,7 @@ while i<=length(varargin),
      case {'sheet','cyl','toroid'}, sTopol.shape = varargin{i};
      otherwise argok=0; 
     end
-  elseif isstruct(varargin{i}) & isfield(varargin{i},'type'), 
+  elseif isstruct(varargin{i}) && isfield(varargin{i},'type'), 
     switch varargin{i}.type, 
      case 'som_topol',
       sTopol = varargin{i}; 

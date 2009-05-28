@@ -156,7 +156,7 @@ if dim ~= ddim,
 end
 
 % which_bmus
-if nargin < 3 | isempty(which_bmus) | any(isnan(which_bmus)), 
+if nargin < 3 || isempty(which_bmus) || any(isnan(which_bmus)), 
   which_bmus = 1; 
 else
   if ischar(which_bmus), 
@@ -169,10 +169,10 @@ else
 end
 
 % mask
-if nargin < 4 | isempty(mask) | any(isnan(mask)), 
-  if isstruct(sMap) & strcmp(sMap.type,'som_map'), 
+if nargin < 4 || isempty(mask) || any(isnan(mask)), 
+  if isstruct(sMap) && strcmp(sMap.type,'som_map'), 
     mask = sMap.mask; 
-  elseif isstruct(sData) & strcmp(sData.type,'som_map'), 
+  elseif isstruct(sData) && strcmp(sData.type,'som_map'), 
     mask = sData.mask; 
   else
     mask = ones(dim,1); 

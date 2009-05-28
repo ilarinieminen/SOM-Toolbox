@@ -46,7 +46,7 @@ nargchk(9,9,nargin);
 NO_FILE = 0;
 if isstruct(sData);
   sData=sData.data;
-elseif ~(isreal(sData) | isstr(sData))
+elseif ~(isreal(sData) || isstr(sData))
   error('Argument ''sData'' must be a struct or a real matrix.');
 else
   if isempty(ft)
@@ -98,10 +98,10 @@ else
   error('Argument ''init_type'' must be string ''rand'' or ''linear''.');
 end
 
-if (isstr(cout) & isempty(cout)) | (~isstr(cout) & isempty(cout))
+if (isstr(cout) && isempty(cout)) || (~isstr(cout) && isempty(cout))
   NO_FILE = 1;
   cout = '__abcdef';
-elseif  ~isstr(cout) & ~isempty(cout)
+elseif  ~isstr(cout) && ~isempty(cout)
   error('Argument ''cout'' must be a string or ''[]''.');
 end
   
@@ -114,7 +114,7 @@ if ~is_positive_integer(ydim)
 end
 
 if isstr(topol)
-  if isempty(topol) | (~strcmp(topol,'hexa') & ~strcmp(topol,'rect'))
+  if isempty(topol) || (~strcmp(topol,'hexa') && ~strcmp(topol,'rect'))
     error ('Argument ''topol'' must be either a string ''hexa'' or ''rect''.');
   end
 else
@@ -122,7 +122,7 @@ else
 end
 
 if isstr(neigh)
-  if isempty(neigh) | (~strcmp(neigh,'bubble') & ~strcmp(neigh,'gaussian'))
+  if isempty(neigh) || (~strcmp(neigh,'bubble') && ~strcmp(neigh,'gaussian'))
     error(sprintf(cat(2,'Argument ''neigh'' must be either a string ',...
                         '''bubble'' or ''gaussian''.')));
   end
@@ -173,7 +173,7 @@ function bool = is_positive_integer(x)
 
 bool = ~isempty(x) & isreal(x) & all(size(x) == 1) & x > 0;
 if ~isempty(bool)
-  if bool & x~=round(x)
+  if bool && x~=round(x)
     bool = 0;
   end
 else

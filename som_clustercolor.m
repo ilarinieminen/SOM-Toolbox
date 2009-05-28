@@ -66,7 +66,7 @@ if vis_valuetype(m, {'nxm'});
    end
 else
    [tmp,ok,tmp]=som_set(m);
-   if isstruct(m) & all(ok)
+   if isstruct(m) && all(ok)
       switch m.type
       case 'som_topol'              % topol? 
          msize=m.msize;
@@ -78,8 +78,8 @@ else
          error('Invalid map or topol struct.');
       end
       % cell?  
-   elseif iscell(m) & vis_valuetype(size(m),{[1 2]}),
-      if vis_valuetype(m{2},{[1 2]}) & vis_valuetype(m{1},{'string'}),
+   elseif iscell(m) && vis_valuetype(size(m),{[1 2]}),
+      if vis_valuetype(m{2},{[1 2]}) && vis_valuetype(m{1},{'string'}),
          lattice=m{1};    
          msize=m{2}; 
       else
@@ -102,7 +102,7 @@ else
       error('Only 2D maps allowed!');
    end
    % Check colorcode
-   if nargin<3 | isempty(colorcode)
+   if nargin<3 || isempty(colorcode)
       colorcode='rgb2';
    end
 end

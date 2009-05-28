@@ -78,7 +78,7 @@ character=ischar(value);
 % main loop: go through all types in arg. 'valid'
 for i=1:length(valid),
   if isnumeric(valid{i}), % numeric size for double matrix
-    if numeric & length(valid{i}) == dims,
+    if numeric && length(valid{i}) == dims,
       flag(i)=all(sz == valid{i});
     else
       flag(i)=0; % not numeric or wrong dimension
@@ -200,7 +200,7 @@ for i=1:length(valid),
 	% valid {lattice, msize} 
        case 'topol_cell_no_shape'
 	flag(i)=1;
-	if ~iscell(value) | length(size(value)) ~= 2 | size(value,2)~=2
+	if ~iscell(value) || length(size(value)) ~= 2 || size(value,2)~=2
 	  flag(i)=0;
 	else
 	  if vis_valuetype(value{1},{'string'}),
@@ -219,7 +219,7 @@ for i=1:length(valid),
 	% valid {lattice, msize, shape} 
        case 'topol_cell'
 	flag(i)=1;
-	if ~iscell(value) | length(size(value)) ~= 2 | size(value,2) ~= 3,
+	if ~iscell(value) || length(size(value)) ~= 2 || size(value,2) ~= 3,
 	  flag(i)=0;
 	else
 	  if vis_valuetype(value{1},{'string'}),

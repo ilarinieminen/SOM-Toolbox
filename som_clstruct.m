@@ -120,7 +120,7 @@ if isempty(base),
   base = 1:dlen; 
 else
   dlen = length(base); 
-  if any(base)>clen | any(base)<1, error('Incorrect base partition vector.'); end
+  if any(base)>clen || any(base)<1, error('Incorrect base partition vector.'); end
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -155,7 +155,7 @@ else
   if size(coord,1)==0, % the default    
     [dummy,coord] = sort(order); 
     coord = coord'; 
-  elseif size(coord,1)==dlen & dlen>clen, % coordinates given for original data
+  elseif size(coord,1)==dlen && dlen>clen, % coordinates given for original data
     codata = coord; 
     coord = zeros(clen,size(coord,2)); 
     for i=1:clen, coord(i,:) = mean(codata(find(base==i),:),1); end  
@@ -173,7 +173,7 @@ if size(color,1)==2*clen-1, % this is ok already
 else
   if size(color,1)==0, % the default
     color(order,:) = hsv(length(order)); 
-  elseif size(color,1)==dlen & dlen>clen, % colors given for original data
+  elseif size(color,1)==dlen && dlen>clen, % colors given for original data
     codata = color; 
     color = zeros(clen,3); 
     for i=1:clen, color(i,:) = mean(codata(find(base==i),:),1); end  

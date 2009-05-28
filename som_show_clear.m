@@ -100,7 +100,7 @@ error(nargchk(0,2, nargin))     % check no. of input args is correct
 
 %%% Initialize & check & action %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-if nargin == 0 | isempty(type) | strcmp(type,'all') % delete everything 
+if nargin == 0 || isempty(type) || strcmp(type,'all') % delete everything 
                                                     % in the gcf
   delete(findobj(gcf,'Tag','Hit'));
   delete(findobj(gcf, 'Tag','Lab'));
@@ -109,7 +109,7 @@ if nargin == 0 | isempty(type) | strcmp(type,'all') % delete everything
   return
 end
 
-if nargin < 2 | isempty(p)            % check handles
+if nargin < 2 || isempty(p)            % check handles
   handle=gcf;                       
 else                                  % check subplot handles if p is given
   [handle,msg]=vis_som_show_data(p,gcf);

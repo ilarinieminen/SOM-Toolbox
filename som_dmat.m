@@ -39,13 +39,13 @@ end
 [n dim] = size(M);
 
 % neighborhoods 
-if nargin<2 | isempty(Ne), Ne = som_neighbors(sM); 
+if nargin<2 || isempty(Ne), Ne = som_neighbors(sM); 
 elseif ischar(Ne), Ne = som_neighbors(sM,Ne); 
 end
 l = size(Ne,1); Ne([0:l-1]*l+[1:l]) = 0; % set diagonal elements = 0
 
 % mode
-if nargin<3 | isempty(mode), mode = 'median'; end
+if nargin<3 || isempty(mode), mode = 'median'; end
 calc = sprintf('%s(x)',mode); 
 
 % distances

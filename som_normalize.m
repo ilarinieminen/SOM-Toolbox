@@ -212,7 +212,7 @@ end
 [dlen dim] = size(D);
 
 % comps
-if nargin<3 | (ischar(comps) & strcmp(comps,'all')), 
+if nargin<3 || (ischar(comps) && strcmp(comps,'all')), 
   comps = [1:dim]; 
 end
 if isempty(comps), return; end
@@ -220,7 +220,7 @@ if size(comps,1)>1, comps = comps'; end  % make it a row vector
 
 % method
 csNorm = cell(dim,1); 
-if nargin<2 | isempty(method), 
+if nargin<2 || isempty(method), 
   if ~struct_mode, 
     warning('No normalization method given. Data left unchanged.');
     return; 

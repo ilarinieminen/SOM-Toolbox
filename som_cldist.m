@@ -43,7 +43,7 @@ function Cd = som_cldist(D,clinds1,clinds2,cldist,q,mask)
 if nargin<5, q = 2; end
 if nargin<6, mask = ones(dim,1); end
 if ~iscell(clinds1), clinds1 = {clinds1}; end
-if ~isempty(clinds2) & ~iscell(clinds2), clinds2 = {clinds2}; end
+if ~isempty(clinds2) && ~iscell(clinds2), clinds2 = {clinds2}; end
 
 n1 = length(clinds1); 
 n2 = length(clinds2); 

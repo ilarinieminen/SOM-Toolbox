@@ -147,13 +147,13 @@ for t=1:rlen
   
     %ind2=ind2+1;
 
-    if d_class(j) & d_class(j)==c_class(ind1)
+    if d_class(j) && d_class(j)==c_class(ind1)
       mj = ind1;
       mi = ind2;
       if d_class(j)==c_class(ind2)
         flag = 1;
       end
-    elseif d_class(j) & d_class(j)==c_class(ind2)
+    elseif d_class(j) && d_class(j)==c_class(ind2)
       mj = ind2;
       mi = ind1;
       if d_class(j)==c_class(ind1)
@@ -161,7 +161,7 @@ for t=1:rlen
       end
     end
 
-    if mj & mi
+    if mj && mi
       if flag
         tmp([mj mi],:) = cod([mj mi],:) + epsilon*alpha*...
                        (dat([j j],:) - cod([mj mi],:));
@@ -196,7 +196,7 @@ names = {};
 nos = zeros(length(class),1);
 
 for i=1:length(class)
-  if ~isempty(class{i}) & ~any(strcmp(class{i},names))
+  if ~isempty(class{i}) && ~any(strcmp(class{i},names))
     names=cat(1,names,class(i));
   end
 end

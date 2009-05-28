@@ -55,7 +55,7 @@ end
 % constrained clustering
 if nargin<4, Ne = []; end
 if prod(size(Ne))==1,  
-  if Ne & isempty(sT),
+  if Ne && isempty(sT),
     warning('Cannot use constrained clustering.'); Ne = 0; 
   end
   if Ne, Ne = som_unit_neighs(sT); else Ne = []; end
@@ -87,7 +87,7 @@ if strcmp(cldist,'neighf')
   if isempty(sT), error('Cannot use neighf linkage.'); end
   q = som_unit_dists(sT).^2; 
   r = sM.trainhist(end).radius_fin^2; 
-  if isnan(r) | isempty(r), r = 1; end 
+  if isnan(r) || isempty(r), r = 1; end 
   switch sM.neigh,
    case 'bubble',   q = (q <= r);
    case 'gaussian', q = exp(-q/(2*r));
@@ -103,7 +103,7 @@ end
 Cd = som_cldist(M,clinds,clinds2,cldist,q,mask); 
 			      
 % check out from Ne which of the clusters are not connected
-if ~isempty(Ne) & any(strcmp(cldist,{'centroid','ward'})),
+if ~isempty(Ne) && any(strcmp(cldist,{'centroid','ward'})),
   Clconn = sparse(nc,nu);   
   for i=1:nc, for j=1:nu, Clconn(i,j) = any(any(Ne(clinds{i},uind(j)))); end, end
   Cd(Clconn==0) = Inf; 

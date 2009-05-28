@@ -51,7 +51,7 @@ h_infoax=findobj(gcf,'tag','Info','type','axes');
 
 % If no arguments are given, return the old axes handles
 
-if nargin == 0 | isempty(txt),
+if nargin == 0 || isempty(txt),
   ;  
 elseif ischar(txt)                    % text: set new text
   [t,h_]=movetext(txt);

@@ -230,7 +230,7 @@ while i<=length(varargin),
      case {'short','default','long'}, training = varargin{i}; 
      otherwise argok=0; 
     end
-  elseif isstruct(varargin{i}) & isfield(varargin{i},'type'), 
+  elseif isstruct(varargin{i}) && isfield(varargin{i},'type'), 
     switch varargin{i}(1).type, 
      case 'som_topol', sTopol = varargin{i}; 
      otherwise argok=0; 
@@ -248,7 +248,7 @@ end
 %% make the map struct
 
 %% map size
-if isempty(sTopol.msize) | ~prod(sTopol.msize), 
+if isempty(sTopol.msize) || ~prod(sTopol.msize), 
   if tracking>0, fprintf(1,'Determining map size...\n'); end
   if ~munits,     
     sTemp = som_topol_struct('dlen',dlen);

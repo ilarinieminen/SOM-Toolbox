@@ -106,7 +106,7 @@ function depth = getdepth(Z)
   ch = 2*clen-1; % active nodes
   while any(ch), 
     c  = ch(1); ch = ch(2:end);
-    if c>clen & isfinite(Z(c-clen,3)), 
+    if c>clen && isfinite(Z(c-clen,3)), 
       chc = Z(c-clen,1:2); % children of c
       depth(chc) = depth(c) + 1; % or +(ind==chc(1))
       ch = [ch, chc]; 

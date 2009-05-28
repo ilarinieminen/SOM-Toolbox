@@ -296,7 +296,7 @@ error(nargchk(1,Inf,nargin))     % check no. of input args
 
 if isstruct(sMap),               % check map
   [tmp,ok,tmp]=som_set(sMap);
-  if all(ok) & strcmp(sMap.type,'som_map') 
+  if all(ok) && strcmp(sMap.type,'som_map') 
     ;
   else
     error('Map struct is invalid!');
@@ -491,7 +491,7 @@ for i=1:n,                         % main loop
   
   %%% Draw colorbars if they are turned on and the plane is umat or c-plane
 
-  if General.comp(i)> -1 & ~strcmp(General.colorbardir,'none'),
+  if General.comp(i)> -1 && ~strcmp(General.colorbardir,'none'),
     h_colorbar(i,1)=colorbar(General.colorbardir);           % colorbars
   else
     h_colorbar(i,1)=-1;
@@ -583,7 +583,7 @@ for i=1:2:length(args),
    case {'comp','compi'}
     %%% Component planes: check values & set defaults
     
-    if ~vis_valuetype(value,{'nx1','1xn','string'}) & ~isempty(value),
+    if ~vis_valuetype(value,{'nx1','1xn','string'}) && ~isempty(value),
       error([ 'A vector argument or string ''all'' expected for ''' ...
 	      identifier '''.'])
     end
@@ -598,7 +598,7 @@ for i=1:2:length(args),
       end
     else
       value=round(value);
-      if min(value)<1 | max(value)>dim,
+      if min(value)<1 || max(value)>dim,
 	error([ 'Component indices out of range in ''' identifier '''.']) 
       end
     end
@@ -610,7 +610,7 @@ for i=1:2:length(args),
     %%% Check first the possible cell input
     
     if iscell(value),
-      if ndims(value) ~= 2 | any(size(value) ~= [1 2]) | ...
+      if ndims(value) ~= 2 || any(size(value) ~= [1 2]) || ...
 	    ~vis_valuetype(value{2},{'string'}),
 	error('Cell input for ''umat'' has to be of form {vector, string}.');
       else
@@ -619,7 +619,7 @@ for i=1:2:length(args),
     else 
       name='U-matrix'; % no cell: default title is set
     end
-    if ~vis_valuetype(value,{'nx1','1xn','string'}) & ~isempty(value),
+    if ~vis_valuetype(value,{'nx1','1xn','string'}) && ~isempty(value),
       error('Vector, string ''all'', or cell {vector, string} expected for ''umat''.')
     end
     if isempty(value)
@@ -633,7 +633,7 @@ for i=1:2:length(args),
     else
       value=unique(round(value));
     end
-    if min(value)<1 | max(value)>dim,
+    if min(value)<1 || max(value)>dim,
       error('Component indices out of range in ''umat''.') 
     end
     
@@ -654,7 +654,7 @@ for i=1:2:length(args),
     
     % Check first the possible cell input
     if iscell(value),
-      if ndims(value)~=2 | any(size(value) ~= [1 2]) | ...
+      if ndims(value)~=2 || any(size(value) ~= [1 2]) || ...
 	    ~vis_valuetype(value{2},{'string'}),
 	error([ 'Cell input for ''' identifier ...
 	      ''' has to be of form {M, string}.']);
@@ -664,10 +664,10 @@ for i=1:2:length(args),
     else 
       name='Color code'; % no cell: default title is set
     end
-    if size(value,1)~=munits | ...
-	  (~vis_valuetype(value,{'nx3rgb'}) & ... 
-	   ~vis_valuetype(value,{'nx1'}) & ...
-	   ~vis_valuetype(value,{'nx1xm'}) & ...
+    if size(value,1)~=munits || ...
+	  (~vis_valuetype(value,{'nx3rgb'}) && ... 
+	   ~vis_valuetype(value,{'nx1'}) && ...
+	   ~vis_valuetype(value,{'nx1xm'}) && ...
 	   ~vis_valuetype(value,{'nx3xdimrgb'})),
       error(['Mx3 or Mx3xN RGBmatrix, Mx1 or Mx1xN matrix, cell '...
 	     '{RGBmatrix, string},' ...
@@ -732,7 +732,7 @@ for i=1:2:length(args),
   case 'edge'
     %%% Edge on or off : check % set 
     
-    if ~vis_valuetype(value,{'string'}) & ~isempty(value),
+    if ~vis_valuetype(value,{'string'}) && ~isempty(value),
       error('String value expected for ''edge''.')
     elseif ~isempty(value),
       switch value
@@ -770,7 +770,7 @@ for i=1:2:length(args),
     
    case 'subplots'
     %%% set the number of subplots
-    if ~vis_valuetype(value,{'1x2'}) & ~vis_valuetype(value,{'2x1'})
+    if ~vis_valuetype(value,{'1x2'}) && ~vis_valuetype(value,{'2x1'})
       error('Subplots grid size is invalid!');
     else
       General.subplots=value; 

@@ -129,7 +129,7 @@ if n>1,
   N1 = Ne; 
   N1(find(N1~=1)) = 0;   
 end
-while k<n & any(isnan(Ne(:))),
+while k<n && any(isnan(Ne(:))),
   k=k+1;
   fprintf(1,'%d ',k);
   for i=1:munits,

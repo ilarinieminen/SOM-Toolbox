@@ -657,7 +657,7 @@ elseif (strcmp(action,'color'))
 
   v = get(tmp_h(3),'Value');
   s = get(tmp_h(3),'string');
-  if v>5 & ~strcmp(s{v},'-variable-'),
+  if v>5 && ~strcmp(s{v},'-variable-'),
     m = evalin('base',s{v});
   elseif ~strcmp(s{v},'-variable-'),
     m = som_colorcode(udata.sM,s{v});

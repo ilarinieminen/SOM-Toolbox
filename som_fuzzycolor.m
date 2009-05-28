@@ -107,21 +107,21 @@ else
    error('Requires a map struct.');
 end
 
-if nargin<2 | isempty(T),
+if nargin<2 || isempty(T),
    T=1;
 end
 if ~vis_valuetype(T,{'1x1'})
    error('Input for T must be a scalar.');
 end
 
-if nargin<3 | isempty(R),
+if nargin<3 || isempty(R),
    R=30;
 end
 if ~vis_valuetype(R,{'1x1'})
    error('Input for R must be a scalar.');
 end
 
-if nargin < 4 | isempty(mode),
+if nargin < 4 || isempty(mode),
    mode='lin';
 end
 if ~ischar(mode),
@@ -136,7 +136,7 @@ else
    end
 end
 
-if nargin < 5 | isempty(initRGB)
+if nargin < 5 || isempty(initRGB)
    initRGB='rgb2';
 end
 
@@ -150,7 +150,7 @@ else
    error('Invalid color code string');   
 end
 
-if nargin<6 | isempty(S),
+if nargin<6 || isempty(S),
    S=fuzzysimilarity(sM,1./T);
 end
 

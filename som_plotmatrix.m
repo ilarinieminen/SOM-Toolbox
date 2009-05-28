@@ -26,18 +26,18 @@ function som_plotmatrix(sM,D,Col,comps)
 M = sM.codebook;
 
 % sD
-if nargin>1 & ~isempty(D), 
+if nargin>1 && ~isempty(D), 
   if isstruct(D), D = D.data; end
   bmus = som_bmus(sM,D);
 else D = []; bmus = []; 
 end
 
 % Col
-if nargin<3 | isempty(Col), Col = som_colorcode(sM); end
+if nargin<3 || isempty(Col), Col = som_colorcode(sM); end
 if ischar(Col), Col = som_colorcode(sM,Col); end
 
 % comps
-if nargin<4 | isempty(comps), comps = 1:dim; end
+if nargin<4 || isempty(comps), comps = 1:dim; end
 n = length(comps)+1;
 
 % histogram bins
@@ -59,7 +59,7 @@ clf
 for i=1:n, 
   for j=1:n, 
     subplot(n,n,(i-1)*n+j); 
-    if j==1 & i==1, 
+    if j==1 && i==1, 
       h=som_cplane(sM,Col); set(h,'edgecolor','none')
     elseif i==1, 
       ind = comps(j-1); 
@@ -91,7 +91,7 @@ for i=1:n,
       vn=som_denormalize(v,sM.comp_norm{ind})'; 
       h=colorbar('vert');
       set(h,'YTick',v,'YTickLabel',cellstr(num2str(vn,2)));
-    elseif i<j | ~isempty(D), 
+    elseif i<j || ~isempty(D), 
       if i>j, i1 = i-1; i2 = j-1; else i1 = j-1; i2 = i-1; end
       ind1 = comps(i1); ind2 = comps(i2); 
       if i<j, 

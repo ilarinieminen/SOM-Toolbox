@@ -55,7 +55,7 @@ error(nargchk(2, 4, nargin));  % check no. of input args
 
 %%% Check input args & set defaults
 
-if isstruct(sM) & isfield(sM,'type') & strcmp(sM.type,'som_map'),
+if isstruct(sM) && isfield(sM,'type') && strcmp(sM.type,'som_map'),
    [tmp,lattice,msize]=vis_planeGetArgs(sM);
    munits=prod(msize);
    if length(msize)>2 
@@ -70,12 +70,12 @@ if ~vis_valuetype(C,{'1x1'}),
 end
 
 % check initial color coding
-if nargin<3 | isempty(initRGB)
+if nargin<3 || isempty(initRGB)
    initRGB=som_colorcode(sM);
 end
 
 % check contrast checking
-if nargin<4 | isempty(contrast),
+if nargin<4 || isempty(contrast),
    contrast='enhanced';
 end
 

@@ -366,7 +366,7 @@ end
 %% Check input args %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 for i=first_identifier:2:num_of_args,
-  if ischar(varargin{i}) & isfield(Ref,lower(varargin{i})),
+  if ischar(varargin{i}) && isfield(Ref,lower(varargin{i})),
     if i+1>num_of_args,
       error('Invalid identifier-value pairs or wrong argument order.');
     else
@@ -420,7 +420,7 @@ case 'char'                % default topologies (hexa,char)
   % If topology is hexa/rect but linetype, color etc. is 
   % not constant, the topology is set to free
 
-  if size(S.linewidth,1)>1 | size(S.linecolor,1)>1 | ...
+  if size(S.linewidth,1)>1 || size(S.linecolor,1)>1 || ...
     iscell(S.linecolor) % matrix or cell = not constant 
     fixedline=False;
     S.lattice=som_connection({S.lattice,S.msize,S.shape});
@@ -440,7 +440,7 @@ end
 
 % Fixed marker size, color, type? 
 
-if size(S.markersize,1)>1 | size(S.markercolor,1)>1 | size(S.marker,1)>1
+if size(S.markersize,1)>1 || size(S.markercolor,1)>1 || size(S.marker,1)>1
    fixedmarker=False;
 else
    fixedmarker=True;
@@ -449,13 +449,13 @@ end
 % Check labels
 
 if ~vis_valuetype(S.label,{'chararray','2Dcellarray_of_char'}) ...
-      & ~isempty(S.label),
+      && ~isempty(S.label),
   error('Labels should be in a char array or cell array of strings.');
 elseif ischar(S.label)
   S.label=cellstr(S.label);
 end
 
-if size(S.label,1) ~= munits & ~isempty(S.label),
+if size(S.label,1) ~= munits && ~isempty(S.label),
   error('Number of labels and map size do not match.');
 end
 
@@ -470,14 +470,14 @@ elseif ~vis_valuetype(S.markersize,{[munits 1] [1 1]}),
   error('MarkerSize matrix value has wrong size or dimension.');
 elseif any(S.markersize(:)<0), 
   error('All elements of MarkerSize must be non-negative.');
-elseif ~vis_valuetype(S.markercolor,{'1x3rgb','colorstyle'}) & ...
+elseif ~vis_valuetype(S.markercolor,{'1x3rgb','colorstyle'}) && ...
       ~vis_valuetype(S.markercolor,{[munits 3],'nx3rgb'},'all'),
   error('MarkerColor should be a ColorSpec or Mx3 matrix of RGB triples.');
 elseif ~vis_valuetype(S.labelcolor,{'1x3rgb','colorstyle','xor'}),
   error('LabelColor shoud be a ColorSpec or ''xor'' or ''none''.')
 elseif ~vis_valuetype(S.labelsize,{'1x1'})
   error('LabelSize should be a scalar.');
-elseif ~isempty(S.surf) & ~vis_valuetype(S.surf,{[munits 1] [munits 3]});
+elseif ~isempty(S.surf) && ~vis_valuetype(S.surf,{[munits 1] [munits 3]});
   error('Surf matrix value has wrong size or dimension.');
 end
 
@@ -507,15 +507,15 @@ end
 % Check line color
 
 if iscell(S.linecolor),
-  if ndims(S.linecolor) ~= 2 | any(size(S.linecolor) ~= [1 3]),
+  if ndims(S.linecolor) ~= 2 || any(size(S.linecolor) ~= [1 3]),
     error('Cell input for LineColor should be of form {r,g,b}.')
-  elseif ~vis_valuetype(S.linecolor{1},{[munits munits],'nxn[0,1]'},'all')| ...
-	~vis_valuetype(S.linecolor{2},{[munits munits],'nxn[0,1]'},'all')| ...
+  elseif ~vis_valuetype(S.linecolor{1},{[munits munits],'nxn[0,1]'},'all')|| ...
+	~vis_valuetype(S.linecolor{2},{[munits munits],'nxn[0,1]'},'all')|| ...
 	~vis_valuetype(S.linecolor{3},{[munits munits],'nxn[0,1]'},'all'),
     error(['In cell input {r,g,b} some matrix r,g or b is invalid: ' ...
 	   'Size must be MxM and values in interval [0,1].']);
   end 
-elseif ~vis_valuetype(S.linecolor,{'colorstyle','1x3rgb'}) & ...
+elseif ~vis_valuetype(S.linecolor,{'colorstyle','1x3rgb'}) && ...
       ~vis_valuetype(S.linecolor,{'nxnx3rgb', [munits munits 3]},'all'),
   error('Invalid LineColor: see help text for valid values.'),
 elseif vis_valuetype(S.linecolor, {'none'}),
@@ -667,8 +667,8 @@ end
 
 % Line color
 
-if size(S.linecolor,1)>1 | iscell(S.linecolor)
-   if length(size(S.linecolor)) == 3 | iscell(S.linecolor) 
+if size(S.linecolor,1)>1 || iscell(S.linecolor)
+   if length(size(S.linecolor)) == 3 || iscell(S.linecolor) 
      if ~iscell(S.linecolor)
        for i=1:L
          set(l(i),'Color',S.linecolor(I(i),J(i),:));

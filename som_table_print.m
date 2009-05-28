@@ -24,8 +24,8 @@ function T = som_table_print(sTable,fid,fmt)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-if nargin<2 | isempty(fid) | isnan(fid), fid = 1; end
-if nargin<3 | isempty(fmt) | isnan(fmt), fmt = 'txt'; end
+if nargin<2 || isempty(fid) || isnan(fid), fid = 1; end
+if nargin<3 || isempty(fmt) || isnan(fmt), fmt = 'txt'; end
 
 rowlines = 0; 
 longtable = 0; 

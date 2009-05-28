@@ -164,7 +164,7 @@ end
 
 form = [repmat('%g ',[1 dim-1]) '%g\n'];
 
-if ~sum(has_labels) & ~sum(has_nans)    % no NaNs, no labels
+if ~sum(has_labels) && ~sum(has_nans)    % no NaNs, no labels
   fprintf(fid, form, D'); 
 elseif ~sum(has_labels)                 % no labels, NaNs
   fprintf(fid, '%s', strrep(sprintf(form, D'), 'NaN', missing));

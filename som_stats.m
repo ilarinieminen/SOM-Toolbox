@@ -171,7 +171,7 @@ function sH = som_hist(x,bins,sN)
 
     binlabels  = []; 
     binlabels2 = []; 
-    if nargin<2 | isempty(bins) | isnan(bins), 
+    if nargin<2 || isempty(bins) || isnan(bins), 
         bins = linspace(min(x),max(x),10);    
     end
     if isstruct(bins), 

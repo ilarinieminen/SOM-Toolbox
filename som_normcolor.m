@@ -39,7 +39,7 @@ function color = som_normcolor(data, clrmap)
 
 error(nargchk(1,2,nargin));
 
-if nargin < 2| isempty(clrmap),
+if nargin < 2 || isempty(clrmap),
   clrmap=colormap;
 elseif ~vis_valuetype(clrmap,{'nx3rgb'}),
   error('The specified colormap is invalid!');
@@ -66,7 +66,7 @@ if isstruct(data),
   end
 end
 
-if ~isnumeric(data) | ndims(data) ~= 2
+if ~isnumeric(data) || ndims(data) ~= 2
   error('Data is not 2 dimensional numeric matrix.');
 end
 

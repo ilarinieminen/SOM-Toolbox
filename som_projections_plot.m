@@ -37,7 +37,7 @@ case 'scatter',
     if length(varargin)>1, color = varargin{2}; else color = 'k'; end
     if length(varargin)>2, psize = varargin{3}; else psize = 5; end
     if length(varargin)>3, sT = varargin{4}; else sT = []; end
-    if isstruct(sT) & strcmp(sT.type,'som_map'), sT = sT.topol; end
+    if isstruct(sT) && strcmp(sT.type,'som_map'), sT = sT.topol; end
     
     if isempty(sT),
         som_grid({'rect',[size(Co,1) 1]},'Coord',Co,'Markercolor',color,'line','none','markersize',psize);

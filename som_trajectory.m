@@ -132,8 +132,8 @@ for i=1:2:length(varargin)
       value=[];
     elseif vis_valuetype(value,{'nxm'})
       Traj.primary_data=value;
-    elseif isstruct(value) & isfield(value,'type') & ...
-	  ischar(value.type) & strcmp(value.type,'som_data'),
+    elseif isstruct(value) && isfield(value,'type') && ...
+	  ischar(value.type) && strcmp(value.type,'som_data'),
       Traj.primary_data=value.data;
       if isempty(Traj.primary_names),
 	Traj.primary_names=value.comp_names;
@@ -146,8 +146,8 @@ for i=1:2:length(varargin)
       value=[];
     elseif vis_valuetype(value,{'nxm'})
       Traj.secondary_data=value;
-    elseif isstruct(value) & isfield(value,'type') & ...
-	  ischar(value.type) & strcmp(value.type,'som_data'),
+    elseif isstruct(value) && isfield(value,'type') && ...
+	  ischar(value.type) && strcmp(value.type,'som_data'),
       Traj.secondary_data=value.data;
       if isempty(Traj.secondary_names),
 	Traj.secondary_names=value.comp_names;
@@ -217,7 +217,7 @@ munits=prod(msize);
 % Check BMU (or response) and map match 
 
 if vis_valuetype(bmus,{'nx1'});
-  if max(bmus)>prod(msize) | min(bmus) <1
+  if max(bmus)>prod(msize) || min(bmus) <1
     error('BMU indexes out of range.')
   elseif any(round(bmus)~=bmus)
     error('BMU indexes must be integer.');
@@ -240,27 +240,27 @@ size2=size(Traj.secondary_data);
 
 % Data2 must not be defined alone
 
-if isempty(Traj.primary_data)&~isempty(Traj.secondary_data),
+if isempty(Traj.primary_data)&&~isempty(Traj.secondary_data),
   error('If ''Data2'' is specified ''Data1'' must be specified, too.');
 elseif ~isempty(Traj.secondary_data) ...
-      & size1~= size2
+      && size1~= size2
   % If data1 and data2 exist both, check data1 and data2 match
   error('''Data1'' and ''Data2'' have different amount of data vectors.')
 end
 
 % Check BMU and data1 match (data2 matches with 1 anyway)
 
-if ~isempty(Traj.primary_data) & size(bmus,1) ~= size1,
+if ~isempty(Traj.primary_data) && size(bmus,1) ~= size1,
   error(['The number of data vectors in ''data1'' must match with' ...
 	 ' the number of rows in the first input argument (bmus).']);
 end
 
 % Check that number of names and data dimension is consistent
 
-if ~isempty(Traj.primary_names) & (size1(2)~=length(Traj.primary_names)),
+if ~isempty(Traj.primary_names) && (size1(2)~=length(Traj.primary_names)),
   error('Number of component names and ''Data1'' dimension mismatch.');
 end
-if ~isempty(Traj.secondary_names) & ...
+if ~isempty(Traj.secondary_names) && ...
       (size2(2)~=length(Traj.secondary_names)),
   error('Number of component names and ''Data2'' dimension mismatch.');
 end

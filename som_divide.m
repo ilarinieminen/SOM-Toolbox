@@ -62,7 +62,7 @@ isvec = prod(size(inds))==length(inds);
 
 % mode
 if nargin<4, 
-  if isvec & length(inds)==munits, 
+  if isvec && length(inds)==munits, 
     mode = 'class'; 
   else
     mode = 'index'; 

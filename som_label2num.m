@@ -27,7 +27,7 @@ function [nos,names] = som_label2num(L)
 %% Init %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 if isstruct(L);
-   if isfield(L,'type') & ischar(L.type),
+   if isfield(L,'type') && ischar(L.type),
       ;
    else
       error('Invalid map/data struct?');
@@ -48,7 +48,7 @@ end
 names = {};
 nos = zeros(length(class),1);
 for i=1:length(class),
-   if ~isempty(class{i}) & ~any(strcmp(class{i},names)),
+   if ~isempty(class{i}) && ~any(strcmp(class{i},names)),
       names=cat(1,names,class(i));
    end
 end

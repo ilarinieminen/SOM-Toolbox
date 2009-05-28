@@ -250,7 +250,7 @@ function D = redo_hist_norm(D,inv_params,cnorm)
     inds = find(~isnan(x) & ~isinf(x))';
     for j = inds, 
       [dummy ind] = min(abs(x(j) - cnorm{i}.params));
-      if x(j) > cnorm{i}.params(ind) & ind < bins, x(j) = ind + 1;  
+      if x(j) > cnorm{i}.params(ind) && ind < bins, x(j) = ind + 1;  
       else x(j) = ind;
       end
     end

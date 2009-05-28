@@ -249,9 +249,9 @@ if ischar(method)
   end
 end
 if iscell(method), 
-  if length(method)==1 & isstruct(method{1}), sNorm = method{1}; 
+  if length(method)==1 && isstruct(method{1}), sNorm = method{1}; 
   else
-    if length(method)==1 | isempty(method{2}), method{2} = 'x'; end
+    if length(method)==1 || isempty(method{2}), method{2} = 'x'; end
     sNorm = som_set('som_norm','method','eval','params',method);
   end
 else 
@@ -262,13 +262,13 @@ end
 %% action
 
 order = [1:length(sNorm)]; 
-if length(order)>1 & strcmp(operation,'undo'), order = order(end:-1:1); end
+if length(order)>1 && strcmp(operation,'undo'), order = order(end:-1:1); end
 
 for i=order, 
 
   % initialize
-  if strcmp(operation,'init') | ...
-     (strcmp(operation,'do') & strcmp(sNorm(i).status,'uninit')), 
+  if strcmp(operation,'init') || ...
+     (strcmp(operation,'do') && strcmp(sNorm(i).status,'uninit')), 
 
     % case method = 'hist'
     if strcmp(sNorm(i).method,'hist'), 
@@ -408,7 +408,7 @@ function x = norm_histeqD_do(x,p)
   for i = inds, 
     [dummy ind] = min(abs(x(i) - p));
     % data item closer to the left-hand bin wall is indexed after RH wall
-    if x(i) > p(ind) & ind < bins, 
+    if x(i) > p(ind) && ind < bins, 
       x(i) = ind + 1;  
     else 
       x(i) = ind;
@@ -513,16 +513,16 @@ function p = norm_eval_init(method)
 
 function x = norm_eval_do(x,p)
   x_tmp = eval(p{1});
-  if size(x_tmp,1)>=1 & size(x,1)>=1 & ...
-     size(x_tmp,2)==1 & size(x,2)==1,
+  if size(x_tmp,1)>=1 && size(x,1)>=1 && ...
+     size(x_tmp,2)==1 && size(x,2)==1,
     x = x_tmp;
   end
   %end of norm_eval_do
 
 function x = norm_eval_undo(x,p)
   x_tmp = eval(p{2});
-  if size(x_tmp,1)>=1 & size(x,1)>=1 & ...
-     size(x_tmp,2)==1 & size(x,2)==1,
+  if size(x_tmp,1)>=1 && size(x,1)>=1 && ...
+     size(x_tmp,2)==1 && size(x,2)==1,
     x = x_tmp;
   end
   %end of norm_eval_undo

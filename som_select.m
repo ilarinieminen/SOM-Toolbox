@@ -253,7 +253,7 @@ coords=get(gca,'CurrentPoint');
 row=round(coords(1,2));
 if row > udata.msize(1), row = udata.msize(1); end
 if row < 1, row = 1; end
-if any(strcmp(udata.lattice,{'hexa','hexaU'})) & ~mod(row,2), 
+if any(strcmp(udata.lattice,{'hexa','hexaU'})) && ~mod(row,2), 
   col=floor(coords(1,1))+0.5;
   if col > udata.msize(2)+0.5, col=udata.msize(2)+0.5; end
 else
@@ -264,15 +264,15 @@ if col < 1, col = 1; end
 
 if strcmp(udata.type,'planePlot')
 
-  if ~mod(row,2) & strcmp(udata.lattice,'hexa'), col=round(col-0.5); end
+  if ~mod(row,2) && strcmp(udata.lattice,'hexa'), col=round(col-0.5); end
   
   ind=sub2ind(udata.msize,row,col);
   colors=reshape(get(udata.patch_h,'FaceVertexCData'),[prod(udata.msize) 3]);
   gui=findobj(get(0,'Children'),'Tag','SELECT_GUI');
   gui=get(gui,'UserData');
   
-  if ~isempty(gui.curr_col) & all(~isnan(colors(ind,1,:))),
-    if ~strcmp(gui.mode,'clear') & ~all(gui.curr_col == colors(ind,:))
+  if ~isempty(gui.curr_col) && all(~isnan(colors(ind,1,:))),
+    if ~strcmp(gui.mode,'clear') && ~all(gui.curr_col == colors(ind,:))
       colors(ind,:)=gui.curr_col;
       gui.mat(row,col)=gui.class;
     else
@@ -304,13 +304,13 @@ else
 end
 coords(:,1)=coords(:,1)+col;
 coords(:,2)=coords(:,2)+row;
-if ~mod(row,2) & strcmp(udata.lattice,'hexa'), col=round(col-0.5); end
+if ~mod(row,2) && strcmp(udata.lattice,'hexa'), col=round(col-0.5); end
  
 hold on;
 if gco == udata.patch_h
   gui=findobj(get(0,'Children'),'Tag','SELECT_GUI');
   gui=get(gui,'UserData');
-  if isnan(gui.curr_col) | strcmp(gui.mode,'clear'), return; end
+  if isnan(gui.curr_col) || strcmp(gui.mode,'clear'), return; end
   h=fill(coords(:,1),coords(:,2),gui.curr_col);
   str=cat(2,'som_select([],[],''click'')');
   set(h,'ButtonDownFcn',str,'Tag','SEL_PATCH');
@@ -321,7 +321,7 @@ if gco == udata.patch_h
 else
   gui=findobj(get(0,'Children'),'Tag','SELECT_GUI');
   gui=get(gui,'UserData');
-  if ~all(get(gcbo,'FaceColor') == gui.curr_col) & ~strcmp(gui.mode,'clear'),
+  if ~all(get(gcbo,'FaceColor') == gui.curr_col) && ~strcmp(gui.mode,'clear'),
     if ~isnan(gui.curr_col), 
       set(gcbo,'FaceColor',gui.curr_col);
       gui.mat(row,col) = gui.class;
@@ -511,7 +511,7 @@ function draw_poly
 
 udata=get(findobj(get(0,'Children'),'Tag','SELECT_GUI'),'UserData');
 
-if isempty(udata.coords) & strcmp(get(gcf,'SelectionType'),'alt')
+if isempty(udata.coords) && strcmp(get(gcf,'SelectionType'),'alt')
   return;
 end
 
@@ -545,7 +545,7 @@ switch get(gcf,'SelectionType');
       in=sub2ind(udata.msize,row,col);
       colors=reshape(get(udata.patch_h,'FaceVertexCData'),...
 		     [prod(udata.msize) 3]);
-      if ~isnan(udata.curr_col) & ~strcmp(udata.mode,'clear')
+      if ~isnan(udata.curr_col) && ~strcmp(udata.mode,'clear')
         colors(in,:)=ones(length(in),1)*udata.curr_col;
         udata.mat(row,col)=udata.class;
       elseif strcmp(udata.mode,'clear')

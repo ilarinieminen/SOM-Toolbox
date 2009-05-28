@@ -11,9 +11,9 @@ function som_use_vs2()
 s=path; p=findstr(s,'somtoolbox'); 
 while any(p), 
   p=p(1); 
-  i=p; while i<length(s) & ~strcmp(s(i),':'), i=i+1; end
+  i=p; while i<length(s) && ~strcmp(s(i),':'), i=i+1; end
   if strcmp(s(i),':'), i=i-1; end
-  j=p; while j>1         & ~strcmp(s(j),':'), j=j-1; end
+  j=p; while j>1         && ~strcmp(s(j),':'), j=j-1; end
   if strcmp(s(j),':'), j=j+1; end
   r=s(j:i);
   rmpath(r);

@@ -178,10 +178,10 @@ end
 if prod(sTopol.msize)==0, error('Map size is 0.'); end
 
 % lattice
-if nargin>1 & ~isempty(lattice) & ~isnan(lattice), sTopol.lattice = lattice; end
+if nargin>1 && ~isempty(lattice) && ~isnan(lattice), sTopol.lattice = lattice; end
 
 % shape 
-if nargin>2 & ~isempty(shape) & ~isnan(shape), sTopol.shape = shape; end
+if nargin>2 && ~isempty(shape) && ~isnan(shape), sTopol.shape = shape; end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Action

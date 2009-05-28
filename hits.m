@@ -29,7 +29,7 @@ function [hits,ninvalid] = hits(bmus, mmax, values)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-if nargin<2 | isempty(mmax), 
+if nargin<2 || isempty(mmax), 
   mmax = max(bmus);
 elseif isstruct(mmax), 
   switch mmax.type, 

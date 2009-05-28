@@ -95,7 +95,7 @@ function som_info(sS,level)
 error(nargchk(1, 2, nargin))  % check no. of input args is correct
 
 if ~isstruct(sS),
-  if ~iscell(sS) | ~isstruct(sS{1}), 
+  if ~iscell(sS) || ~isstruct(sS{1}), 
     error('Invalid first input argument.')
   end
   csS = sS;
@@ -105,7 +105,7 @@ else
   for i=1:l, csS{i} = sS(i); end
 end
 
-if nargin<2 | isempty(level) | isnan(level), level = 1; end
+if nargin<2 || isempty(level) || isnan(level), level = 1; end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% print struct information

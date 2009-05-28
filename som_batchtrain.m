@@ -304,7 +304,7 @@ while i<=length(varargin),
      case {'gaussian','cutgauss','ep','bubble'}, sTrain.neigh = varargin{i};
      otherwise argok=0; 
     end
-  elseif isstruct(varargin{i}) & isfield(varargin{i},'type'), 
+  elseif isstruct(varargin{i}) && isfield(varargin{i},'type'), 
     switch varargin{i}(1).type, 
      case 'som_topol', 
       sTopol = varargin{i}; 
@@ -331,8 +331,8 @@ if ~isempty(radius), sTrain.trainlen = length(radius); end
 
 % check topology
 if struct_mode, 
-  if ~strcmp(sTopol.lattice,sMap.topol.lattice) | ...
-	~strcmp(sTopol.shape,sMap.topol.shape) | ...
+  if ~strcmp(sTopol.lattice,sMap.topol.lattice) || ...
+	~strcmp(sTopol.shape,sMap.topol.shape) || ...
 	any(sTopol.msize ~= sMap.topol.msize), 
     warning('Changing the original map topology.');
   end

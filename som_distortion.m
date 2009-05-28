@@ -80,17 +80,17 @@ rad = NaN;
 normalize = 0;
 if nargin>2, 
   if isnumeric(arg1), rad = arg1;
-  elseif ischar(arg1) & strcmp(arg1,'prob'), normalize = 0;
+  elseif ischar(arg1) && strcmp(arg1,'prob'), normalize = 0;
   end
 end
 if nargin>3, 
   if isnumeric(arg2), rad = arg2;
-  elseif ischar(arg2) & strcmp(arg2,'prob'), normalize = 0;
+  elseif ischar(arg2) && strcmp(arg2,'prob'), normalize = 0;
   end
 end
 
 % neighborhood radius
-if isempty(rad) | isnan(rad), 
+if isempty(rad) || isnan(rad), 
   if ~isempty(sM.trainhist), rad = sM.trainhist(end).radius_fin;
   else rad = 1; 
   end

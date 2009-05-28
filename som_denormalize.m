@@ -268,7 +268,7 @@ for i = comps,
 end
 
 % remove normalizations
-if struct_mode & remove_tag, 
+if struct_mode && remove_tag, 
   for i = comps, csNorm{i} = []; end
 end
 

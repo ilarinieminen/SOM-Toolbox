@@ -59,9 +59,9 @@ else D = sD;
 end
 [dlen dim] = size(D);
 
-if nargin < 2 | isempty(n_max) | isnan(n_max), n_max = ceil(sqrt(dlen)); end
-if nargin < 3 | isempty(c_max) | isnan(c_max), c_max = 5; end
-if nargin < 4 | isempty(verbose) | isnan(verbose), verbose = 0; end
+if nargin < 2 || isempty(n_max) || isnan(n_max), n_max = ceil(sqrt(dlen)); end
+if nargin < 3 || isempty(c_max) || isnan(c_max), c_max = 5; end
+if nargin < 4 || isempty(verbose) || isnan(verbose), verbose = 0; end
 
 centers   = cell(n_max,1); 
 clusters  = cell(n_max,1);

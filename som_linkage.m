@@ -104,7 +104,7 @@ while i<=length(varargin),
      case {'single','average','complete'}, linkage = varargin{i};
      otherwise argok=0; 
     end
-  elseif isstruct(varargin{i}) & isfield(varargin{i},'type'), 
+  elseif isstruct(varargin{i}) && isfield(varargin{i},'type'), 
     switch varargin{i}(1).type, 
      case 'som_topol', sTopol = varargin{i}; 
      otherwise argok=0; 
@@ -135,7 +135,7 @@ else
 end
 
 % neighborhood constraint
-if length(constrained)==1 & constrained>0, 
+if length(constrained)==1 && constrained>0, 
   Ne1 = som_unit_neighs(sT); 
   Conn = som_neighborhood(Ne1,constrained); 
   Conn(~isfinite(Conn(:))) = 0; 
@@ -151,7 +151,7 @@ else
   % calculate pairwise distance matrix
   q = Md; 
   Md = zeros(n,n)+Inf;
-  if ~constrained & q==2, % fast for the default case 
+  if ~constrained && q==2, % fast for the default case 
     for i = 1:n-1,
       x = D(i,:);
       inds = [(i+1):n]; 

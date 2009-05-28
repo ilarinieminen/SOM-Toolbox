@@ -148,7 +148,7 @@ while i<=length(varargin),
      case {'sheet','cyl','toroid'}, sTopol.shape = varargin{i};
      otherwise argok=0; 
     end
-  elseif isstruct(varargin{i}) & isfield(varargin{i},'type'), 
+  elseif isstruct(varargin{i}) && isfield(varargin{i},'type'), 
     switch varargin{i}.type, 
      case 'som_topol',
       sTopol = varargin{i}; 
@@ -214,7 +214,7 @@ if dlen<2,
 end
 
 % compute principle components
-if dim > 1 & sum(msize > 1) > 1,
+if dim > 1 && sum(msize > 1) > 1,
   % calculate mdim largest eigenvalues and their corresponding
   % eigenvectors
     

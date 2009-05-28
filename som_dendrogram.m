@@ -114,7 +114,7 @@ end
 
 switch Coordtype, 
  case 'SOM', 
-  if isempty(M) | ~any(strcmp(M.type,{'som_map','som_topol'})) , 
+  if isempty(M) || ~any(strcmp(M.type,{'som_map','som_topol'})) , 
     error('Cannot determine SOM coordinates without a SOM.'); 
   end
   if strcmp(M.type,'som_map'), M = M.topol; end
@@ -129,7 +129,7 @@ switch Coordtype,
     error('Given data must be equal in length to the number of original data samples.')
   end    
  case 'given', 
-  if size(Coord,1) ~= nd & size(Coord,1) ~= nd+nc, 
+  if size(Coord,1) ~= nd && size(Coord,1) ~= nd+nc, 
     error('Size of given coordinate matrix does not match the cluster hierarchy.');
   end  
 end
@@ -254,7 +254,7 @@ function depth = nodedepth(Z)
   ch = nc+nd-1; 
   while any(ch), 
     c  = ch(1); ch = ch(2:end);
-    if c>nd & isfinite(Z(c-nd,3)), 
+    if c>nd && isfinite(Z(c-nd,3)), 
       chc = Z(c-nd,1:2); 
       depth(chc) = depth(c) + 1; 
       ch = [ch, chc]; 
@@ -268,7 +268,7 @@ function inds = leafnodes(Z,i,nd)
   ch = i; 
   while any(ch), 
     c  = ch(1); ch = ch(2:end);
-    if c>nd & isfinite(Z(c-nd,3)), ch = [ch, Z(c-nd,1:2)]; end
+    if c>nd && isfinite(Z(c-nd,3)), ch = [ch, Z(c-nd,1:2)]; end
     if c<=nd, inds(end+1) = c; end 
   end
   return;

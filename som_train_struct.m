@@ -220,7 +220,7 @@ while i<=length(varargin),
      case {'lininit','randinit','seq','batch'}, sTrain.algorithm = varargin{i}; 
      otherwise argok=0; 
     end
-  elseif isstruct(varargin{i}) & isfield(varargin{i},'type'), 
+  elseif isstruct(varargin{i}) && isfield(varargin{i},'type'), 
     switch varargin{i}.type, 
      case 'som_train', 
       sT = varargin{i}; 
@@ -240,10 +240,10 @@ while i<=length(varargin),
 	  sTprev = varargin{i}.trainhist(end); 
 	  msize = varargin{i}.topol.msize; 
 	end
-	if ~isempty(varargin{i}.neigh) & isempty(sTrain.neigh), 
+	if ~isempty(varargin{i}.neigh) && isempty(sTrain.neigh), 
 	  sTrain.neigh = varargin{i}.neigh; 
 	end
-	if ~isempty(varargin{i}.mask) & isempty(sTrain.mask),  
+	if ~isempty(varargin{i}.mask) && isempty(sTrain.mask),  
 	  sTrain.mask = varargin{i}.mask; 
 	end
       elseif strcmp(varargin{i}.type,'som_train'), 
@@ -263,13 +263,13 @@ while i<=length(varargin),
 end
 
 % dim
-if ~isempty(sTprev) & isnan(dim), dim = length(sTprev.mask); end
+if ~isempty(sTprev) && isnan(dim), dim = length(sTprev.mask); end
 
 % mask
-if isempty(sTrain.mask) & ~isnan(dim), sTrain.mask = ones(dim,1); end
+if isempty(sTrain.mask) && ~isnan(dim), sTrain.mask = ones(dim,1); end
 
 % msize, munits
-if ~msize | isempty(msize), 
+if ~msize || isempty(msize), 
   if isnan(munits), msize = [10 10]; 
   else s = round(sqrt(munits)); msize = [s round(munits/s)]; 
   end
@@ -317,7 +317,7 @@ end
 
 % neighborhood function
 if isempty(sTrain.neigh), 
-  if ~isempty(sTprev) & ~isempty(sTprev.neigh), sTrain.neigh = sTprev.neigh; 
+  if ~isempty(sTprev) && ~isempty(sTprev.neigh), sTrain.neigh = sTprev.neigh; 
   else sTrain.neigh = 'gaussian';
   end
 end
@@ -343,8 +343,8 @@ else
     end
   end
   if isempty(sTrain.alpha_type),     
-    if ~isempty(sTprev) & ~isempty(sTprev.alpha_type) ... 
-	  & ~strcmp(sTrain.algorithm,'batch'),
+    if ~isempty(sTprev) && ~isempty(sTprev.alpha_type) ... 
+	  && ~strcmp(sTrain.algorithm,'batch'),
       sTrain.alpha_type = sTprev.alpha_type;
     elseif strcmp(sTrain.algorithm,'seq'),
       sTrain.alpha_type = 'inv';
@@ -354,9 +354,9 @@ else
   % radius
   ms = max(msize);   
   if isnan(sTrain.radius_ini),     
-    if isempty(sTprev) | strcmp(sTprev.algorithm,'randinit'), 
+    if isempty(sTprev) || strcmp(sTprev.algorithm,'randinit'), 
       sTrain.radius_ini = max(1,ceil(ms/4));
-    elseif strcmp(sTprev.algorithm,'lininit') | isnan(sTprev.radius_fin),
+    elseif strcmp(sTprev.algorithm,'lininit') || isnan(sTprev.radius_fin),
       sTrain.radius_ini = max(1,ceil(ms/8));
     else
       sTrain.radius_ini = sTprev.radius_fin;

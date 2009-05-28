@@ -109,11 +109,11 @@ switch str
    h=findobj(get(gcf,'Children'),'Tag','MAP');
    data.map=get(h,'String');
   case 'init_ok'
-   if isempty(data.xdim) | ~is_positive_integer(data.xdim)
+   if isempty(data.xdim) || ~is_positive_integer(data.xdim)
      errordlg('Argument ''xdim'' must be positive integer.');
      return;
    end
-   if isempty(data.ydim) | ~is_positive_integer(data.ydim)
+   if isempty(data.ydim) || ~is_positive_integer(data.ydim)
      errordlg('Argument ''ydim'' must be positive integer.');
      return;
    end
@@ -143,7 +143,7 @@ switch str
                       data.ydim,...
                       data.topol,...
                       data.neigh);
-   if any(strcmp(data.out_var,{'ans','''ans'''})) | isstr(answer)
+   if any(strcmp(data.out_var,{'ans','''ans'''})) || isstr(answer)
      varargout{1}=answer; 
    else
      assignin('base',data.out_var,answer);
@@ -152,15 +152,15 @@ switch str
    close(findobj(get(0,'Children'),'Tag','InitGUI'));
    return;
   case 'train_ok'
-   if isempty(data.rlen) | ~is_positive_integer(data.rlen)
+   if isempty(data.rlen) || ~is_positive_integer(data.rlen)
      errordlg('Argument ''Running Length'' must be positive integer.');
      return;
    end
-   if isempty(data.alpha) | data.alpha <= 0
+   if isempty(data.alpha) || data.alpha <= 0
      errordlg('Argument ''Initial Alpha Value'' must be a positive float.');
      return;
    end
-   if isempty(data.radius) | data.radius <= 0
+   if isempty(data.radius) || data.radius <= 0
      errordlg('Argument ''Neighborhood Radius'' must be a positive float.');
      return;
    end
@@ -195,7 +195,7 @@ switch str
                        data.rlen,...
                        data.alpha,...
                        data.radius);
-   if any(strcmp(data.out_var,{'''ans''','ans'})) | isstr(answer)
+   if any(strcmp(data.out_var,{'''ans''','ans'})) || isstr(answer)
      varargout{1}=answer;
    else
      assignin('base',data.out_var,answer);
@@ -221,7 +221,7 @@ switch str
                         data.out_file,...
                         data.out_file_type,...
                         data.rlen);
-   if strcmp(data.out_var,'''ans''')|strcmp(data.out_var,'ans')|isstr(answer)
+   if strcmp(data.out_var,'''ans''')||strcmp(data.out_var,'ans')||isstr(answer)
      varargout{1}=answer;
    else
      assignin('base',data.out_var,answer);
@@ -239,7 +239,7 @@ function bool = is_positive_integer(x)
 
 bool = ~isempty(x) & isreal(x) & all(size(x) == 1) & x > 0;
 if ~isempty(bool)
-  if bool & x~=round(x)
+  if bool && x~=round(x)
     bool = 0;
   end
 else

@@ -138,10 +138,10 @@ end
 if prod(sTopol.msize)==0, error('Map size is 0.'); end
 
 % lattice
-if nargin>1 & ~isempty(lattice) & ~isnan(lattice), sTopol.lattice = lattice; end
+if nargin>1 && ~isempty(lattice) && ~isnan(lattice), sTopol.lattice = lattice; end
 
 % shape 
-if nargin>2 & ~isempty(shape) & ~isnan(shape), sTopol.shape = shape; end
+if nargin>2 && ~isempty(shape) && ~isnan(shape), sTopol.shape = shape; end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Action
@@ -207,7 +207,7 @@ case 'toroid',
   % NOTE: if lattice is 'hexa', the msize(1) should be even, otherwise 
   % the bending the upper and lower edges of the map do not match 
   % to each other
-  if strcmp(lattice,'hexa') & rem(msize(1),2)==1, 
+  if strcmp(lattice,'hexa') && rem(msize(1),2)==1, 
     warning('Map size along y-coordinate is not even.');
   end
 

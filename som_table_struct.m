@@ -41,17 +41,17 @@ elseif isnumeric(values), values = num2cell(values);
 end
 [nrow,ncol] = size(values);
 
-if nargin<2 | isempty(headers), headers = cell(1,ncol); headers(:) = {''}; end
+if nargin<2 || isempty(headers), headers = cell(1,ncol); headers(:) = {''}; end
 if ischar(headers), headers = cellstr(headers); end
 
-if nargin<3 | isempty(span), span = ones(nrow,ncol,2); end
+if nargin<3 || isempty(span), span = ones(nrow,ncol,2); end
 if sum(span(:)) > 2*nrow*ncol, 
   warning('span matrix has overlapping cells')
 elseif sum(span(:)) < 2*nrow*ncol,
   warning('span matrix has noncontinuous cells')
 end
 
-if nargin<4 | isempty(colfmt), colfmt = ''; end
+if nargin<4 || isempty(colfmt), colfmt = ''; end
     
 sTable = struct('colfmt','','headers',[],'values',[],'span',[]); 
 sTable.colfmt  = colfmt; 

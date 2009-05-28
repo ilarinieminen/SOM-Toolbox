@@ -150,7 +150,7 @@ error(nargchk(0, 4, nargin))    % check no. of input args
 % Check the subplot vector p and  get the handles, exit if error
 % Default subplot vector is 'all'
 
-if nargin < 1 | isempty(p)                       % default p
+if nargin < 1 || isempty(p)                       % default p
   p= 'all';
 end
 
@@ -160,15 +160,15 @@ end
     vis_som_show_data(p, gcf);
 error(msg);                                       
 
-if nargin < 2 | isempty(ticks)                   % default tick mode is 'auto'
+if nargin < 2 || isempty(ticks)                   % default tick mode is 'auto'
   ticks = 'auto';
 elseif isa(ticks,'cell')                         % check for cell
   tickValues = ticks; 
   ticks= 'explicit';
-elseif isa(ticks,'double') & length(ticks)>1,
+elseif isa(ticks,'double') && length(ticks)>1,
   tickValues = {ticks}; 
   ticks = 'explicit'; 
-elseif isa(ticks,'double') & length(ticks)==1,
+elseif isa(ticks,'double') && length(ticks)==1,
   tickValues = max(2,round(ticks)); 
   ticks = 'evenspace'; 
 end
@@ -183,7 +183,7 @@ switch ticks                                     % check ticks
   for i=1:length(handles), tickValues_tmp{i} = tickValues; end
   tickValues = tickValues_tmp; 
  case 'explicit', 
-  if length(tickValues)==1 & length(handles)>1, 
+  if length(tickValues)==1 && length(handles)>1, 
     tickValues_tmp = cell(length(handles),1); 
     for i=1:length(handles), tickValues_tmp{i} = tickValues{1}; end
     tickValues = tickValues_tmp; 
@@ -195,7 +195,7 @@ otherwise
   error('''auto'' or ''border'' expected for the second argument.');
 end
 
-if nargin < 3 | isempty(scale)                   % default mode is normalized
+if nargin < 3 || isempty(scale)                   % default mode is normalized
   scale= 'normalized';
 end
 if ~ischar(scale)                                % check scale type
@@ -209,7 +209,7 @@ switch scale                                     % check the string
   error('''normalized'' or ''denormalized'' expected for the third argument.')
 end
 
-if nargin < 4 | isempty(labels)                  % default is autolabeling
+if nargin < 4 || isempty(labels)                  % default is autolabeling
   labels = 'auto';
 elseif ~isa(labels,'cell')                       % check type
   error('The fourth argument should be a cell array of cells containing strings.')
@@ -344,7 +344,7 @@ function t=epsto0(t)
 % EPSTO0 checks whether first tick value is *very* close to zero, 
 % if so sets it to zero.
 
-if (t(end)-t(1))/t(end) > 1-0.005 & abs(t(1))<1, t(1) = 0; end
+if (t(end)-t(1))/t(end) > 1-0.005 && abs(t(1))<1, t(1) = 0; end
 
 
 

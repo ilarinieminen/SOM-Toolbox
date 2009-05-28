@@ -60,7 +60,7 @@ if isstruct(varargin{1}),
     varargout{1}=varargin{1};
     varargoutC=2;
     nargin_ = nargin;
-  elseif ~isfield(topol,'msize') | ~isfield(topol,'lattice'),
+  elseif ~isfield(topol,'msize') || ~isfield(topol,'lattice'),
     % Field missing?!
     warning('Invalid topology struct.');
     varargout{1}=topol;

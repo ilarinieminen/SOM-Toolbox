@@ -40,12 +40,12 @@ NO_FILE = 0;
 
 nargchk(5,5,nargin);
 
-if ~(isstruct(sMap) | isstr(sMap))
+if ~(isstruct(sMap) || isstr(sMap))
   error('Argument ''sMap'' must be a struct or filename.');
 end
 
 if isstr(sMap)
- if isempty(ft) | ~isstr(ft) | ~(strcmp(ft,'pak') | strcmp(ft,'box'))
+ if isempty(ft) || ~isstr(ft) || ~(strcmp(ft,'pak') || strcmp(ft,'box'))
    error('Argument ''ft'' must be string ''pak'' or ''box''.');
  end
  if strcmp(ft,'pak')
@@ -72,14 +72,14 @@ if isstr(sMap)
  end
 end
 
-if ~isstr(cout) & isempty(cout)
+if ~isstr(cout) && isempty(cout)
   NO_FILE = 1;
   cout = '__abcdef';
-elseif ~isstr(cout) | isempty(cout)
+elseif ~isstr(cout) || isempty(cout)
   error('Argument ''cout'' must be a string or ''[]''.');
 end
 
-if ~NO_FILE & (isempty(ct) | ~(strcmp(ct,'pak') | strcmp(ct,'box')))
+if ~NO_FILE && (isempty(ct) || ~(strcmp(ct,'pak') || strcmp(ct,'box')))
   error('Argument ''ct'' must be string ''pak'' or ''box''.');
 end
 
@@ -135,7 +135,7 @@ function bool = is_positive_integer(x)
 
 bool = ~isempty(x) & isreal(x) & all(size(x) == 1) & x > 0;
 if ~isempty(bool)
-  if bool & x~=round(x)
+  if bool && x~=round(x)
     bool = 0;
   end
 else

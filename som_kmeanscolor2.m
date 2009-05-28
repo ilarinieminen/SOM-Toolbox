@@ -66,7 +66,7 @@ otherwise
    error('Mode must be string ''average'' or ''best''.');
 end
 
-if isstruct(sM) & isfield(sM,'type') & strcmp(sM.type,'som_map'),
+if isstruct(sM) && isfield(sM,'type') && strcmp(sM.type,'som_map'),
    [tmp,lattice,msize]=vis_planeGetArgs(sM);
    munits=prod(msize);
    if length(msize)>2 
@@ -88,12 +88,12 @@ if any(C<2),
 end
 
 % check initial color coding
-if nargin<4 | isempty(initRGB)
+if nargin<4 || isempty(initRGB)
    initRGB=som_colorcode(sM);
 end
 
 % check contrast checking
-if nargin<5 | isempty(contrast),
+if nargin<5 || isempty(contrast),
    contrast='enhanced';
 end
 
@@ -123,7 +123,7 @@ else
          'or an Mx3 matrix of RGB triples.']);
 end
 
-if nargin<6|isempty(R),
+if nargin<6||isempty(R),
    R=30;
 end
 

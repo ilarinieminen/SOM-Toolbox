@@ -335,7 +335,7 @@ while i<=length(varargin),
      case {'random', 'ordered'}, sample_order_type = varargin{i}; 
      otherwise argok=0; 
     end
-  elseif isstruct(varargin{i}) & isfield(varargin{i},'type'), 
+  elseif isstruct(varargin{i}) && isfield(varargin{i},'type'), 
     switch varargin{i}(1).type, 
      case 'som_topol', 
       sTopol = varargin{i}; 
@@ -355,13 +355,13 @@ while i<=length(varargin),
 end
 
 % training length
-if ~isempty(radius) | ~isempty(alpha), 
+if ~isempty(radius) || ~isempty(alpha), 
   lr = length(radius);
   la = length(alpha);
-  if lr>2 | la>1,
+  if lr>2 || la>1,
     tlen_type = 'samples';
-    if     lr> 2 & la<=1, sTrain.trainlen = lr;
-    elseif lr<=2 & la> 1, sTrain.trainlen = la;
+    if     lr> 2 && la<=1, sTrain.trainlen = lr;
+    elseif lr<=2 && la> 1, sTrain.trainlen = la;
     elseif lr==la,        sTrain.trainlen = la;
     else
       error('Mismatch between radius and learning rate vector lengths.')
@@ -372,8 +372,8 @@ if strcmp(tlen_type,'samples'), sTrain.trainlen = sTrain.trainlen/dlen; end
 
 % check topology
 if struct_mode, 
-  if ~strcmp(sTopol.lattice,sMap.topol.lattice) | ...
-	~strcmp(sTopol.shape,sMap.topol.shape) | ...
+  if ~strcmp(sTopol.lattice,sMap.topol.lattice) || ...
+	~strcmp(sTopol.shape,sMap.topol.shape) || ...
 	any(sTopol.msize ~= sMap.topol.msize), 
     warning('Changing the original map topology.');
   end

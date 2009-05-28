@@ -30,7 +30,7 @@ if nargin<3,
   bmus = som_bmus(sM,sD);   
 end
 
-if isstruct(sM) & strcmp(sM.type,'som_map'),
+if isstruct(sM) && strcmp(sM.type,'som_map'),
   sM = sM.codebook(bmus,:); 
 elseif isstruct(sM), 
   sM = sM.data(bmus,:);   

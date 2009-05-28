@@ -47,7 +47,7 @@ for i = 1:c, hits(i) = sum(bmus == i); end
 
 % neighborhood kernel
 r  = sM.trainhist(end).radius_fin; % neighborhood radius
-if isempty(r) | isnan(r), r=1; end
+if isempty(r) || isnan(r), r=1; end
 Ud = som_unit_dists(sM);
 Ud = Ud.^2; 
 r = r^2; 

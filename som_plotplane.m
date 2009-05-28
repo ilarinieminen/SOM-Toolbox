@@ -171,20 +171,20 @@ error(nargchk(3, 5, nargin));  % check no. of input args is correct
 
 s=0.8; % size of plot
 
-if nargin < 6 | isempty(pos)
+if nargin < 6 || isempty(pos)
   pos=NaN; 
 end
 
-if nargin < 5 | isempty(scaling)
+if nargin < 5 || isempty(scaling)
   scaling='on'; 
-elseif ~vis_valuetype(scaling,{'string'}) | ...
+elseif ~vis_valuetype(scaling,{'string'}) || ...
       ~any(strcmp(scaling,{'on','off'})),
   error('Scaling should be string ''on'' or ''off''.');
 end
 
 l=size(data,2);
 
-if ~isnumeric(msize) | ndims(msize) ~= 2 | size(msize,2)~=2, 
+if ~isnumeric(msize) || ndims(msize) ~= 2 || size(msize,2)~=2, 
   error('msize has to be 1x2 grid size vector or a Nx2 coordinate matrix.');
 elseif size(msize,1) == 1,
    xdim=msize(2);
@@ -208,14 +208,14 @@ otherwise
   error(['Lattice' lattice ' not implemented!']);
 end  
 
-if ~isnumeric(data) | size(data,1) ~= N
+if ~isnumeric(data) || size(data,1) ~= N
   error('Data matrix is invalid or has wrong size!');
 end
 
-if nargin < 4 | isempty(color),
+if nargin < 4 || isempty(color),
   color='k';
 elseif vis_valuetype(color, {'colorstyle',[N 3]}),
-  if ischar(color) & strcmp(color,'none'),
+  if ischar(color) && strcmp(color,'none'),
     error('Colorstyle ''none'' not allowed in som_plotplane.');
   end
 elseif vis_valuetype(color,{'1x3rgb'})

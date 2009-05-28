@@ -163,7 +163,7 @@ end
 
 % if the data dimension is not specified, find out what it is
 
-if nargin == 1 | (nargin == 2 & isstr(varargin{1}))
+if nargin == 1 || (nargin == 2 && isstr(varargin{1}))
 
   fpos1 = ftell(fid); c1 = 0;      % read first non-comment line
   while c1 == 0,
@@ -177,7 +177,7 @@ if nargin == 1 | (nargin == 2 & isstr(varargin{1}))
     [l2, c2] = sscanf(line2, '%f ');
   end
 
-  if (c1 == 1 & c2 ~= 1) | (c1 == c2 & c1 == 1 & l1 == 1)
+  if (c1 == 1 && c2 ~= 1) || (c1 == c2 && c1 == 1 && l1 == 1)
     dim = l1;
     fseek(fid, fpos2, -1);
   elseif (c1 == c2)
@@ -193,7 +193,7 @@ end
 
 % check the dimension is valid
 
-if dim < 1 | dim ~= round(dim) 
+if dim < 1 || dim ~= round(dim) 
   error(['Illegal data dimension: ' num2str(dim)]);
 end
 

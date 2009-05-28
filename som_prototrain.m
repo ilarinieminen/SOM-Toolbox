@@ -121,7 +121,7 @@ for t = 1:trainlen,
   M(:,known) = M(:,known) - a*h(:,ones(sum(known),1)).*Dx;
 			 
   %% tracking
-  if t==1 | ~rem(t,trackstep),
+  if t==1 || ~rem(t,trackstep),
     elap_t = etime(clock,start); tot_t = elap_t*trainlen/t; 
     fprintf(1,'\rTraining: %3.0f/ %3.0f s',elap_t,tot_t)
   end

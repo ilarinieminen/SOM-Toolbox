@@ -292,7 +292,7 @@ while i<=length(varargin),
      case {'epochs','samples'}, tlen_type = varargin{i};
      otherwise argok=0; 
     end
-  elseif isstruct(varargin{i}) & isfield(varargin{i},'type'), 
+  elseif isstruct(varargin{i}) && isfield(varargin{i},'type'), 
     switch varargin{i}(1).type, 
      case 'som_topol', 
       sTopol = varargin{i}; 
@@ -313,8 +313,8 @@ end
 
 % check topology
 if struct_mode, 
-  if ~strcmp(sTopol.lattice,sMap.topol.lattice) | ...
-	~strcmp(sTopol.shape,sMap.topol.shape) | ...
+  if ~strcmp(sTopol.lattice,sMap.topol.lattice) || ...
+	~strcmp(sTopol.shape,sMap.topol.shape) || ...
 	any(sTopol.msize ~= sMap.topol.msize), 
     warning('Changing the original map topology.');
   end
@@ -388,7 +388,7 @@ if any(strcmp('SOM_PAKDIR', evalin('base', 'who')))
 else
   som_pak_dir = '';
 end
-if ~isempty(som_pak_dir) & ~strncmp(som_pak_dir(end), '/', 1)
+if ~isempty(som_pak_dir) && ~strncmp(som_pak_dir(end), '/', 1)
   som_pak_dir(end + 1) = '/';
 end
 
@@ -400,7 +400,7 @@ str = [som_pak_dir 'vsom ' ...
        sprintf('-cin %s -din %s -cout %s', temp_cin, temp_din, temp_cout) ...
        sprintf(' -rlen %d -alpha %g -alpha_type %s', rlen, aini, atype) ...
        sprintf(' -radius %g -rand %g ',rad,random_seed)];
-if ~isempty(snapshotname) & snapinterval>0, 
+if ~isempty(snapshotname) && snapinterval>0, 
   str = [str, sprintf(' -snapfile %s -snapinterval %d',snapshotname,snapshotinterval)];
 end
 

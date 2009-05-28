@@ -63,7 +63,7 @@ function [Class,P]=knn_old(Data, Proto, proto_class, K)
 classnames='';
 
 % Check K 
-if nargin<4 | isempty(K),
+if nargin<4 || isempty(K),
   K=1;
 end
 
@@ -74,7 +74,7 @@ end
 % Take data from data or map struct
 
 if isstruct(Data);
-  if isfield(Data,'type') & ischar(Data.type),
+  if isfield(Data,'type') && ischar(Data.type),
     ;
   else
     error('Invalid map/data struct?');
@@ -94,7 +94,7 @@ end
 
 if isstruct(Proto),
   
-  if isfield(Proto,'type') & ischar(Proto.type),
+  if isfield(Proto,'type') && ischar(Proto.type),
     ;
   else
     error('Invalid map/data struct?');
@@ -111,7 +111,7 @@ else
 end
 
 % Check that inputs are matrices
-if ~vis_valuetype(proto,{'nxm'}) | ~vis_valuetype(data,{'nxm'}),
+if ~vis_valuetype(proto,{'nxm'}) || ~vis_valuetype(data,{'nxm'}),
   error('Prototype or data input not valid.')
 end
 
@@ -125,7 +125,7 @@ end
 % Check if the classes are given as labels (no class input arg.)
 % if they are take them from prototype struct
 
-if nargin<3 | isempty(proto_class)
+if nargin<3 || isempty(proto_class)
   if ~isstruct(Proto)
     error(['If prototypes are not in labeled map or data struct' ...
 	   'class must be given.']);  
@@ -230,7 +230,7 @@ function [nos,names] = class2num(class)
 names = {};
 nos = zeros(length(class),1);
 for i=1:length(class)
-  if ~isempty(class{i}) & ~any(strcmp(class{i},names))
+  if ~isempty(class{i}) && ~any(strcmp(class{i},names))
     names=cat(1,names,class(i));
   end
 end

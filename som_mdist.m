@@ -46,7 +46,7 @@ end
 [dlen dim] = size(D);
 
 % distance norm
-if nargin<2 | isempty(q) | isnan(q), q = 2; end
+if nargin<2 || isempty(q) || isnan(q), q = 2; end
 
 % mask
 if isempty(mask), mask = ones(dim,1); end

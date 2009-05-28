@@ -51,7 +51,7 @@ if nargin<3,
   end
 end
 if rad<eps, rad = eps; end
-if isempty(rad) | isnan(rad), rad = 1; end
+if isempty(rad) || isnan(rad), rad = 1; end
 
 % neighborhood function
 Ud = som_unit_dists(sM.topol); 

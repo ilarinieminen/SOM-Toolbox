@@ -33,7 +33,7 @@ function d=som_eucdist2(Data, Proto)
 %% Init %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 if isstruct(Data);
-  if isfield(Data,'type') & ischar(Data.type),
+  if isfield(Data,'type') && ischar(Data.type),
     ;
   else
     error('Invalid map/data struct?');
@@ -53,7 +53,7 @@ end
 
 if isstruct(Proto),
   
-  if isfield(Proto,'type') & ischar(Proto.type),
+  if isfield(Proto,'type') && ischar(Proto.type),
     ;
   else
     error('Invalid map/data struct?');
@@ -70,7 +70,7 @@ else
 end
 
 % Check that inputs are matrices
-if ~vis_valuetype(proto,{'nxm'}) | ~vis_valuetype(data,{'nxm'}),
+if ~vis_valuetype(proto,{'nxm'}) || ~vis_valuetype(data,{'nxm'}),
   error('Prototype or data input not valid.')
 end
 

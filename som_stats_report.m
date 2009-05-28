@@ -42,7 +42,7 @@ for i=1:dim, continuity(i) = csS{i}.nunique / csS{i}.nvalid; end
 entropy_rel = zeros(dim,1);
 for i=1:dim, 
     c = csS{i}.hist.counts; 
-    if length(c) < 2 | all(c==0), entropy(i) = 0; 
+    if length(c) < 2 || all(c==0), entropy(i) = 0; 
     else
         maxent = log(length(c));
         c = c(c>0)/sum(c);
@@ -90,7 +90,7 @@ end
 if ~texonly, rep_utils('footer',fmt,fid); end
 if fid~=1, fclose(fid); end
 
-if ~texonly & any(strcmp(fmt,{'ps','pdf'})), rep_utils('compile',fmt); end
+if ~texonly && any(strcmp(fmt,{'ps','pdf'})), rep_utils('compile',fmt); end
 return;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

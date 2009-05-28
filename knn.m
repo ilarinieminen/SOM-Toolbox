@@ -61,7 +61,7 @@ function [C,P]=knn(d, Cp, K)
 %% Init %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Check K 
-if nargin<3 | isempty(K),
+if nargin<3 || isempty(K),
   K=1;
 end
 

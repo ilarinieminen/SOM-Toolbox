@@ -121,7 +121,7 @@ while i<=length(varargin),
      case {'single','average','complete','neighf','centroid','ward'}, linkage = varargin{i};
      otherwise argok=0; 
     end
-  elseif isstruct(varargin{i}) & isfield(varargin{i},'type'), 
+  elseif isstruct(varargin{i}) && isfield(varargin{i},'type'), 
     switch varargin{i}(1).type, 
      case 'som_topol', sT = varargin{i}; 
      otherwise argok=0; 
@@ -135,8 +135,8 @@ end
 
 % check distance metric
 if prod(size(Md))==1, q = Md; Md = []; end
-if ~isempty(Md) & prod(size(Md))<dlen^2, Md = squareform(Md); end    
-if prod(size(Md))>0 & any(strcmp(linkage,{'ward','centroid'})),
+if ~isempty(Md) && prod(size(Md))<dlen^2, Md = squareform(Md); end    
+if prod(size(Md))>0 && any(strcmp(linkage,{'ward','centroid'})),
   warning(['The linkage method ' linkage ' cannot be performed with precalculated distance matrix.']);
 end
 
@@ -148,7 +148,7 @@ if isempty(base), base = 1:dlen; end
 if ~isempty(ignore), base(ignore) = NaN; end
 cid = unique(base(isfinite(base))); 
 nc = length(cid); 
-if max(cid)>nc | min(cid)<1, 
+if max(cid)>nc || min(cid)<1, 
   b = base; for i=1:nc, base(find(b==cid(i))) = i; end
 end
 
@@ -172,7 +172,7 @@ if strcmp(linkage,'neighf')
   if isempty(sTr), error('Cannot use neighf linkage.'); end
   q = som_unit_dists(sT).^2; 
   r = sTr.radius_fin^2; 
-  if isnan(r) | isempty(r), r = 1; end 
+  if isnan(r) || isempty(r), r = 1; end 
   switch sTr.neigh,
    case 'bubble',   q = (q <= r);
    case 'gaussian', q = exp(-q/(2*r));
@@ -185,13 +185,13 @@ end
 Cd = []; 
 if any(strcmp(linkage,{'single','average','complete','neighf'})), 
   M = som_mdist(M,2,mask,Ne); 
-  if (nc == dlen & all(base==[1:dlen])), Cd = M; end
+  if (nc == dlen && all(base==[1:dlen])), Cd = M; end
 end 
 if isempty(Cd), Cd = som_cldist(M,clinds,[],linkage,q,mask); end
 Cd([0:nc-1]*nc+[1:nc]) = NaN; % NaNs on the diagonal
 			      
 % check out from Ne which of the clusters are not connected
-if ~isempty(Ne) & any(strcmp(linkage,{'centroid','ward'})),
+if ~isempty(Ne) && any(strcmp(linkage,{'centroid','ward'})),
   Clconn = sparse(nc); 
   for i=1:nc-1, 
     for j=i+1:nc, Clconn(i,j) = any(any(Ne(clinds{i},clinds{j}))); end

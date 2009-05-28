@@ -62,7 +62,7 @@ while i<=length(varargin),
      case {'c','p'}, useprob = strcmp(varargin{i}(1),'p'); 
      otherwise argok=0; 
     end
-  elseif isstruct(varargin{i}) & isfield(varargin{i},'type'), 
+  elseif isstruct(varargin{i}) && isfield(varargin{i},'type'), 
     argok = 0; 
   else
     argok = 0; 

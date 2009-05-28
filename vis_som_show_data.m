@@ -56,11 +56,11 @@ msg=[];
 
 cr=sprintf('\n');                               % carriage return            
 
-if nargin < 2 | isempty(f)
+if nargin < 2 || isempty(f)
   f=gcf;                                        % default figure
 end
 
-if nargin < 1 | isempty(p)                      % default p 
+if nargin < 1 || isempty(p)                      % default p 
   p= 'all';
 end
 

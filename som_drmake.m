@@ -63,8 +63,8 @@ else
 end
 
 [dlen,dim] = size(D);
-if nargin<2 | isempty(inds1), inds1 = 1:dlen; end
-if nargin<3 | isempty(inds2), i = ones(dlen,1); i(inds1) = 0; inds2 = find(i); end
+if nargin<2 || isempty(inds1), inds1 = 1:dlen; end
+if nargin<3 || isempty(inds2), i = ones(dlen,1); i(inds1) = 0; inds2 = find(i); end
 if nargin<4, sigmea = 'mutuconf'; end
 if nargin<5, nanis = 0; end
 

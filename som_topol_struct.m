@@ -161,17 +161,17 @@ while i<=length(varargin),
      case {'sheet','cyl','toroid'}, sTopol.shape = varargin{i};
      case {'som_topol','sTopol','topol'}, 
       i=i+1;
-      if ~isempty(varargin{i}.msize) & prod(varargin{i}.msize), 
+      if ~isempty(varargin{i}.msize) && prod(varargin{i}.msize), 
 	sTopol.msize = varargin{i}.msize; 
       end
       if ~isempty(varargin{i}.lattice), sTopol.lattice = varargin{i}.lattice; end   
       if ~isempty(varargin{i}.shape), sTopol.shape = varargin{i}.shape; end
      otherwise argok=0; 
     end
-  elseif isstruct(varargin{i}) & isfield(varargin{i},'type'), 
+  elseif isstruct(varargin{i}) && isfield(varargin{i},'type'), 
     switch varargin{i}.type, 
      case 'som_topol',
-      if ~isempty(varargin{i}.msize) & prod(varargin{i}.msize), 
+      if ~isempty(varargin{i}.msize) && prod(varargin{i}.msize), 
 	sTopol.msize = varargin{i}.msize; 
       end
       if ~isempty(varargin{i}.lattice), sTopol.lattice = varargin{i}.lattice; end   
@@ -195,7 +195,7 @@ end
 
 % lattice and shape set already, so if msize is also set, there's
 % nothing else to do
-if prod(sTopol.msize) & ~isempty(sTopol.msize), return; end
+if prod(sTopol.msize) && ~isempty(sTopol.msize), return; end
 
 % otherwise, decide msize 
 % first (if necessary) determine the number of map units (munits)
@@ -240,7 +240,7 @@ else % determine map size based on eigenvalues
   %me     = mean(D);
   %D      = D - me(ones(length(ind),1),:); % remove mean from data
   %eigval = sort(eig((D'*D)./size(D,1))); 
-  if eigval(end)==0 | eigval(end-1)*munits<eigval(end), 
+  if eigval(end)==0 || eigval(end-1)*munits<eigval(end), 
     ratio = 1; 
   else
     ratio  = sqrt(eigval(end)/eigval(end-1)); % ratio between map sidelengths
@@ -261,7 +261,7 @@ else % determine map size based on eigenvalues
   
   % a special case: if the map is toroid with hexa lattice, 
   % size along first axis must be even
-  if strcmp(sTopol.lattice,'hexa') & strcmp(sTopol.shape,'toroid'), 
+  if strcmp(sTopol.lattice,'hexa') && strcmp(sTopol.shape,'toroid'), 
     if mod(sTopol.msize(1),2), sTopol.msize(1) = sTopol.msize(1) + 1; end
   end
 

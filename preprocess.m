@@ -30,7 +30,7 @@ function preprocess(sData,arg2)
 global no_of_sc  % every Nth component in 'relative values' is drawn stronger.
 no_of_sc=5;
 
-if nargin < 1 | nargin > 2 
+if nargin < 1 || nargin > 2 
   error('Invalid number of input arguments');
   return;
 end
@@ -966,24 +966,24 @@ if strcmp(arg,'key ') %string is 'key' + 1 space!!!
    else 
     key=arg2
   end
-  if ~strcmp(key,'<') & ~strcmp(key,'>')
+  if ~strcmp(key,'<') && ~strcmp(key,'>')
     return;
   end
   data=get(gcf,'UserData');
   sel=data.selected_vects;
   if length(sel) == 1
-    if strcmp(key,'<') & sel ~= 1 
+    if strcmp(key,'<') && sel ~= 1 
       data.selected_vects=sel-1;
       set(gcf,'UserData',data);
-     elseif strcmp(key,'>') & sel ~= length(data.sData.data(:,1))
+     elseif strcmp(key,'>') && sel ~= length(data.sData.data(:,1))
       data.selected_vects = sel + 1;
       set(gcf,'UserData',data);
      end
   else
-    if strcmp(key,'<') & sel(1) ~= 1
+    if strcmp(key,'<') && sel(1) ~= 1
       data.selected_vects=cat(2,sel(1)-1,sel);
       set(gcf,'UserData',data);
-     elseif strcmp(key,'>') & sel(length(sel)) ~= length(sel)
+     elseif strcmp(key,'>') && sel(length(sel)) ~= length(sel)
       data.selected_vects=cat(2,sel,sel(length(sel))+1);
       set(gcf,'UserData',data);
      end
@@ -1067,12 +1067,12 @@ switch arg
      len=size(getfield(getfield(get(pre_h,'UserData'),'sData'),'data'));
      vectors=zeros(1,len(1));
      i=1;
-     while i <= length(arg2) & (isspace(arg2(i)) | ~isletter(arg2(i)))
+     while i <= length(arg2) && (isspace(arg2(i)) || ~isletter(arg2(i)))
       i=i+1;
      end
      arg3=arg2(i:length(arg2));
      selected_vects=str2num(arg2(1:i-1));
-     if ~isempty(arg3) & ~all(isspace(arg3))
+     if ~isempty(arg3) && ~all(isspace(arg3))
        selected_vects=unique(cat(2,selected_vects,...
                             getfield(get(pre_h,'UserData'),'selected_vects')));
      end           
@@ -1272,7 +1272,7 @@ for i=1:length(sData.data(1,:))
   Mean=abs(mean(tmp(find(~isnan(tmp)))));
   Median=abs(median(tmp(find(~isnan(tmp)))));
   
-  if Max ~= Min & ~all(isnan(sData.data(:,i)))
+  if Max ~= Min && ~all(isnan(sData.data(:,i)))
 
     if rem(i,no_of_sc)   % no_of_sc is defined in the beginning of this file...
 
@@ -1688,10 +1688,10 @@ if isempty(pre_h)
   return;
 end
 
-if isstr(new_sD) | (~isstruct(new_sD) & ~isreal(new_sD))
+if isstr(new_sD) || (~isstruct(new_sD) && ~isreal(new_sD))
   errordlg(errstr);
   return;
-elseif isstruct(new_sD) & length(new_sD) > 1
+elseif isstruct(new_sD) && length(new_sD) > 1
   errordlg(errstr)
   return;
 elseif ~isstruct(new_sD)
@@ -1777,7 +1777,7 @@ set_var_names;
 function rename(arg)
 
 i=1;
-while i <= length(arg) & arg(i) ~= ' '
+while i <= length(arg) && arg(i) ~= ' '
   i=i+1;
 end
 
@@ -1787,13 +1787,13 @@ if ~isempty(arg2)
   LOG=1;
   i=1;
   if arg2(1) ~= '{'
-    while i <= length(arg2) & arg2(i) ~= ' '
+    while i <= length(arg2) && arg2(i) ~= ' '
       i=i+1;
     end
     index=str2num(arg2(i+1:length(arg2)));
     arg2=arg2(1:i-1);
   else
-    while i <= length(arg2) & arg2(i) ~= '}'
+    while i <= length(arg2) && arg2(i) ~= '}'
       i=i+1;
     end
     index=str2num(arg2(i+1:length(arg2)));
@@ -1820,7 +1820,7 @@ switch arg
    else
      name=get(new_name_h,'String');
    end
-   if ~isempty(name{1}) & ~any(isspace(name{1}))
+   if ~isempty(name{1}) && ~any(isspace(name{1}))
      if ~isvalid_var_name(name)
        sD_stats;
        return;
@@ -1908,7 +1908,7 @@ if isempty(names)
   return;
 end
 for i=1:length(names)
-  if isempty(names{i}) | isspace(names{i})
+  if isempty(names{i}) || isspace(names{i})
     bool = 0;
     return;
   end
@@ -1923,21 +1923,21 @@ function bool=isvalid_var_name(name)
 bool=1;
 
 tmp=name{1};
-if ~((tmp(1)>='a' & tmp(1)<='z') | (tmp(1)>='A' & tmp(1)<='Z'))
+if ~((tmp(1)>='a' && tmp(1)<='z') || (tmp(1)>='A' && tmp(1)<='Z'))
   errordlg('Invalid name.');
   bool=0;
   return;
 end
 for j=1:length(tmp)
-  if ~((tmp(j)>='a' & tmp(j)<='z') | ...
-       (tmp(j)>='A' & tmp(j)<='Z') | ...
-       (j>1 & tmp(j) == '_') | ...
-       (tmp(j)>='0' & tmp(j) <= '9')) | tmp(j) == '.'
+  if ~((tmp(j)>='a' && tmp(j)<='z') || ...
+       (tmp(j)>='A' && tmp(j)<='Z') || ...
+       (j>1 && tmp(j) == '_') || ...
+       (tmp(j)>='0' && tmp(j) <= '9')) || tmp(j) == '.'
     errordlg('Invalid name.');
     bool=0;
     return;
   end
-  if j == length(tmp) & tmp(j) == '_'
+  if j == length(tmp) && tmp(j) == '_'
     errordlg('Invalid name.');
     bool=0;
     return;
@@ -1952,7 +1952,7 @@ end
 function copy_delete(arg)
 
 i=1;
-while i <= length(arg) & arg(i) ~= ' '
+while i <= length(arg) && arg(i) ~= ' '
   i=i+1;
 end
 
@@ -2000,7 +2000,7 @@ switch arg
      return;
    end
    data=get(pre_h,'UserData');
-   if ~isempty(data.undo) &  any(strcmp('index',fieldnames(data.undo)))
+   if ~isempty(data.undo) &&  any(strcmp('index',fieldnames(data.undo)))
      if data.undo.index > index
        data.undo.index = data.undo.index-1;
      elseif data.undo.index==index;
@@ -2695,7 +2695,7 @@ switch arg
    big_val_h=getfield(get(gcf,'UserData'),'big_val_h');
    val =str2num(get(big_val_h,'String'));
    dims=size(val);
-   if dims(1) ~= 1 | dims(2) ~= 1
+   if dims(1) ~= 1 || dims(2) ~= 1
      errordlg('Argument of the operation must be scalar.');
      set(big_val_h,'String','');
      return;
@@ -2711,7 +2711,7 @@ switch arg
    small_val_h=getfield(get(gcf,'UserData'),'small_val_h');
    val=str2num(get(small_val_h,'String'));
    dims=size(val);
-   if dims(1) ~= 1 | dims(2) ~= 1
+   if dims(1) ~= 1 || dims(2) ~= 1
      errordlg('Argument of the operation must be scalar.')
      set(small_val_h,'String','');
      return;
@@ -2727,7 +2727,7 @@ switch arg
    equal_val_h=getfield(get(gcf,'UserData'),'equal_val_h');
    val = str2num(get(equal_val_h,'String'));
    dims=size(val);
-   if dims(1) ~= 1 | dims(2) ~= 1
+   if dims(1) ~= 1 || dims(2) ~= 1
      errordlg('Argument of the operation must be scalar.');
      set(equal_val_h,'String','');
      return;
@@ -2743,7 +2743,7 @@ switch arg
    replace_val_h=getfield(get(gcf,'UserData'),'replace_val_h');
    val=str2num(get(replace_val_h,'String'));
    dims=size(val);
-   if (dims(1) ~= 1 | dims(2) ~= 1) & ~strcmp(get(gcf,'Tag'),'Select')
+   if (dims(1) ~= 1 || dims(2) ~= 1) && ~strcmp(get(gcf,'Tag'),'Select')
      errordlg('Argument of the operation must be scalar.');
      set(replace_val_h,'String','');
      return;
@@ -2770,7 +2770,7 @@ function clip_data(arg)
 %
 
 i=1;
-while i <= length(arg) & arg(i) ~= ' '
+while i <= length(arg) && arg(i) ~= ' '
   i=i+1;
 end
 
@@ -2786,31 +2786,31 @@ if ~isempty(arg2)
   end
   set(0,'CurrentFigure',c_h);
   i=1;
-  while i <= length(arg2) & arg2(i) ~= ' '
+  while i <= length(arg2) && arg2(i) ~= ' '
     i=i+1;
   end
   BT=str2num(arg2(1:i-1));
   i=i+1;
   j=i;
-  while i <= length(arg2) & arg2(i) ~= ' '
+  while i <= length(arg2) && arg2(i) ~= ' '
     i=i+1;
   end
   ST=str2num(arg2(j:i-1));
   i=i+1;
   j=i;
-  while i <= length(arg2) & arg2(i) ~= ' '
+  while i <= length(arg2) && arg2(i) ~= ' '
     i=i+1;
   end
   EQ=str2num(arg2(j:i-1));
   i=i+1;
   j=i;
-  while i <= length(arg2) & arg2(i) ~= ' '
+  while i <= length(arg2) && arg2(i) ~= ' '
     i=i+1;
   end
   AND_OR=str2num(arg2(j:i-1));
   i=i+1;
   j=i;
-  while i <= length(arg2) & arg2(i) ~= ' '
+  while i <= length(arg2) && arg2(i) ~= ' '
     i=i+1;
   end
   ALL_AMONG=str2num(arg2(j:i-1));
@@ -2866,15 +2866,15 @@ end
 
 n_th_comp=getfield(get_indices,{1});
 
-if isempty(state.big) & isempty(state.small) & isempty(state.equal) & ...
+if isempty(state.big) && isempty(state.small) && isempty(state.equal) && ...
    strcmp(arg,'clip')
   clear_state_vals;
   errordlg('At least one limit must be chosen for the-operation.');
   return;
 end
 
-if ~isempty(state.replace) & strcmp(arg,'sel')
-  if ~all(state.replace == round(state.replace)) | any(state.replace < 1)
+if ~isempty(state.replace) && strcmp(arg,'sel')
+  if ~all(state.replace == round(state.replace)) || any(state.replace < 1)
     errordlg('Indices of vectors must be positive integers.');
     return;
   elseif any(state.replace > length(sData.data(:,1)))
@@ -2883,13 +2883,13 @@ if ~isempty(state.replace) & strcmp(arg,'sel')
   end
 end
 
-if isempty(state.replace) & strcmp(arg,'clip')
+if isempty(state.replace) && strcmp(arg,'clip')
   clear_state_vals;
   errordlg('Replace value must be determined for Clipping-operation.');
   return;
 end
 
-if isempty(state.big) & isempty(state.small) & isempty(state.equal) & ...
+if isempty(state.big) && isempty(state.small) && isempty(state.equal) && ...
    isempty(state.replace)
    clear_state_vals;
    return;
@@ -2932,10 +2932,10 @@ end
 
 if state.and
 
-  if ~isempty(bt_indices) | ~isempty(lt_indices) | ~isempty(equal_indices)...
-     | strcmp(arg,'sel')
+  if ~isempty(bt_indices) || ~isempty(lt_indices) || ~isempty(equal_indices)...
+     || strcmp(arg,'sel')
 
-    if isempty(bt_indices) & isempty(lt_indices) & isempty(equal_indices) &...
+    if isempty(bt_indices) && isempty(lt_indices) && isempty(equal_indices) &&...
        isempty(state.replace)
       clear_state_vals;
       return;
@@ -2964,7 +2964,7 @@ if state.and
     
     indices=intersect(intersect(bt_indices,lt_indices),equal_indices);
     if strcmp(arg,'sel')
-      if ~isempty(indices) | ~isempty(state.replace)
+      if ~isempty(indices) || ~isempty(state.replace)
         if isempty(state.replace)
           NOTEMPTY=0;
           if ~state.all
@@ -3024,9 +3024,9 @@ if state.and
   end
 else
   indices=union(union(bt_indices,lt_indices),equal_indices);
-  if ~isempty(indices) | strcmp(arg,'sel')
+  if ~isempty(indices) || strcmp(arg,'sel')
     if strcmp(arg,'sel')
-      if ~isempty(indices) | ~isempty(state.replace')
+      if ~isempty(indices) || ~isempty(state.replace')
         data=get(pre_h,'UserData');
         data.undo.sData=sData;
         data.undo.selected=data.selected_vects;
@@ -3078,7 +3078,7 @@ if sData.MODIFIED
     else
       data.LOG{length(data.LOG)+1}='% Clip values.';
     end
-    if strcmp(arg,'clip') | isempty(state.replace)
+    if strcmp(arg,'clip') || isempty(state.replace)
      data.LOG{length(data.LOG)+1}=cat(2,'preprocess(''clip_data'',''',arg,...
                                                  ' ',num2str(state.big),...
                                                  ' ',num2str(state.small),...
@@ -3337,7 +3337,7 @@ if nargin == 1
   LOG=1;
   arg=varargin{1};
   i=1;
-  while i <= length(arg) & arg(i) ~= ' ' 
+  while i <= length(arg) && arg(i) ~= ' ' 
     i=i+1;
   end
   delay=str2num(arg(1:i-1));
@@ -3892,25 +3892,25 @@ if nargin == 1
   LOG=1;
   i=1;
   arg=varargin{1};
-  while i <= length(arg) & arg(i) ~= ' '
+  while i <= length(arg) && arg(i) ~= ' '
     i=i+1;
   end
   value=str2num(arg(1:i-1));
   i=i+1;
   j=i;
-  while i <= length(arg) & arg(i) ~= ' '
+  while i <= length(arg) && arg(i) ~= ' '
     i=i+1;
   end
   position=arg(j:i-1);
   i=i+1;
   j=i;
-  while i <= length(arg) & arg(i) ~= ' '
+  while i <= length(arg) && arg(i) ~= ' '
     i=i+1;
   end
   mode=arg(j:i-1);
   i=i+1;
   j=i;
-  while i <= length(arg) & arg(i) ~= ' '
+  while i <= length(arg) && arg(i) ~= ' '
     i=i+1;
   end
   eval_mode=arg(j:i-1);
@@ -3953,7 +3953,7 @@ end
 set(data.win_len_h,'String','');
 
 if ~LOG
-  if isempty(value) | value < 0 | value ~= round(value)
+  if isempty(value) || value < 0 || value ~= round(value)
     errordlg('Window length must be positive integer.');
     return;
   end
@@ -4176,7 +4176,7 @@ else
   val1=get(sel_comp_h,'String');
 end
    
-if ~isempty(val1) & iscell(val1)
+if ~isempty(val1) && iscell(val1)
   selected_vects=getfield(get(pre_h,'UserData'),'selected_vects');
   sData=getfield(get(pre_h,'UserData'),'sData');
   sel_cdata_h=getfield(get(pre_h,'UserData'),'sel_cdata_h');
@@ -4509,7 +4509,7 @@ selected=getfield(get(pre_h,'UserData'),'selected_vects');
 str1='There must be one component chosen for ''Number of Values''-operation';
 
 
-if ~LOG & isempty(get_indices) 
+if ~LOG && isempty(get_indices) 
   errordlg(str1);
 else
   indices=get_indices;
@@ -4596,7 +4596,7 @@ sData.MODIFIED=1;
 scaled=sData.data;
 comp_names_h=getfield(get(gcf,'UserData'),'comp_names_h');
 
-if ~LOG & isempty(get(comp_names_h,'Value'))
+if ~LOG && isempty(get(comp_names_h,'Value'))
   errordlg('There must be components chosen for the ''unit length''- operation');
   return;
 end
@@ -4806,7 +4806,7 @@ if ~LOG
   index=getfield(get_indices,{1});
   answer=inputdlg(prompt);
 
-  if isempty(answer) | (iscell(answer) & isempty(answer{1}))
+  if isempty(answer) || (iscell(answer) && isempty(answer{1}))
     msgbox('No components moved');
     return;
   end
@@ -4816,12 +4816,12 @@ if ~LOG
 
   dims=size(value);
 
-  if dims(1) ~= 1 | dims(2) ~= 1 | ~isreal(value)
+  if dims(1) ~= 1 || dims(2) ~= 1 || ~isreal(value)
     errordlg('The new component place must be positive integer.')
     return;
   end
 
-  if value <= 0 | round(value) ~= value
+  if value <= 0 || round(value) ~= value
     errordlg('The new component place must be positive integer.');
     return;
   end
@@ -4916,7 +4916,7 @@ if ~LOG
   index=getfield(get_indices,{1});
   answer=inputdlg(prompt);
 
-  if isempty(answer) | (iscell(answer) & isempty(answer{1}))
+  if isempty(answer) || (iscell(answer) && isempty(answer{1}))
     msgbox('No components moved');
     return
   end
@@ -4925,12 +4925,12 @@ if ~LOG
   value=str2num(answer{1});
   dims=size(value);
 
-  if dims(1) ~= 1 | dims(2) ~= 1 | ~isreal(value)
+  if dims(1) ~= 1 || dims(2) ~= 1 || ~isreal(value)
     errordlg('The new component place must be positive integer.')
     return;
   end
 
-  if value <= 0 | round(value) ~= value
+  if value <= 0 || round(value) ~= value
     errordlg('The new component place must be positive integer.');
     return;
   end
@@ -5008,7 +5008,7 @@ dim=length(sData.data(1,:));
 if ~LOG
   answer=inputdlg(prompt);
 
-  if isempty(answer) | (iscell(answer) & isempty(answer{1}))
+  if isempty(answer) || (iscell(answer) && isempty(answer{1}))
     msgbox('Components not removed.');
     return;
   end
@@ -5016,12 +5016,12 @@ if ~LOG
   value=str2num(answer{1});
   dims=size(value);
 
-  if dims(1) ~= 1 | dims(2) ~= 1 | ~isreal(value)
+  if dims(1) ~= 1 || dims(2) ~= 1 || ~isreal(value)
     errordlg('Number of the component to be removed must be positive integer.')
     return;
   end
 
-  if value <= 0 | round(value) ~= value
+  if value <= 0 || round(value) ~= value
     errordlg('Number of the component to be removed must be positive integer.');
     return;
   end
@@ -5034,7 +5034,7 @@ end
 
 sD_set_h=getfield(get(gcf,'UserData'),'sD_set_h');
 index=get(sD_set_h,'Value');
-if value == 1 & getfield(size(sData.data),{2}) == 1
+if value == 1 && getfield(size(sData.data),{2}) == 1
    if length(get(sD_set_h,'String')) == 1
     msgbox('No data left. Closing program...')
     pro_tools('close');
@@ -5281,7 +5281,7 @@ if ~LOG
   answer=inputdlg(prompt,title,1);
 end
 
-if ~isempty(answer) & ~isempty(answer{1})
+if ~isempty(answer) && ~isempty(answer{1})
    str=answer{1};
    [answer,foo]=build_expr(answer{1},'multiple');
    if ~isstr(answer)
@@ -5546,7 +5546,7 @@ end
 tmp=[];
 [name,assign,skip]=check_assign(string,evaltype);
 
-if ~strcmp(assign,'NOTASSIGN') & ~strcmp(assign,'error')
+if ~strcmp(assign,'NOTASSIGN') && ~strcmp(assign,'error')
   string=string(skip:length(string));
 end
 
@@ -5557,7 +5557,7 @@ if ~strcmp(assign,'error')
   end
   [str,skip]=check_token(string,evaltype);
   method=string;
-  while ~strcmp(str,'error') & ~strcmp(tmp,'error') & skip < length(string)
+  while ~strcmp(str,'error') && ~strcmp(tmp,'error') && skip < length(string)
     if ~strcmp(tmp,')')
       str=cat(2,str,tmp);
     end
@@ -5565,14 +5565,14 @@ if ~strcmp(assign,'error')
     skip=skip+skip2;
                
   end
-   if ~strcmp(tmp,')') & ~strcmp(tmp,'error')
+   if ~strcmp(tmp,')') && ~strcmp(tmp,'error')
      str=cat(2,str,tmp);
    elseif strcmp(tmp,'error')
      str='error';
    end
 end
 
-if ~strcmp(assign,'error') & ~strcmp(str,'error');
+if ~strcmp(assign,'error') && ~strcmp(str,'error');
   answer=evalin('caller',str,'lasterr');
 else
   answer='??? Illegal expression.';
@@ -5581,7 +5581,7 @@ end
 
 data=get(pre_h,'UserData');
 sData=data.sData;
-if strcmp(assign,'NOTASSIGN') & strcmp(evaltype,'single') & ~isstr(answer)
+if strcmp(assign,'NOTASSIGN') && strcmp(evaltype,'single') && ~isstr(answer)
   if isempty(get(getfield(get(pre_h,'UserData'),'comp_names_h'),'Value'))
     errordlg('There are not components chosen.');
     answer='??? Illegal expression.';
@@ -5589,7 +5589,7 @@ if strcmp(assign,'NOTASSIGN') & strcmp(evaltype,'single') & ~isstr(answer)
   end
   index=getfield(get_indices,{1});
   if strcmp(assign,'NOTASSIGN')
-    if length(sData.data(:,index)) ~=length(answer) & ~isscalar(answer)
+    if length(sData.data(:,index)) ~=length(answer) && ~isscalar(answer)
       answer='??? Illegal assignment.';
     else
       sData.data(:,index)=answer;
@@ -5598,7 +5598,7 @@ if strcmp(assign,'NOTASSIGN') & strcmp(evaltype,'single') & ~isstr(answer)
       set(pre_h,'UserData',data);
     end
   else
-    if length(sData.data(str2num(assign),index)) ~=length(answer) & ~isscalar(answer)
+    if length(sData.data(str2num(assign),index)) ~=length(answer) && ~isscalar(answer)
       answer='??? Illegal assignment.';
     else
       sData.data(str2num(assign),index)=answer;
@@ -5607,7 +5607,7 @@ if strcmp(assign,'NOTASSIGN') & strcmp(evaltype,'single') & ~isstr(answer)
       set(pre_h,'UserData',data);
     end
   end
-elseif ~strcmp(assign,'error') & ~isstr(answer) & ~strcmp(assign,'NOTASSIGN')  
+elseif ~strcmp(assign,'error') && ~isstr(answer) && ~strcmp(assign,'NOTASSIGN')  
   switch name
     case 'x'
      if isempty(get(data.comp_names_h,'Value'))
@@ -5615,7 +5615,7 @@ elseif ~strcmp(assign,'error') & ~isstr(answer) & ~strcmp(assign,'NOTASSIGN')
      end
      index = getfield(get_indices,{1});
      if isempty(assign)
-       if length(sData.data(:,index)) ~= length(answer) & ~isscalar(answer)
+       if length(sData.data(:,index)) ~= length(answer) && ~isscalar(answer)
          answer='??? Illegal assignment.';
        else
          sData.data(:,index)=answer;
@@ -5633,10 +5633,10 @@ elseif ~strcmp(assign,'error') & ~isstr(answer) & ~strcmp(assign,'NOTASSIGN')
          if ~isscalar(len)
            answer='??? Illegal assignment.';
            return;
-         elseif len > length(sData.data(:,1)) | min(str2num(args{1})) < 1
+         elseif len > length(sData.data(:,1)) || min(str2num(args{1})) < 1
            answer='??? Illegal assignment.';
            return;
-         elseif ~all(size(sData.data(str2num(args{1}),index))) == size(answer) & ~isscalar(answer)
+         elseif ~all(size(sData.data(str2num(args{1}),index))) == size(answer) && ~isscalar(answer)
            answer='??? Illegal assignment.';
            return;
          else            
@@ -5653,19 +5653,19 @@ elseif ~strcmp(assign,'error') & ~isstr(answer) & ~strcmp(assign,'NOTASSIGN')
          dim=max(str2num(args{2}));
          asize=size(answer);
          msize=size(sData.data);
-         if ~isscalar(len) | ~isscalar(dim) 
+         if ~isscalar(len) || ~isscalar(dim) 
            answer='??? Illegal assignment.';
            return;
-         elseif len > length(sData.data(:,1)) | len < 1
+         elseif len > length(sData.data(:,1)) || len < 1
            answer='??? Illegal assignment.';
            return;
-         elseif dim > 1 | dim > msize(2) | min(str2num(args{2})) < 1
+         elseif dim > 1 || dim > msize(2) || min(str2num(args{2})) < 1
            answer='??? Illegal assignment.';
            return;
          end 
          len=length(str2num(args{1}));
          dim=length(str2num(args{1}));
-         if ~all([len dim] == asize) & ~isscalar(answer) 
+         if ~all([len dim] == asize) && ~isscalar(answer) 
            answer='??? Illegal assignment.';
            return;
          else
@@ -5688,7 +5688,7 @@ elseif ~strcmp(assign,'error') & ~isstr(answer) & ~strcmp(assign,'NOTASSIGN')
      end
      indices=get_indices;
      if isempty(assign)
-       if ~all(size(answer) == size(sData.data(:,indices))) & ~isscalar(answer)
+       if ~all(size(answer) == size(sData.data(:,indices))) && ~isscalar(answer)
          answer='??? Illegal assignment.';
        else       
          sData.data(:,indices) = answer;
@@ -5704,11 +5704,11 @@ elseif ~strcmp(assign,'error') & ~isstr(answer) & ~strcmp(assign,'NOTASSIGN')
          if ~isscalar(len)
            answer='??? Illegal assignment.';
            return;
-         elseif len > length(sData.data(:,1)) | min(str2num(args{1})) < 1
+         elseif len > length(sData.data(:,1)) || min(str2num(args{1})) < 1
            answer='??? Illegal assignment.';
            return;
          end
-         if ~all(size(answer) == size(sData.data(str2num(args{1})))) &...
+         if ~all(size(answer) == size(sData.data(str2num(args{1})))) &&...
             ~isscalar(answer)
            answer='??? Illegal assignment.';
            return;
@@ -5726,19 +5726,19 @@ elseif ~strcmp(assign,'error') & ~isstr(answer) & ~strcmp(assign,'NOTASSIGN')
          dim=max(str2num(args{2}));
          asize=size(answer);
          msize=size(sData.data(:,indices));
-         if ~isscalar(len) | ~isscalar(dim)
+         if ~isscalar(len) || ~isscalar(dim)
            answer='??? Illegal assignment.';
            return;
-         elseif len > msize(1) | min(str2num(args{1})) < 1
+         elseif len > msize(1) || min(str2num(args{1})) < 1
            answer='??? Illegal assignment.';
            return;
-         elseif dim > msize(2) | min(str2num(args{2})) < 1
+         elseif dim > msize(2) || min(str2num(args{2})) < 1
            answer='??? Illegal assignment.';
            return;
          end
          len=length(str2num(args{1}));
          dim=length(str2num(args{2}));
-         if ~all([len dim] == asize) & ~isscalar(answer)
+         if ~all([len dim] == asize) && ~isscalar(answer)
            answer='??? Illegal assignment';
            return;
          else
@@ -5756,7 +5756,7 @@ elseif ~strcmp(assign,'error') & ~isstr(answer) & ~strcmp(assign,'NOTASSIGN')
 
     case 'D'
      if isempty(assign)
-       if ~all(size(answer) == size(sData.data)) & ~isscalar(answer)
+       if ~all(size(answer) == size(sData.data)) && ~isscalar(answer)
          answer='??? Illegal assignment.';
        else
          if isscalar(answer)
@@ -5776,11 +5776,11 @@ elseif ~strcmp(assign,'error') & ~isstr(answer) & ~strcmp(assign,'NOTASSIGN')
          if ~isscalar(len)
            answer='??? Illegal assignment.';
            return;
-         elseif len > length(sData.data(:,1)) | min(str2num(args{1})) < 1
+         elseif len > length(sData.data(:,1)) || min(str2num(args{1})) < 1
            answer='??? Illegal assignment.';
            return;
          end 
-         if ~all(size(answer) == size(sData.data(str2num(args{1})))) &...
+         if ~all(size(answer) == size(sData.data(str2num(args{1})))) &&...
             ~isscalar(answer)
            answer='??? Illegal assignment.';
          else
@@ -5796,19 +5796,19 @@ elseif ~strcmp(assign,'error') & ~isstr(answer) & ~strcmp(assign,'NOTASSIGN')
          dim=max(str2num(args{2}));
          asize=size(answer);
          msize=size(sData.data);
-         if ~isscalar(len) | ~isscalar(dim)
+         if ~isscalar(len) || ~isscalar(dim)
            answer='??? Illegal assignment.';
            return;
-         elseif len > msize(1) | min(str2num(args{1})) < 1
+         elseif len > msize(1) || min(str2num(args{1})) < 1
            answer='??? Illegal assignment.';
            return;
-         elseif dim > msize(2) | min(str2num(args{2})) < 1
+         elseif dim > msize(2) || min(str2num(args{2})) < 1
            answer= '??? Illegal assignment.';
            return;
          end
          len = length(str2num(args{1}));
          dim = length(str2num(args{2}));
-         if ~all([len dim] == asize) & ~isscalar(answer)
+         if ~all([len dim] == asize) && ~isscalar(answer)
            answer='??? Illegal assignment.';
            return;
          else
@@ -5863,12 +5863,12 @@ EMPTY=isempty(get(getfield(get(pre_h,'UserData'),'comp_names_h'),'Value'));
 [name,s]=give_token(string,evaltype);
 skip=length(s);
 
-if strcmp(evaltype,'single') & ~strcmp(name,'x')
+if strcmp(evaltype,'single') && ~strcmp(name,'x')
   string='NOTASSIGN';
   return;
 end
 
-if strcmp(name,'other') & ~strcmp(s,'x') 
+if strcmp(name,'other') && ~strcmp(s,'x') 
   string = 'error';
   return;
 end
@@ -5883,12 +5883,12 @@ if strcmp(name,[{'x'};{'xs'}])
 end
 
 
-if skip == length(string) | ~strcmp(name,reswords)
+if skip == length(string) || ~strcmp(name,reswords)
   string = 'NOTASSIGN';
   return;
 end
 
-if (strcmp(name,'x') | strcmp(name,'xs')) & EMPTY
+if (strcmp(name,'x') || strcmp(name,'xs')) && EMPTY
   errordlg('There are not components chosen.');
   string = 'error';
   return;
@@ -5908,7 +5908,7 @@ else
   tmp = [];
 end
 
-if flag & tmp(length(tmp)) ~= ')'
+if flag && tmp(length(tmp)) ~= ')'
   tmp(length(tmp)+1)=')';
 end
 
@@ -5960,7 +5960,7 @@ if string(i) == ':'
   j=j+length(arg1);
 end
 
-while string(i) ~=',' & string(i) ~=')'
+while string(i) ~=',' && string(i) ~=')'
   arg1(j)=string(i);
   i=i+1;
   j=j+1;
@@ -6230,7 +6230,7 @@ else
     str = t;
     str2='';
     tmp_string=tmp_string(1+length(s):length(tmp_string));
-    while ~strcmp(str2,')') & ~isempty(tmp_string)
+    while ~strcmp(str2,')') && ~isempty(tmp_string)
       [str2,skip2]=check_token(tmp_string,evaltype);
       if strcmp(str2,'error')
         str='error';
@@ -6268,7 +6268,7 @@ if any(strcmp(t,res_words));
   string=string(1+length(s):length(string)); 
   str=cat(2,'{[',str);
   [t,s]=give_token(string,evaltype);
-elseif t==')' | t==','
+elseif t==')' || t==','
   str = 'error';
   return;
 elseif strcmp(t,':');
@@ -6297,13 +6297,13 @@ end
 str2 =[];
 
 
-if ~strcmp(t,',') & ~strcmp(t,')')
+if ~strcmp(t,',') && ~strcmp(t,')')
   skip=skip-length(s);
 end
 
 
 
-while ~strcmp(t,',') & ~strcmp(t,')') & NOTALL;
+while ~strcmp(t,',') && ~strcmp(t,')') && NOTALL;
   str=cat(2,str,str2);
   [t,s] = give_token(string,evaltype);
   if length(s) == length(string)
@@ -6313,7 +6313,7 @@ while ~strcmp(t,',') & ~strcmp(t,')') & NOTALL;
   string=string(1+length(s):length(string));
   skip=skip+length(s);
   [t,s]=give_token(string,evaltype);
-  if length(s) == length(string) & ~strcmp(t,')')
+  if length(s) == length(string) && ~strcmp(t,')')
     str = 'error';
     return;
   end
@@ -6321,7 +6321,7 @@ while ~strcmp(t,',') & ~strcmp(t,')') & NOTALL;
   [str2,foo]=check_token(string,evaltype);  
 end 
 
-if NOTALL & ~strcmp(t,')')
+if NOTALL && ~strcmp(t,')')
  skip=skip+1;
 end
 
@@ -6360,14 +6360,14 @@ if strcmp(t,':');
    [t,s]=give_token(string,evaltype);
 end
 
-if ~strcmp(t,')') & NOTALL
+if ~strcmp(t,')') && NOTALL
   skip=skip-1;
 end
 
-while ~strcmp(t,')') & NOTALL
+while ~strcmp(t,')') && NOTALL
   str=cat(2,str,str2);
   skip=skip+length(s);
-  if length(s) == length(string) & ~strcmp(t,')')
+  if length(s) == length(string) && ~strcmp(t,')')
     str='error';
     return;
   end
@@ -6414,7 +6414,7 @@ char=string(i);
 switch analyze_char(string(i));
   case 'num'
    token='num';
-   while i <= n & strcmp('num',analyze_char(string(i)))
+   while i <= n && strcmp('num',analyze_char(string(i)))
      str(i)=string(i);
      i=i+1;
    end
@@ -6435,7 +6435,7 @@ switch analyze_char(string(i));
    end
    str=string(i);
   case 'alpha'
-   while i <= n & strcmp('alpha',analyze_char(string(i)))
+   while i <= n && strcmp('alpha',analyze_char(string(i)))
     str(i)=string(i);
     i=i+1;
    end
@@ -6447,10 +6447,10 @@ end
 function type=analyze_char(char)
 
 
-if ((char-0) >= ('0'-0) &  (char-0) <= ('9'-0))
+if ((char-0) >= ('0'-0) &&  (char-0) <= ('9'-0))
   type='num';
-elseif   ((char-0) >= ('a'-0) & (char-0) <= ('z'-0)) ...
-       | ((char-0) >= ('A'-0) & (char-0) <= ('Z'-0))  
+elseif   ((char-0) >= ('a'-0) && (char-0) <= ('z'-0)) ...
+       || ((char-0) >= ('A'-0) && (char-0) <= ('Z'-0))  
   type='alpha';
 else
   type='other';
@@ -6468,7 +6468,7 @@ reswords=[{'D'};{'c'};{'cs'};{'dim'};{'dlen'};{'x'};{'xs'};{'other'}];
 for i=1:length(reswords);
   token=reswords{i};
   if strcmp(string,reswords{i})
-    if strcmp(evaltype,'single') & ~strcmp(string,'x')
+    if strcmp(evaltype,'single') && ~strcmp(string,'x')
       token = 'other';
     end
     return;
@@ -6558,7 +6558,7 @@ if ~LOG
                 '',1,{'indices'});
 end
 
-if isempty(answer) | isempty(answer{1})
+if isempty(answer) || isempty(answer{1})
   return;
 else
   assignin('base',answer{1},selected);

@@ -99,7 +99,7 @@ function C=som_connection(S)
 error(nargchk(1, 1, nargin));   % check number of input arguments
 
 [tmp,ok,tmp]=som_set(S);
-if isstruct(S) & all(ok),       % check m type
+if isstruct(S) && all(ok),       % check m type
   switch S.type
   case 'som_topol' 
     msize=S.msize;

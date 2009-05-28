@@ -169,7 +169,7 @@ while i<=length(varargin),
      case {'min','mean','median','max'}, mode = varargin{i};
      otherwise argok=0; 
     end
-  elseif isstruct(varargin{i}) & isfield(varargin{i},'type'), 
+  elseif isstruct(varargin{i}) && isfield(varargin{i},'type'), 
     switch varargin{i}(1).type, 
      case 'som_topol', sTopol = varargin{i};
      case 'som_map',   sTopol = varargin{i}.topol;
@@ -232,7 +232,7 @@ if strcmp(lattice, 'rect'), % rectangular lattice
 	dy = (M(j,i,:) - M(j+1,i,:)).^2; % vertical
 	U(2*j,2*i-1) = sqrt(mask'*dy(:));
       end
-      if j<y & i<x,	
+      if j<y && i<x,	
 	dz1 = (M(j,i,:) - M(j+1,i+1,:)).^2; % diagonals
 	dz2 = (M(j+1,i,:) - M(j,i+1,:)).^2;
 	U(2*j,2*i) = (sqrt(mask'*dz1(:))+sqrt(mask'*dz2(:)))/(2 * sqrt(2));
@@ -253,10 +253,10 @@ elseif strcmp(lattice, 'hexa') % hexagonal lattice
 	dy = (M(j,i,:) - M(j+1,i,:)).^2;
 	U(2*j,2*i-1) = sqrt(mask'*dy(:));	
 	
-	if rem(j,2)==0 & i<x,
+	if rem(j,2)==0 && i<x,
 	  dz= (M(j,i,:) - M(j+1,i+1,:)).^2; 
 	  U(2*j,2*i) = sqrt(mask'*dz(:));
-	elseif rem(j,2)==1 & i>1,
+	elseif rem(j,2)==1 && i>1,
 	  dz = (M(j,i,:) - M(j+1,i-1,:)).^2; 
 	  U(2*j,2*i-2) = sqrt(mask'*dz(:));
 	end
@@ -268,12 +268,12 @@ end
 
 % values on the units
 
-if (uy == 1 | ux == 1),
+if (uy == 1 || ux == 1),
   % in 1-D case, mean is equal to median 
 
   ma = max([ux uy]);
   for i = 1:2:ma,
-    if i>1 & i<ma, 
+    if i>1 && i<ma, 
       a = [U(i-1) U(i+1)]; 
       U(i) = eval(calc);
     elseif i==1, U(i) = U(i+1); 
@@ -285,23 +285,23 @@ elseif strcmp(lattice, 'rect')
 
   for j=1:2:uy, 
     for i=1:2:ux,
-      if i>1 & j>1 & i<ux & j<uy,    % middle part of the map
+      if i>1 && j>1 && i<ux && j<uy,    % middle part of the map
 	a = [U(j,i-1) U(j,i+1) U(j-1,i) U(j+1,i)];        
-      elseif j==1 & i>1 & i<ux,        % upper edge
+      elseif j==1 && i>1 && i<ux,        % upper edge
 	a = [U(j,i-1) U(j,i+1) U(j+1,i)];
-      elseif j==uy & i>1 & i<ux,       % lower edge
+      elseif j==uy && i>1 && i<ux,       % lower edge
 	a = [U(j,i-1) U(j,i+1) U(j-1,i)];
-      elseif i==1 & j>1 & j<uy,        % left edge
+      elseif i==1 && j>1 && j<uy,        % left edge
 	a = [U(j,i+1) U(j-1,i) U(j+1,i)];
-      elseif i==ux & j>1 & j<uy,       % right edge
+      elseif i==ux && j>1 && j<uy,       % right edge
 	a = [U(j,i-1) U(j-1,i) U(j+1,i)];
-      elseif i==1 & j==1,              % top left corner
+      elseif i==1 && j==1,              % top left corner
 	a = [U(j,i+1) U(j+1,i)];
-      elseif i==ux & j==1,             % top right corner
+      elseif i==ux && j==1,             % top right corner
 	a = [U(j,i-1) U(j+1,i)];
-      elseif i==1 & j==uy,             % bottom left corner
+      elseif i==1 && j==uy,             % bottom left corner
 	a = [U(j,i+1) U(j-1,i)];
-      elseif i==ux & j==uy,            % bottom right corner
+      elseif i==ux && j==uy,            % bottom right corner
 	a = [U(j,i-1) U(j-1,i)];
       else
 	a = 0;
@@ -314,32 +314,32 @@ elseif strcmp(lattice, 'hexa')
   
   for j=1:2:uy, 
     for i=1:2:ux,
-      if i>1 & j>1 & i<ux & j<uy,      % middle part of the map
+      if i>1 && j>1 && i<ux && j<uy,      % middle part of the map
 	a = [U(j,i-1) U(j,i+1)];
 	if rem(j-1,4)==0, a = [a, U(j-1,i-1) U(j-1,i) U(j+1,i-1) U(j+1,i)];
 	else a = [a, U(j-1,i) U(j-1,i+1) U(j+1,i) U(j+1,i+1)]; end       
-      elseif j==1 & i>1 & i<ux,        % upper edge
+      elseif j==1 && i>1 && i<ux,        % upper edge
 	a = [U(j,i-1) U(j,i+1) U(j+1,i-1) U(j+1,i)];
-      elseif j==uy & i>1 & i<ux,       % lower edge
+      elseif j==uy && i>1 && i<ux,       % lower edge
 	a = [U(j,i-1) U(j,i+1)];
 	if rem(j-1,4)==0, a = [a, U(j-1,i-1) U(j-1,i)];
 	else a = [a, U(j-1,i) U(j-1,i+1)]; end
-      elseif i==1 & j>1 & j<uy,        % left edge
+      elseif i==1 && j>1 && j<uy,        % left edge
 	a = U(j,i+1);
 	if rem(j-1,4)==0, a = [a, U(j-1,i) U(j+1,i)];
 	else a = [a, U(j-1,i) U(j-1,i+1) U(j+1,i) U(j+1,i+1)]; end
-      elseif i==ux & j>1 & j<uy,       % right edge
+      elseif i==ux && j>1 && j<uy,       % right edge
 	a = U(j,i-1);
 	if rem(j-1,4)==0, a=[a, U(j-1,i) U(j-1,i-1) U(j+1,i) U(j+1,i-1)];
 	else a = [a, U(j-1,i) U(j+1,i)]; end
-      elseif i==1 & j==1,              % top left corner
+      elseif i==1 && j==1,              % top left corner
 	a = [U(j,i+1) U(j+1,i)];
-      elseif i==ux & j==1,             % top right corner
+      elseif i==ux && j==1,             % top right corner
 	a = [U(j,i-1) U(j+1,i-1) U(j+1,i)];
-      elseif i==1 & j==uy,             % bottom left corner
+      elseif i==1 && j==uy,             % bottom left corner
 	if rem(j-1,4)==0, a = [U(j,i+1) U(j-1,i)];
 	else a = [U(j,i+1) U(j-1,i) U(j-1,i+1)]; end
-      elseif i==ux & j==uy,            % bottom right corner
+      elseif i==ux && j==uy,            % bottom right corner
 	if rem(j-1,4)==0, a = [U(j,i-1) U(j-1,i) U(j-1,i-1)];
 	else a = [U(j,i-1) U(j-1,i)]; end
       else

@@ -104,7 +104,7 @@ while i<=length(varargin),
   i = i+1;
 end
 
-if strcmp(show,'planes') & ~ismap, 
+if strcmp(show,'planes') && ~ismap, 
   warning('Given data is not a map: using ''names'' visualization.'); 
   show = 'names'; 
 end
@@ -254,7 +254,7 @@ function bm = assign_unique_bm(sM,D)
   bmi=ones(dim,1);  
   hits = som_hits(sM,D); 
   mult = find(hits>1); 
-  while any(mult) & sum(hits(mult))-length(mult)>margin, 
+  while any(mult) && sum(hits(mult))-length(mult)>margin, 
     choices = find(bm==mult(1)); 
     while length(choices)>1,
       [dummy,mv] = max(qers(choices)); mv = choices(mv);

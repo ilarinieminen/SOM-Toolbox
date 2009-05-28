@@ -42,8 +42,8 @@ if isstruct(D), D = D.data; end
 Neurons = (rand(n,dim)-0.5)*10e-5; % small initial values
 train_len = epochs*dlen;
 
-if nargin<4 | isempty(alpha0) | isnan(alpha0), alpha0 = 0.5; end
-if nargin<5 | isempty(lambda0) | isnan(lambda0), lambda0 = n/2; end
+if nargin<4 || isempty(alpha0) || isnan(alpha0), alpha0 = 0.5; end
+if nargin<5 || isempty(lambda0) || isnan(lambda0), lambda0 = n/2; end
 
 % random sample order
 rand('state',sum(100*clock));
@@ -77,7 +77,7 @@ for i=1:train_len,
 
   % track
   fprintf(1,'%d / %d \r',i,train_len);
-  if 0 & mod(i,50) == 0, 
+  if 0 && mod(i,50) == 0, 
     hold off, plot3(D(:,1),D(:,2),D(:,3),'bo')
     hold on, plot3(Neurons(:,1),Neurons(:,2),Neurons(:,3),'r+')
     drawnow

@@ -54,9 +54,9 @@ if isstruct(sM),
 else ismap = 0; D = sM; 
 end
 
-if nargin<2 | isempty(ncol) | isnan(ncol), ncol = min(64,size(D,1)); end
-if nargin<3 | isempty(chaingap) | isnan(chaingap), chaingap = 0.1; end
-if nargin<4 | isempty(dw) | isnan(dw), dw = 1; end
+if nargin<2 || isempty(ncol) || isnan(ncol), ncol = min(64,size(D,1)); end
+if nargin<3 || isempty(chaingap) || isnan(chaingap), chaingap = 0.1; end
+if nargin<4 || isempty(dw) || isnan(dw), dw = 1; end
 
 if chaingap == 0, lattice = 'sheet'; else lattice = 'cyl'; end
 sMring = som_make(D,'msize',[1,ncol],lattice,'tracking',0);

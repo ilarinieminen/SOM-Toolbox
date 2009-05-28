@@ -50,11 +50,11 @@ if iscell(action),
     action = action{1}; 
 end
 
-if nargin<2 | isempty(fmt), fmt = 'txt'; end
+if nargin<2 || isempty(fmt), fmt = 'txt'; end
 global REPORT_OUTPUT_FMT
 REPORT_OUTPUT_FMT = fmt;
 
-if nargin<3 | isempty(fid), fid = NaN; end
+if nargin<3 || isempty(fid), fid = NaN; end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% action
@@ -91,7 +91,7 @@ case 'p_str',        aout = p_str(pars{:}); printable = 1;
 end 
 
 % if output file is given, print lines
-if ~isnan(fid) & printable,
+if ~isnan(fid) && printable,
     if ~iscell(aout), aout = {aout}; end
     for i = 1:length(aout), fprintf(fid,'%s\n',fmtline(aout{i})); end
 end
@@ -275,7 +275,7 @@ function vstr = defaultformat(val)
   elseif isnumeric(val), 
     if val==round(val), fmt = '%d'; else fmt = '%.3g'; end 
     if abs(val)<=eps, vstr = '0'; else vstr = sprintf(fmt,val); end
-  elseif isstruct(val) & isfield(val,'values') & isfield(val,'headers'), 
+  elseif isstruct(val) && isfield(val,'values') && isfield(val,'headers'), 
     % a table
     vstr = joinstr(inserttable(val,0),'\n');
     if any(strcmp(REPORT_OUTPUT_FMT,{'ps','pdf'})), 
@@ -353,8 +353,8 @@ function insertlist(list,enum)
 function csout = tablerow(cs,emp,span)
   % construct one table row
   global REPORT_OUTPUT_FMT
-  if nargin<2 | isempty(emp), emp = 'none'; end
-  if nargin<3 | isempty(span), span = ones(length(cs),2); end
+  if nargin<2 || isempty(emp), emp = 'none'; end
+  if nargin<3 || isempty(span), span = ones(length(cs),2); end
   rowspan = span(:,1); colspan = span(:,2);
   switch emp,
    case 'bold',   emp1 = '<B>';  emp2 = '</B>'; 
@@ -374,7 +374,7 @@ function csout = tablerow(cs,emp,span)
     %end    
     s0 = ''; 
     for i=1:length(cs), 
-      if rowspan(i) & colspan(i), 
+      if rowspan(i) && colspan(i), 
 	 sp1 = ''; sp2 = '';
          if colspan(i)>1, sp1 = [sp1 ' \multicolumn{' num2str(colspan(i)) '}{|c|}{']; sp2 = [sp2 '}']; end
          if rowspan(i)>1, sp1 = [sp1 ' \multirow{' num2str(rowspan(i)) '}{2cm}{']; sp2 = [sp2 '}']; end
@@ -391,7 +391,7 @@ function csout = tablerow(cs,emp,span)
     tag = 'TD';
     csout{end+1} = '<TR>';     
     for i=1:length(cs),
-      if rowspan(i) & colspan(i), 
+      if rowspan(i) && colspan(i), 
          sp = '';
          if rowspan(i)>1, sp = [sp ' ROWSPAN=' num2str(rowspan(i))]; end
          if colspan(i)>1, sp = [sp ' COLSPAN=' num2str(colspan(i))]; end
@@ -496,7 +496,7 @@ function A = cell2char(T)
   
 
 function s = inserttominipage(s,width)
-  if nargin<2 | isempty(width) | isnan(width), width = 1; end
+  if nargin<2 || isempty(width) || isnan(width), width = 1; end
   width = ['{' num2str(width) '\columnwidth}'];
   mp1 = '\begin{minipage}[t]'; mp2 = '\end{minipage}';   
   if size(s,1)==1, s = [mp1 width s mp2];
