@@ -297,7 +297,6 @@ error(nargchk(1,Inf,nargin))     % check no. of input args
 if isstruct(sMap),               % check map
   [tmp,ok,tmp]=som_set(sMap);
   if all(ok) && strcmp(sMap.type,'som_map') 
-    ;
   else
     error('Map struct is invalid!');
   end
@@ -799,7 +798,7 @@ for i=1:2:length(args),
     Plane{tail+1}.value=value;
     Plane{tail+1}.name=name;
     General.comp = [General.comp; comp_];
-   case {'color','colori'},
+  case {'color','colori'},
     for i=1:size(value,3),
       Plane{tail+i}.mode=identifier;
       Plane{tail+i}.name=[name '_' num2str(i)];
@@ -810,6 +809,6 @@ for i=1:2:length(args),
       Plane{tail+1}.name=name;
     end
   otherwise
-    ; % do nothing
+    % do nothing
   end
 end

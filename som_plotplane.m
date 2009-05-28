@@ -203,7 +203,6 @@ end
 
 switch lattice
 case {'hexa', 'rect'}
-  ;
 otherwise
   error(['Lattice' lattice ' not implemented!']);
 end  
@@ -219,7 +218,6 @@ elseif vis_valuetype(color, {'colorstyle',[N 3]}),
     error('Colorstyle ''none'' not allowed in som_plotplane.');
   end
 elseif vis_valuetype(color,{'1x3rgb'})
-  ;
 elseif ~vis_valuetype(color,{'nx3rgb',[N 3]},'all'), 
   error('The color matrix has wrong size or contains invalid RGB values or colorstyle.');
 end

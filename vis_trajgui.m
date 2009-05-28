@@ -391,7 +391,7 @@ set(udata.fig1,'UserData',udata);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function set_numbers(x);
+function set_numbers(x)
 
 % This function writes the numbers beside of the pointer lines
 
@@ -561,14 +561,14 @@ set(udata.fig1,'UserData',udata);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function draw_markers(x);
+function draw_markers(x)
 
 plot2data(x);
 plot2plane(x);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function plot2data(x);
+function plot2data(x)
 
 % plot black markers to the data figure(s)
 
@@ -636,7 +636,7 @@ set(udata.fig1,'UserData',udata);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function plot2plane(x);
+function plot2plane(x)
 
 % sets markers to the component planes.
 
@@ -1487,7 +1487,7 @@ set(udata.fig1,'UserData',udata);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function fuzzy_traj(trajStruct,arg); 
+function fuzzy_traj(trajStruct,arg) 
 %function fuzzy_traj(sM_h,sM,sD,interval,arg)
 
 

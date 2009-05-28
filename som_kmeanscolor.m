@@ -84,7 +84,6 @@ if ~ischar(contrast),
 else
    switch lower(contrast)
    case {'flat','enhanced'}
-      ;
    otherwise 
       error(['''flat'' or ''enhanced'' expected for '...
             'input argument ''contrast''.']);
@@ -99,7 +98,6 @@ if ischar(initRGB),
             'was not recognized by SOM_COLORCODE.']);
    end
 elseif vis_valuetype(initRGB,{'nx3rgb',[munits 3]},'all'),
-   ;
 else
    error(['The initial color code must be a string '...
          'or an Mx3 matrix of RGB triples.']);
@@ -122,7 +120,6 @@ color=som_clustercolor(sM,cat(2,p{:}),initRGB);
 
 switch contrast
 case 'flat'
-   ;
 case 'enhanced'
    warning off;
    ncolor=maxnorm(color);

@@ -1,4 +1,4 @@
-function codebook=lvq1(codebook, data, rlen, alpha);
+function codebook=lvq1(codebook, data, rlen, alpha)
 
 %LVQ1 Trains a codebook with the LVQ1 -algorithm.
 %

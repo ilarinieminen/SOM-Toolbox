@@ -295,7 +295,6 @@ elseif ischar(input)
     set(current_fig,'UserData',udata);
 
   else
-    ;
   end
 
 else

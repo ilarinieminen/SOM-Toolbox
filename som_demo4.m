@@ -24,7 +24,7 @@ clc
 %    from the current path), normalized, and a map is
 %    trained. Since the data also had labels, the map is labelled.
 
-try, 
+try 
   sD = som_read_data('iris.data');     
 catch
   echo off

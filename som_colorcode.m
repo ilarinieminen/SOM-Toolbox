@@ -93,9 +93,7 @@ else
  
   switch lattice                   % lattice  
   case 'hexa' 
-    ;
   case 'rect'
-    ;
   otherwise
     error('Unknown lattice type');
   end

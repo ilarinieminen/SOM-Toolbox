@@ -217,7 +217,6 @@ else
   labelValues=labels;                            % set labels
   labels = 'explicit';
   if length(labelValues) == length(handles)      % check size
-    ;
   else
     error('Cell containing the labels has wrong size')
   end
@@ -286,7 +285,7 @@ for i=1:length(handles),                   % MAIN LOOP BEGINS
 	error('Internal error: unknown scale type'); % this shouldn't happen
       end
      case 'explicit'
-      ;                                            % they are there already
+                                            % they are there already
      otherwise
       error('Internal error: unknown label type'); % this shouldn't happen
     end

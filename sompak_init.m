@@ -182,7 +182,7 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function str = diff_varname();
+function str = diff_varname()
 
 array=evalin('base','who');
 

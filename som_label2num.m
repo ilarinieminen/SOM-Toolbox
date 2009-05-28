@@ -28,7 +28,6 @@ function [nos,names] = som_label2num(L)
 
 if isstruct(L);
    if isfield(L,'type') && ischar(L.type),
-      ;
    else
       error('Invalid map/data struct?');
    end

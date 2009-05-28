@@ -478,7 +478,6 @@ switch mode         % check mode
   if isstruct(D),                  % check if D is a map
     [tmp,ok,tmp]=som_set(D);
     if all(ok) && strcmp(D.type,'som_map') 
-      ;
     else
       error('Map struct is invalid!');
     end
@@ -491,7 +490,6 @@ switch mode         % check mode
     D=D.labels;
     % Cell input  
   elseif vis_valuetype(D,{'2Dcellarray_of_char'}) 
-    ;
     % Char input   
   elseif vis_valuetype(D,{'char_array'}),
     D=cellstr(D);
@@ -538,7 +536,7 @@ for i=1:2:length(varargin),
       if vis_valuetype(value,{'markerstyle'}) || ...
 	    (vis_valuetype(value,{'string'}) && ...
 	     any(strcmp(value,{'lattice','pie'}))),
-	; % ok
+	  % ok
       elseif vis_valuetype(value,{'cellcolumn_of_char'}),
 	if size(value,1) ~= size(D,2)
 	  error([' If a cell of Markers is specified its size must be' ...
@@ -677,7 +675,7 @@ for i=1:2:length(varargin),
 	    ~any(strcmp(value,{'on','off'})),
 	error('Value for Text in mode ''hit'' should be ''on'' or ''off''.');
       else
-	; % ok
+	  % ok
       end
      %case 'traj','comet'
      % if ~vis_valuetype(value,{'char_array','cellcolumn_of_char'}) & ...
@@ -691,7 +689,7 @@ for i=1:2:length(varargin),
      % 	       ' trajectory do not match.']);
      % end
      case 'label'
-      ; % not used
+      % not used
     end
     used_in.comet=0;            % Set relevance flags
     used_in.traj=0;
@@ -849,7 +847,7 @@ end
 
 %%%% SUBFUNCTIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function h_=hit(Hits, lattice, msize, Property);  
+function h_=hit(Hits, lattice, msize, Property)  
 
 % number of map units
 munits=prod(msize);
@@ -884,7 +882,7 @@ if ~isempty(Property.markercolor),
     warning('MarkerColor is not used since Marker is set to ''none''.');
     Property.markercolor=[]; % not used
   else
-    ; % ok
+    % ok
   end
 elseif any(strcmp(Property.marker,{'+','*','.','x'})),
   % these don't use fill color: 'none' will cause default
@@ -899,7 +897,7 @@ if ~isempty(Property.edgecolor),
     warning(['EdgeColor is not used since Marker is set to' ...
 	     ' ''none''.']);
   else
-    ; %ok 
+    %ok 
   end
 elseif ~strcmp(Property.markercolor,'none'),
   Property.edgecolor='none';
@@ -1038,7 +1036,7 @@ set(h_,'Tag','Hit')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function h_=mhit(Hits, lattice, msize, Property);  
+function h_=mhit(Hits, lattice, msize, Property)  
 
 % number of map units
 munits=prod(msize);
@@ -1591,7 +1589,7 @@ set(h_,'Tag','Comet');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-function P=init_properties;
+function P=init_properties
 
 % Initialize an empty property struct
 

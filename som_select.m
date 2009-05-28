@@ -209,7 +209,7 @@ return;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% subfunctions
 
-function rb_control;
+function rb_control
 
 h=findobj(get(gcf,'Children'),'Style','radiobutton');
 set(h,'Value',0);

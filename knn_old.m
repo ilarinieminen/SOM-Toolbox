@@ -75,7 +75,6 @@ end
 
 if isstruct(Data);
   if isfield(Data,'type') && ischar(Data.type),
-    ;
   else
     error('Invalid map/data struct?');
   end
@@ -95,7 +94,6 @@ end
 if isstruct(Proto),
   
   if isfield(Proto,'type') && ischar(Proto.type),
-    ;
   else
     error('Invalid map/data struct?');
   end
@@ -242,7 +240,7 @@ for i=1:length(class)
   end
 end
 
-function d=distance(X,Y);
+function d=distance(X,Y)
 
 % Euclidean distance matrix between row vectors in X and Y
 

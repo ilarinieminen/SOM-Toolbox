@@ -152,7 +152,6 @@ end
 
 switch shape
 case 'sheet'
-  ;
 case 'cyl'
   C=spdiags(ones(N,1),msize(1)*(msize(2)-1),C);
 case 'toroid'

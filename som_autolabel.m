@@ -194,7 +194,7 @@ if strcmp(mode,'add1') || strcmp(mode,'freq') || strcmp(mode,'vote'),
 	k = length(new_labels) + 1;
 	new_labels{k} = Labels{i}{j};
 	new_freq(k) = sum(strcmp(new_labels{k},Labels{i}));
-      else, % an old one, ignore       
+      else % an old one, ignore       
       end
     end
     

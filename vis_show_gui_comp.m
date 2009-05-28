@@ -179,7 +179,7 @@ if (strcmp(action,'init'))
     o7 = o1+o3+frames_dist2;
     o8 = 2*dist1+interp_cb(2);
     o9 = o7+dist1;
-    o10 = o7+o8+frames_dist2;;
+    o10 = o7+o8+frames_dist2;
     o11 = 2*dist1+max(title_edit_h,title_txt(2));
     o12 = W-(title_txt(1)+2*ok_pb(1));
     o13 = o10+dist1+(title_edit_h-title_txt(2))/2;

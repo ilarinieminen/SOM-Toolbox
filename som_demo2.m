@@ -72,7 +72,7 @@ sData = som_data_struct(D,'name','unit cube','comp_names',{'x','y','z'});
 %    Here, the IRIS data set is loaded from a file (please make sure
 %    the file can be found from the current path):
 
-try, 
+try 
   sDiris = som_read_data('iris.data');
 catch
   echo off

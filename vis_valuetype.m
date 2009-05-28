@@ -1,4 +1,4 @@
-function flag=vis_valuetype(value, valid, str);
+function flag=vis_valuetype(value, valid, str)
 
 % VIS_VALUETYPE Used for type checks in SOM Toolbox visualization routines
 %
@@ -192,12 +192,12 @@ for i=1:length(valid),
 	% nx1 cell array of strings
        case 'cellcolumn_of_char'
 	flag(i)=iscell(value) & dims == 2 & sz(2)==1;  
-	try, char(value); catch, flag(i)=0; end
+	try char(value); catch, flag(i)=0; end
 	
 	% mxn cell array of strings
        case '2Dcellarray_of_char'  
 	flag(i)=iscell(value) & dims == 2; 
-	try, char(cat(2,value{:})); catch, flag(i)=0; end
+	try char(cat(2,value{:})); catch, flag(i)=0; end
 	
 	% valid {lattice, msize} 
        case 'topol_cell_no_shape'
@@ -208,7 +208,6 @@ for i=1:length(valid),
 	  if vis_valuetype(value{1},{'string'}),
 	    switch value{1}
 	     case { 'hexa','rect'}
-	      ;
 	     otherwise
 	      flag(i)=0;
 	    end
@@ -227,7 +226,6 @@ for i=1:length(valid),
 	  if vis_valuetype(value{1},{'string'}),
 	    switch value{1}
 	     case { 'hexa','rect'}
-	      ;
 	     otherwise
 	      flag(i)=0;
 	    end
@@ -240,7 +238,6 @@ for i=1:length(valid),
 	  else
 	    switch value{3}
 	     case { 'sheet','cyl', 'toroid'}
-	      ;
 	     otherwise
 	      flag(i)=0;
 	    end

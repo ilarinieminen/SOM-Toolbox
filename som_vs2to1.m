@@ -171,7 +171,7 @@ switch sS.type,
      case 'range', 
       sSnew.inv_params = zeros(2,1);
       sSnew.inv_params(1) = sS.params(1);
-      sSnew.inv_params(2) = sS.params(2) + sS.params(1);;
+      sSnew.inv_params(2) = sS.params(2) + sS.params(1);
      case 'histD',
       bins = length(sS.params);
       sSnew.inv_params = zeros(bins+1,1) + Inf;

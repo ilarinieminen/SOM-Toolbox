@@ -653,7 +653,7 @@ temp = strcat('alpha initial:',alpha_ini2);
 set(Handle,'String',temp);
 
 
-function [] = init();
+function [] = init()
 global INIT_TYPE MAP NEWMAP ALGORITHM SOTHERS DATA STOPOLINIT;
 if strcmp(INIT_TYPE,'random')
    MAP = som_randinit(DATA,STOPOLINIT);

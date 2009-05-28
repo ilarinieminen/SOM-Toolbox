@@ -4489,7 +4489,7 @@ end
 
 %%% Subfunction: no_of_values %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function no_of_values(varargin); 
+function no_of_values(varargin)
 
 %NO_OF_VALUES  A callback function. Calculates the number of different
 %              values of the chosen components.
@@ -5192,7 +5192,7 @@ select_all('foo');
 
 %%% Subfunction: eval1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function eval1(varargin);
+function eval1(varargin)
 
 if nargin == 1
   answer=varargin
@@ -6624,7 +6624,7 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
 
-function code=write_log_code(indices,arg1,arg2,arg3,arg4,arg5,arg6);
+function code=write_log_code(indices,arg1,arg2,arg3,arg4,arg5,arg6)
 
 str=textwrap({num2str(indices)},500);
 

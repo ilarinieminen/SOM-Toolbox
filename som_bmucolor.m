@@ -1,4 +1,4 @@
-function bmu_colors=som_bmucolor(bmus, m, colors);
+function bmu_colors=som_bmucolor(bmus, m, colors)
 
 % SOM_BMUCOLOR Returns the colors of the bmus according to a map colorcode
 %

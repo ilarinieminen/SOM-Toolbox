@@ -105,7 +105,7 @@ if strcmp(action,'add_label')
   o4 = o1+0.5*o6+dist1-var_pop(2)/2;  
   o5 = ok_pb(1)+title_txt(1);
   o9 = o1+o6+0.5*o7+2*dist1-title_txt(2)/2;
-  o10 = o1+o6+0.5*o7+2*dist1-title_edit_h/2;;
+  o10 = o1+o6+0.5*o7+2*dist1-title_edit_h/2;
   o11 = o1+o6+o7+0.5*o8+3*dist1-title_txt(2)/2;
   o12 = o1+o6+o7+0.5*o8+3*dist1-title_edit_h/2;
   o13 = o1+o6+o7+0.5*o8+3*dist1-selvar_pb(2)/2;
@@ -1602,7 +1602,7 @@ elseif strcmp(action,'c_clear')
       errordlg('Invalid subplot indices!','Error in SOM_VIS: tools');
       return;
     end
-  else,
+  else
     e = '';
   end
   set(0,'currentfigure',child)

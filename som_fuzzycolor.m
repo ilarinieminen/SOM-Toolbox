@@ -130,7 +130,6 @@ else
    mode=lower(mode);
    switch mode
    case {'lin','exp'}
-      ;   
    otherwise
       error('Input for mode must be ''lin'' or ''exp''.');
    end
