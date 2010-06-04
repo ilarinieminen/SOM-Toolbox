@@ -55,7 +55,7 @@ if nargin==2,
   % eigenvectors, sort them according to eigenvalues, and normalize
   [V,S]   = eig(A);
   eigval  = diag(S);
-  [y,ind] = sort(abs(eigval)); 
+  [~,ind] = sort(abs(eigval)); 
   eigval  = eigval(flipud(ind));
   V       = V(:,flipud(ind)); 
   for i=1:odim, V(:,i) = (V(:,i) / norm(V(:,i))); end

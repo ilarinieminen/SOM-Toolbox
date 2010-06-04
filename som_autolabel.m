@@ -144,7 +144,7 @@ error(nargchk(2, 4, nargin));  % check no. of input args is correct
 todata = strcmp(sTo.type,'som_data');
 
 % sFrom 
-[dummy m] = size(sFrom.labels);
+[~, m] = size(sFrom.labels);
 
 % mode
 if nargin<3 || isempty(mode), mode = 'add'; end
@@ -205,7 +205,7 @@ if strcmp(mode,'add1') || strcmp(mode,'freq') || strcmp(mode,'vote'),
       else
       
 	% sort labels according to frequency
-	[dummy order] = sort(1./(1+new_freq));
+	[~, order] = sort(1./(1+new_freq));
 	new_labels = new_labels(order);
 	new_freq = new_freq(order);
 	

@@ -76,7 +76,7 @@ m = zeros(1,dim);
 for i=1:dim, m(i)=mean(D(isfinite(D(:,i)),i)); end
 centers{1} = m;
 clusters{1} = ones(dlen,1);
-[dummy qerr] = som_bmus(m,D);
+[~, qerr] = som_bmus(m,D);
 errors(1) = sum(qerr.^2);
 ind(1) = NaN; 
 

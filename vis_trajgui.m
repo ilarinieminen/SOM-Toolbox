@@ -1375,7 +1375,7 @@ if isempty(answer) || isempty(answer{1})
   return;
 else
   assignin('base',answer{1},data);
-  disp(sprintf('Struct is set to the workspace as ''%s''.',answer{1}));
+  sprintf(1,'Struct is set to the workspace as ''%s''.',answer{1});
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

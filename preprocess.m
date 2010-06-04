@@ -5787,7 +5787,7 @@ elseif ~strcmp(assign,'error') && ~isstr(answer) && ~strcmp(assign,'NOTASSIGN')
            sData.data(str2num(args{1}))=answer;
            sData.MODIFIED=1;
            data.sData=sData;
-           [i,j]=ind2sub(size(sData.data),str2num(args{1}));
+           [~,j]=ind2sub(size(sData.data),str2num(args{1}));
            data.sData.comp_norm(j)={[]};
            set(pre_h,'UserData',data);
          end
@@ -5900,7 +5900,7 @@ if strcmp(t,'(')
   flag=1;
 end
 
-[foo,skip]=check_token(string,evaltype);
+[~,skip]=check_token(string,evaltype);
 if length(name) ~= skip-1
   skip=skip-1;
   tmp=string(length(name)+1:skip);
@@ -6305,7 +6305,7 @@ end
 
 while ~strcmp(t,',') && ~strcmp(t,')') && NOTALL;
   str=cat(2,str,str2);
-  [t,s] = give_token(string,evaltype);
+  [~,s] = give_token(string,evaltype);
   if length(s) == length(string)
     str = 'error';
     return;

@@ -139,7 +139,7 @@ end
 
 % Coordinates
 switch Coordtype, 
- case 'natural', o = leavesorder(Z)'; [dummy,Coord] = sort(o); codim = 1; 
+ case 'natural', o = leavesorder(Z)'; [~,Coord] = sort(o); codim = 1; 
  case 'SOM', Coord = som_vis_coords(M.lattice,M.msize); codim = 2;   
  case 'projection', 
   switch Coord, 

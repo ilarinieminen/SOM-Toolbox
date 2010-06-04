@@ -153,7 +153,7 @@ end
 if size(coord,1)==2*clen-1, % this is ok already
 else
   if size(coord,1)==0, % the default    
-    [dummy,coord] = sort(order); 
+    [~,coord] = sort(order); 
     coord = coord'; 
   elseif size(coord,1)==dlen && dlen>clen, % coordinates given for original data
     codata = coord; 

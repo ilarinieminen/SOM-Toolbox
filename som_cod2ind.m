@@ -35,7 +35,7 @@ end
 if nargin<2, cind = 1:prod(msize); end
 
 I2C = som_ind2cod(msize,[1:prod(msize)]); 
-[dummy,C2I] = sort(I2C); 
+[~,xC2I] = sort(I2C); 
 ind = C2I(cind); 
 
 return; 

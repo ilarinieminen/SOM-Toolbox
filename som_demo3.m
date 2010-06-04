@@ -507,7 +507,7 @@ clc
 
 echo off
 [bm,qe] = som_bmus(sM,[0 0 0; 99 99 99],'all'); % distance to all map units
-[dummy,ind] = sort(bm(1,:)); d0 = qe(1,ind)'; 
+[~,ind] = sort(bm(1,:)); d0 = qe(1,ind)'; 
 [dummy,ind] = sort(bm(2,:)); d9 = qe(2,ind)'; 
 bmu0 = bm(1,1); bmu9 = bm(2,1); % bmus
 

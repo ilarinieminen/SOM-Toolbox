@@ -126,7 +126,7 @@ for t=1:rlen
     no_NaN=find(~isnan(dat(j,:)));
     di = sqrt(sum([cod(:,no_NaN)  - ONES*dat(j,no_NaN)].^2,2));
 
-    [foo,ind] = min(di);
+    [~,ind] = min(di);
 
     if d_class(j) && d_class(j) == c_class(ind) % 0 is for unclassified vectors
       tmp(ind,:) = cod(ind,:) + alpha * (dat(j,:) - cod(ind,:));

@@ -167,7 +167,7 @@ function sC = Z2sC(Z)
         order = [oleft, ch, oright];
         nonleaves = find(order>nb); 
     end
-    [dummy,co] = sort(order);     
+    [~,co] = sort(order);     
     sC.coord   = derivative_average(sC,co');
     H          = hsv(nb+1);
     sC.color   = derivative_average(sC,H(co,:));    

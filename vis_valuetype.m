@@ -67,7 +67,6 @@ if nargin == 2
   str='any';
 end
 
-flag=0;  
 sz=size(value);
 dims=ndims(value);
 

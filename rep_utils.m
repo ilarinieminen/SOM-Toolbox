@@ -140,9 +140,9 @@ function str = p_str(p)
 function cs = rulestr(sR,cnames)
   global REPORT_OUTPUT_FMT
   switch REPORT_OUTPUT_FMT
-   case {'ps','pdf'}, [leq,geq,infi,m,less,in] = deal('\leq','\geq','\inf','$','<','\in'); 
-   case 'html',  [leq,geq,infi,m,less,in]  = deal('&lt;=','&gt;=','Inf',' ','&lt;',' '); 
-   case 'txt', [leq,geq,infi,m,less,in]  = deal('<=','>=','inf',' ','<',''); 
+   case {'ps','pdf'}, [~,geq,~,m,less,in] = deal('\leq','\geq','\inf','$','<','\in'); 
+   case 'html',  [~,geq,~,m,less,in]  = deal('&lt;=','&gt;=','Inf',' ','&lt;',' '); 
+   case 'txt', [~,geq,~,m,less,in]  = deal('<=','>=','inf',' ','<',''); 
   end
   nr = length(sR); 
   cs = cell(nr,1); 

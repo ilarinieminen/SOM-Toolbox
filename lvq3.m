@@ -141,9 +141,9 @@ for t=1:rlen
     mi = 0;
     no_NaN=find(~isnan(dat(j,:)));
     di=sqrt(sum([cod(:,no_NaN) - ONES*dat(j,no_NaN)].^2,2));
-    [foo, ind1] = min(di);
+    [~, ind1] = min(di);
     di(ind1)=Inf;
-    [foo,ind2] =  min(di);    
+    [~,ind2] =  min(di);    
   
     %ind2=ind2+1;
 

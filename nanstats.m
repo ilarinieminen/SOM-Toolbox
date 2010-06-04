@@ -28,7 +28,7 @@ if isstruct(D),
   else D = D.data;
   end
 end
-[dlen dim] = size(D);
+[~, dim] = size(D);
 me = zeros(dim,1)+NaN;
 md = me;
 st = me;

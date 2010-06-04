@@ -67,7 +67,7 @@ for i=1:train_len,
 
   % neighborhood ranking
   Dx = Neurons(:,known) - X;  % difference between vector and all map units
-  [qerrs, inds] = sort((Dx.^2)*known'); % 1-BMU, 2-BMU, etc.
+  [~, inds] = sort((Dx.^2)*known'); % 1-BMU, 2-BMU, etc.
   ranking(inds) = [0:(n-1)];             
   h = exp(-ranking/lambda(i));
   H = h(ones(length(known),1),:)';

@@ -102,13 +102,13 @@ if K==1,   % sort distances only if K>1
   
   % 1NN
   % Select the closest prototype
-  [tmp,proto_index]=min(d,[],2); 
+  [~,proto_index]=min(d,[],2); 
   C=Cp(proto_index);
 
 else 
   
   % Sort the prototypes for each classifiee according to distance
-  [tmp, proto_index]=sort(d');
+  [~, proto_index]=sort(d);
   
   %% Select up to K closest prototypes
   proto_index=proto_index(1:K,:);

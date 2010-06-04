@@ -28,7 +28,7 @@ if isstruct(D),
 end
 
 % cluster centroids
-[l dim] = size(D);
+[~, dim] = size(D);
 u = unique(cl); 
 c = length(u); 
 if nargin <3, 
