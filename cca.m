@@ -58,8 +58,8 @@ end
 noc_x_1  = ones(noc, 1); % used frequently
 me = zeros(1,dim); st = zeros(1,dim);
 for i=1:dim,
-  me(i) = mean(D(isfinite(D(:,i)))); % ZZZ: me(i) = mean(D(find(isfinite(D(:,i))),i));
-  st(i) = std(D(isfinite(D(:,i)))); % ZZZ: st(i) = std(D(find(isfinite(D(:,i))),i));
+  me(i) = mean(D(isfinite(D(:,i)),i)); 
+  st(i) = std(D(isfinite(D(:,i)),i));
 end
 
 % initial projection
@@ -69,14 +69,14 @@ else
   % replace unknown projections with known values
   inds = find(isnan(P)); P(inds) = rand(size(inds));
 end
-[dummy odim] = size(P);
+[~, odim] = size(P);
 odim_x_1  = ones(odim, 1); % this is used frequently
 
 % training length
 train_len = epochs*noc;
 
 % random sample order
-rand('state',sum(100*clock)); %% TODO: FIX
+% rand('state',sum(100*clock)); %% TODO: FIX
 sample_inds = ceil(noc*rand(train_len,1));
 
 % mutual distances
@@ -87,9 +87,9 @@ if nargin<4 || isempty(Mdist) || all(isnan(Mdist(:))),
     x = D(i,:); 
     Diff = D - x(noc_x_1,:);
     N = isnan(Diff);
-    Diff(find(N)) = 0; 
+    Diff(N) = 0; 
     Mdist(:,i) = sqrt((Diff.^2)*dim_x_1);
-    N = find(sum(N')==dim); %mutual distance unknown
+    N = find(sum(N,2)==dim); %mutual distance unknown
     if ~isempty(N), Mdist(N,i) = NaN; end
   end
 else
@@ -127,7 +127,7 @@ for i=1:train_len,
     dy = sqrt((Dy.^2)*odim_x_1);           
   
     % relative effect
-    dy(find(dy==0)) = 1;        % to get rid of div-by-zero's
+    dy(dy==0) = 1;        % to get rid of div-by-zero's
     fy = exp(-dy/lambda(i)) .* (dx(known) ./ dy - 1);
 
     % Note that the function F here is e^(-dy/lambda)) 
@@ -157,7 +157,7 @@ c_error = cca_error(P,Mdist,lambda(train_len));
 fprintf(2,'%d iterations, error %f          \n', epochs, c_error);
 
 % set projections of totally unknown vectors as unknown
-unknown = find(sum(isnan(D)')==dim);
+unknown = sum(isnan(D),2)==dim;
 P(unknown,:) = NaN;
 
 return;
@@ -237,7 +237,7 @@ function [] = dydxplot(P,Mdist)
   plot(Pdist(inds),Mdist(inds),'.');
   xlabel('dy'), ylabel('dx')
 
-
+% TODO: What is this function?
 function p = project_point(P,x,dx)
 
   [noc odim] = size(P);
@@ -245,7 +245,7 @@ function p = project_point(P,x,dx)
   odim_x_1 = ones(odim,1);
 
   % initial projection
-  [dummy,i] = min(dx);
+  [~,i] = min(dx);
   y = P(i,:)+rand(1,odim)*norm(P(i,:))/20;
  
   % lambda 
