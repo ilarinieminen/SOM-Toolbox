@@ -313,7 +313,7 @@ else
   
   % Feature warning
   if munits == 3  
-    warning('Problems with 1x3 and 3x1 maps. See documentation.');
+    warning('SOMTOOLBOX:warning', 'Problems with 1x3 and 3x1 maps. See documentation.');
   end
 end
 

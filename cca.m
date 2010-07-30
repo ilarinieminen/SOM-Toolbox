@@ -195,7 +195,7 @@ function vals = potency_curve(v0,vn,l)
 
   % curve that decreases from v0 to vn with a rate that is 
   % somewhere between linear and 1/t
-  vals = v0 * (vn/v0).^([0:(l-1)]/(l-1));
+  vals = v0 * (vn/v0).^((0:(l-1))/(l-1));
 
 
 function c_error = cca_error(P,Mdist,lambda)
@@ -233,7 +233,7 @@ function [] = dydxplot(P,Mdist)
 
   Pdist = tril(Pdist,-1); 
   inds = find(Pdist > 0); 
-  n = length(inds);
+  n = length(inds); % TODO: Is this just forgotten debug code?
   plot(Pdist(inds),Mdist(inds),'.');
   xlabel('dy'), ylabel('dx')
 

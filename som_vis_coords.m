@@ -127,8 +127,8 @@ if vis_valuetype(lattice,{'string'})
   switch lattice
   case {'hexa', 'rect'}
     munits=prod(msize);
-    unit_coord(:,1)=reshape(repmat([1:msize(2)],msize(1),1),1,munits)';
-    unit_coord(:,2)=repmat([1:msize(1)]',msize(2),1);
+    unit_coord(:,1)=reshape(repmat((1:msize(2)),msize(1),1),1,munits)';
+    unit_coord(:,2)=repmat((1:msize(1))',msize(2),1);
     if strcmp(lattice,'hexa')
       % Move even rows by .5
       d=rem(unit_coord(:,2),2) == 0;   
@@ -136,8 +136,8 @@ if vis_valuetype(lattice,{'string'})
     end
   case {'hexaU','rectU'}
     msize=2*msize-1; munits=prod(msize);
-    unit_coord(:,1)=reshape(repmat([1:msize(2)],msize(1),1),1,munits)';
-    unit_coord(:,2)=repmat([1:msize(1)]',msize(2),1);
+    unit_coord(:,1)=reshape(repmat((1:msize(2)),msize(1),1),1,munits)';
+    unit_coord(:,2)=repmat((1:msize(1))',msize(2),1);
     if strcmp(lattice,'hexaU')
       d=rem(unit_coord(:,2),2) == 0;   
       unit_coord(d,1)=unit_coord(d,1)+.5;

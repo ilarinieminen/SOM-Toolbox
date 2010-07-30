@@ -316,7 +316,7 @@ if ischar(sS),
     return;
   end  
   
-elseif isstruct(sS) && length(varargin)==0, 
+elseif isstruct(sS) && isempty(varargin), 
   
   % check all fields
   fields = fieldnames(sS);
@@ -371,7 +371,7 @@ for i=1:p,
      case 'codebook', 
       if ~isnumeric(content), 
 	msg = '''codebook'' should be a numeric matrix'; 
-      elseif size(content) ~= size(sS.codebook) && ~isempty(sS.codebook), 
+      elseif any(size(content) ~= size(sS.codebook)) && ~isempty(sS.codebook), 
 	msg = 'New ''codebook'' must be equal in size to the old one.'; 
       elseif ~iscomplete, 
 	msg = 'Map codebook must not contain NaN''s.'; 
@@ -455,7 +455,7 @@ for i=1:p,
       end
      case 'mask', 
       if size(content,1) == 1, content = content'; end
-      if ~isnumeric(content) || size(content) ~= [dim 1], 
+      if ~iscolvec(content),
 	msg = '''mask'' should be a column vector (size dim x 1).'; 
       else
 	sS.mask = content; isok = 1;
@@ -660,7 +660,7 @@ for i=1:p,
      case 'mask', 
       if size(content,1) == 1, content = content'; end
       dim = size(content,1); %[munits dim] = size(sS.data); 
-      if ~isnumeric(content) || size(content) ~= [dim 1], 
+      if ~iscolvec(content),
 	msg = '''mask'' should be a column vector (size dim x 1).'; 
       else
 	sS.mask = content; isok = 1;

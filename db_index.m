@@ -34,7 +34,7 @@ c = length(u);
 if nargin <3, 
   C = zeros(c,dim); 
   for i=1:c, 
-      me = nanstats(D(find(cl==u(i)),:));
+      me = nanstats(D(cl==u(i),:));
       C(i,:) = me';
   end 
 end

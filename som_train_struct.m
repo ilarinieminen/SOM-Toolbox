@@ -269,7 +269,8 @@ if ~isempty(sTprev) && isnan(dim), dim = length(sTprev.mask); end
 if isempty(sTrain.mask) && ~isnan(dim), sTrain.mask = ones(dim,1); end
 
 % msize, munits
-if ~msize || isempty(msize), 
+if any(~msize) || isempty(msize), % TODO ITN: This actually checks for msize invalidity
+    
   if isnan(munits), msize = [10 10]; 
   else s = round(sqrt(munits)); msize = [s round(munits/s)]; 
   end
