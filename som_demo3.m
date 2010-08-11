@@ -283,6 +283,7 @@ title('D-matrix (marker size)')
 subplot(2,2,4)
 C = som_colorcode(Pm);  % Pm is the PC-projection calculated earlier
 som_cplane(sM,C)
+drawnow;
 title('Similarity coloring')
 
 pause % Strike any key to visualize shape and clusters with projections...
@@ -373,14 +374,17 @@ M = som_normalize(sM.codebook,'range');
 
 subplot(1,3,1)
 som_pieplane(sM, M);
+drawnow;
 title('som\_pieplane')
 
 subplot(1,3,2)
 som_barplane(sM, M, '', 'unitwise');
+drawnow;
 title('som\_barplane')
 
 subplot(1,3,3)
 som_plotplane(sM, M, 'b');
+drawnow;
 title('som\_plotplane')
 
 pause % Strike any key to visualize cluster properties...
@@ -638,7 +642,8 @@ pause % Press any key to change the colorbar labels...
 %     colorbar of the second subplot, values are calculated for the
 %     borders between colors.
 
-som_recolorbar(1,{[0 4 9]},'',{{'small','medium','big'}});
+% ITN 2010-08-11 Changed '' to 'd' to avoid warning.
+som_recolorbar(1,{[0 4 9]},'d',{{'small','medium','big'}});
 som_recolorbar(2,'border','');
 
 pause % Press any key to learn about SOM_NORMCOLOR...
