@@ -325,7 +325,8 @@ elseif isstruct(sS) && isempty(varargin),
   end
   k = 0;
   for i=1:length(fields), 
-    contents = getfield(sS,fields{i});
+
+    contents = sS.(fields{i});
     if ~strcmp(fields{i},'type'), 
       varargin{k+1} = fields{i};
       varargin{k+2} = contents;

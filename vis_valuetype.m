@@ -254,11 +254,12 @@ for i=1:length(valid),
     error(msg);
   end
   % set flag according to 3rd parameter (all ~ AND, any ~ OR) 
-  if strcmp(str,'all');
+end
+
+if strcmp(str,'all');
     flag=all(flag);
-  else
+else
     flag=any(flag);
-  end
 end
 
 
