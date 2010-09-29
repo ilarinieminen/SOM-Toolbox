@@ -390,7 +390,7 @@ for i=1:p,
 	isok = 1;
 	if ischar(content), content = cellstr(content); 
 	elseif ~iscellstr(content), 
-	  l = prod(size(content));
+	  l = numel(content);
 	  for j=1:l, 
 	    if ischar(content{j}), 
 	      if ~isempty(content{j}), 
@@ -538,7 +538,7 @@ for i=1:p,
 	isok = 1;
 	if ischar(content), content = cellstr(content); 
 	elseif ~iscellstr(content), 
-	  l = prod(size(content));
+	  l = numel(content);
 	  for j=1:l, 
 	    if ~ischar(content{j}), 
 	      if ~isempty(content{j}), 

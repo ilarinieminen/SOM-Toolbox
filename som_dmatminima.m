@@ -45,7 +45,7 @@ if nargin<3, Ne = som_neighbors(sM); end
 
 % distance matrix
 if nargin<2 || isempty(U), U = som_dmat(sM,Ne,'median'); end
-if prod(size(U))>munits, U = U(1:2:size(U,1),1:2:size(U,2)); end
+if numel(U)>munits, U = U(1:2:size(U,1),1:2:size(U,2)); end
 U = U(:); 
 if length(U) ~= munits, error('Distance matrix has incorrect size.'); end
 

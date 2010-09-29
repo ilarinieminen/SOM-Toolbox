@@ -54,7 +54,7 @@ end
 
 % constrained clustering
 if nargin<4, Ne = []; end
-if prod(size(Ne))==1,  
+if numel(Ne)==1,  
   if Ne && isempty(sT),
     warning('Cannot use constrained clustering.'); Ne = 0; 
   end

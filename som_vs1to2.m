@@ -82,7 +82,7 @@ end
 
 switch type, 
  case 'som_map',
-  msize = sS.msize; munits = prod(msize); dim = prod(size(sS.codebook))/munits; 
+  msize = sS.msize; munits = prod(msize); dim = numel(sS.codebook)/munits; 
   M = reshape(sS.codebook,[munits dim]);
 
   % topology

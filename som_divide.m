@@ -58,7 +58,7 @@ if isstruct(D), D=D.data; end
 
 % inds
 if nargin<3, inds = 1:munits; end
-isvec = prod(size(inds))==length(inds);
+isvec = numel(inds)==length(inds);
 
 % mode
 if nargin<4, 

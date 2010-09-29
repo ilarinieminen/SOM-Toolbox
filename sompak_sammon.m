@@ -40,12 +40,12 @@ NO_FILE = 0;
 
 nargchk(5,5,nargin);
 
-if ~(isstruct(sMap) || isstr(sMap))
+if ~(isstruct(sMap) || ischar(sMap))
   error('Argument ''sMap'' must be a struct or filename.');
 end
 
-if isstr(sMap)
- if isempty(ft) || ~isstr(ft) || ~(strcmp(ft,'pak') || strcmp(ft,'box'))
+if ischar(sMap)
+ if isempty(ft) || ~ischar(ft) || ~(strcmp(ft,'pak') || strcmp(ft,'box'))
    error('Argument ''ft'' must be string ''pak'' or ''box''.');
  end
  if strcmp(ft,'pak')
@@ -72,10 +72,10 @@ if isstr(sMap)
  end
 end
 
-if ~isstr(cout) && isempty(cout)
+if ~ischar(cout) && isempty(cout)
   NO_FILE = 1;
   cout = '__abcdef';
-elseif ~isstr(cout) || isempty(cout)
+elseif ~ischar(cout) || isempty(cout)
   error('Argument ''cout'' must be a string or ''[]''.');
 end
 

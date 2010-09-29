@@ -151,7 +151,7 @@ end
 % process input arguments
 
 if nargin == 2 
-  if isstr(varargin{1})
+  if ischar(varargin{1})
     dont_care = varargin{1};
   else
     dim      = varargin{1};
@@ -163,7 +163,7 @@ end
 
 % if the data dimension is not specified, find out what it is
 
-if nargin == 1 || (nargin == 2 && isstr(varargin{1}))
+if nargin == 1 || (nargin == 2 && ischar(varargin{1}))
 
   fpos1 = ftell(fid); c1 = 0;      % read first non-comment line
   while c1 == 0,
@@ -211,7 +211,7 @@ form        = [repmat('%g',[1 dim-1]) '%g%[^ \t]'];
 limit       = block_size;
 while 1,
   li = fgetl(fid);                         % read next line
-  if ~isstr(li), break, end;               % is this the end of file? 
+  if ~ischar(li), break, end;               % is this the end of file? 
 
   % all missing vectors are replaced by value realmax because
   % sscanf is not able to read NaNs  

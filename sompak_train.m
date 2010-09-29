@@ -51,11 +51,11 @@ nargchk(9,9,nargin);
 NO_FILE=0;
 DIN_FILE = 0;
 
-if ~isstruct(sMap) && ~isstr(sMap)
+if ~isstruct(sMap) && ~ischar(sMap)
   error('Argument ''sMap'' must be a struct or string.');
 end
 
-if isstr(sMap)
+if ischar(sMap)
   if isempty(ft)
     error('Argument ''ft'' must be defined.');
   end
@@ -83,10 +83,10 @@ if isstr(sMap)
 
   end
 end
-if ~isstr(cout) && isempty(cout)
+if ~ischar(cout) && isempty(cout)
   cout = '__abcdef';
   NO_FILE = 1;
-elseif ~isstr(cout) || (isstr(cout) && isempty(cout))
+elseif ~ischar(cout) || (ischar(cout) && isempty(cout))
   error('Argument ''cout'' must be a string or ''[]''.');
 end
 
@@ -107,7 +107,7 @@ else
 end
 
 if ~DIN_FILE
-  if isempty(dt) || ~isstr(dt) || ~(strcmp(dt,'box') || strcmp(dt,'pak'))
+  if isempty(dt) || ~ischar(dt) || ~(strcmp(dt,'box') || strcmp(dt,'pak'))
     error('Argument ''dt'' must be string ''pak'' or ''box''.');
   end
   if strcmp(dt,'box');
@@ -168,7 +168,7 @@ if ~NO_FILE
   else
     dos(cat(2,'del ',cout));
   end
-  if isempty(ct) || ~isstr(ct) || ~(strcmp(ct,'pak') || strcmp(ct,'box'))
+  if isempty(ct) || ~ischar(ct) || ~(strcmp(ct,'pak') || strcmp(ct,'box'))
     error('Argument ''ct'' must be string ''pak'' or ''box''.');
   elseif strcmp(ct,'box');
     eval(cat(2,'save ',cout,' sMap'));

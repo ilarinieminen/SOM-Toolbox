@@ -46,11 +46,11 @@ nargchk(9,9,nargin);
 NO_FILE = 0;
 if isstruct(sData);
   sData=sData.data;
-elseif ~(isreal(sData) || isstr(sData))
+elseif ~(isreal(sData) || ischar(sData))
   error('Argument ''sData'' must be a struct or a real matrix.');
 else
   if isempty(ft)
-    if isstr(sData)
+    if ischar(sData)
       error('Argument ''file_type'' must be defined when input file is used.');
     end
   elseif strcmp(ft,'pak');
@@ -78,7 +78,7 @@ else
     error('Argument ''ft'' must be a string ''pak'' or ''box''.');
   end
 end
-if isstr(init_type)
+if ischar(init_type)
   if strcmp(init_type,'rand')
     if any(strcmp('SOM_PAKDIR',evalin('base','who')))
       init_command=cat(2,evalin('base','SOM_PAKDIR'),'randinit');
@@ -98,10 +98,10 @@ else
   error('Argument ''init_type'' must be string ''rand'' or ''linear''.');
 end
 
-if (isstr(cout) && isempty(cout)) || (~isstr(cout) && isempty(cout))
+if (ischar(cout) && isempty(cout)) || (~ischar(cout) && isempty(cout))
   NO_FILE = 1;
   cout = '__abcdef';
-elseif  ~isstr(cout) && ~isempty(cout)
+elseif  ~ischar(cout) && ~isempty(cout)
   error('Argument ''cout'' must be a string or ''[]''.');
 end
   
@@ -113,7 +113,7 @@ if ~is_positive_integer(ydim)
   error('Argument ''ydim'' must be a positive integer.');
 end
 
-if isstr(topol)
+if ischar(topol)
   if isempty(topol) || (~strcmp(topol,'hexa') && ~strcmp(topol,'rect'))
     error ('Argument ''topol'' must be either a string ''hexa'' or ''rect''.');
   end
@@ -121,7 +121,7 @@ else
   error ('Argument ''topol'' must be either a string ''hexa'' or ''rect''.');  
 end
 
-if isstr(neigh)
+if ischar(neigh)
   if isempty(neigh) || (~strcmp(neigh,'bubble') && ~strcmp(neigh,'gaussian'))
     error(sprintf(cat(2,'Argument ''neigh'' must be either a string ',...
                         '''bubble'' or ''gaussian''.')));

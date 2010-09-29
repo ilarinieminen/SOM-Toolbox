@@ -161,7 +161,7 @@ else            % has labels; slow
       end
       labs = char(sMap.labels{order(i), nonempty});
       labs(:,end + 1) = ' ';
-      temp = reshape(labs',[1 prod(size(labs))]);
+      temp = reshape(labs',[1 numel(labs)]);
       temp(findstr('  ', temp))='';
       fprintf(fid, '%s\n', temp(1:end-1));
     else

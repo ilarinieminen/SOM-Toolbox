@@ -122,10 +122,10 @@ end
 %% distance matrix
 
 % given distance matrix % jh corrected this place totally 27.3. 03
-if (prod(size(Md))==1), % no explicit distance matrix, set flag
+if (numel(Md)==1), % no explicit distance matrix, set flag
   q=2; % 17.2.03 kr added some brackets
 else
-  if (prod(size(Md))<dlen^2), % check pdist form
+  if (numel(Md)<dlen^2), % check pdist form
     Md = squareform(Md);   % transform to ordinary square diastance matrix
   end
   % jh: 27.3. 03 "calculate pairwise dist. matrix" see approx. 20 lines below
@@ -144,7 +144,7 @@ if ~isempty(Conn), for i=1:dlen, C(i,i) = 1; end, end
 
 % pairwise distance matrix across connected units
 n = size(D,1);
-if prod(size(Md))>1,   
+if numel(Md)>1,   
   % remove distances between non-neighbors
   if constrained, for i = 1:n, Md(i,find(Conn(i,:)==0)) = Inf; end, end
 else    

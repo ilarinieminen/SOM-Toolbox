@@ -361,7 +361,7 @@ vis_PlaneAxisProperties(ax,lattice, msize, pos);
 
 %% Rearrange dx3 color matrix
 
-if ~isstr(color) && size(color,1)~=1,
+if ~ischar(color) && size(color,1)~=1,
   color=reshape(repmat(color,N,1),[1 N*d 3]);
 end
 

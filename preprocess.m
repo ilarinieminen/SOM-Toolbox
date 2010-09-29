@@ -37,7 +37,7 @@ end
   
 if nargin == 1, arg2=[]; end
 
-if ~isstr(sData)   %%% Preprocess is started...
+if ~ischar(sData)   %%% Preprocess is started...
 data.LOG{1}='% Starting the ''Preprocess'' -window...';
 data.LOG{2}=cat(2,'preprocess(',...
                      sprintf('%s);',inputname(1)));
@@ -1688,7 +1688,7 @@ if isempty(pre_h)
   return;
 end
 
-if isstr(new_sD) || (~isstruct(new_sD) && ~isreal(new_sD))
+if ischar(new_sD) || (~isstruct(new_sD) && ~isreal(new_sD))
   errordlg(errstr);
   return;
 elseif isstruct(new_sD) && length(new_sD) > 1
@@ -5221,7 +5221,7 @@ if ~isempty(answer)
   tmp=[];
   if ~isempty(answer{1})
     [tmp,method]=build_expr(answer{1},'single');
-    if ~isstr(tmp)
+    if ~ischar(tmp)
       sData=getfield(get(gcf,'UserData'),'sData');
       tmp='Done.';
       %if ~isempty(answer{2})
@@ -5284,7 +5284,7 @@ end
 if ~isempty(answer) && ~isempty(answer{1})
    str=answer{1};
    [answer,foo]=build_expr(answer{1},'multiple');
-   if ~isstr(answer)
+   if ~ischar(answer)
      
      answer='Done.';
      data=get(gcf,'UserData');
@@ -5581,7 +5581,7 @@ end
 
 data=get(pre_h,'UserData');
 sData=data.sData;
-if strcmp(assign,'NOTASSIGN') && strcmp(evaltype,'single') && ~isstr(answer)
+if strcmp(assign,'NOTASSIGN') && strcmp(evaltype,'single') && ~ischar(answer)
   if isempty(get(getfield(get(pre_h,'UserData'),'comp_names_h'),'Value'))
     errordlg('There are not components chosen.');
     answer='??? Illegal expression.';
@@ -5607,7 +5607,7 @@ if strcmp(assign,'NOTASSIGN') && strcmp(evaltype,'single') && ~isstr(answer)
       set(pre_h,'UserData',data);
     end
   end
-elseif ~strcmp(assign,'error') && ~isstr(answer) && ~strcmp(assign,'NOTASSIGN')  
+elseif ~strcmp(assign,'error') && ~ischar(answer) && ~strcmp(assign,'NOTASSIGN')  
   switch name
     case 'x'
      if isempty(get(data.comp_names_h,'Value'))

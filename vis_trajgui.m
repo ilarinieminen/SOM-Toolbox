@@ -136,7 +136,7 @@ if nargin == 1
     %
     % 
     
-    if nargin < 5 || isempty(comps) || (isstr(comps) && strcmp(comps,'all'))
+    if nargin < 5 || isempty(comps) || (ischar(comps) && strcmp(comps,'all'))
       comps = 1:size(data1,2);
     end
     
@@ -341,7 +341,7 @@ udata=get(gcf,'UserData');
 udata=get(udata.fig1,'UserData');
 color=udata.color;
 eMode='normal';
-if isstr(udata.color) && strcmp(udata.color,'xor')
+if ischar(udata.color) && strcmp(udata.color,'xor')
   eMode='xor';
   color='black';
 end

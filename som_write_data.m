@@ -185,7 +185,7 @@ else                                    % labels and NaNs
       end
       labs = char(sData.labels{i, nonempty});
       labs(:,end + 1) = ' ';
-      temp = reshape(labs',[1 prod(size(labs))]);
+      temp = reshape(labs',[1 numel(labs)]);
       temp(findstr('  ', temp))='';
       fprintf(fid, '%s', temp(1:end-1));
     end

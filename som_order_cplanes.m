@@ -118,7 +118,7 @@ fprintf(1,'Calculating similarity matrix\n');
 if strcmp(simil,'umat'), 
   if ~ismap, error('Given data is not a map: cannot use U-matrix similarity.'); end
   U = som_umat(sM);
-  D = zeros(prod(size(U)),dim); 
+  D = zeros(numel(U),dim); 
   m = zeros(dim,1);
   for i=1:dim, m=m*0; m(i)=1; U = som_umat(sM,'mask',m); D(:,i) = U(:); end
 end

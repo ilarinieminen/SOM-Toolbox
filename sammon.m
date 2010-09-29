@@ -80,7 +80,7 @@ noc = prod(orig_si)/dim;
 if length(orig_si)>2, D = reshape(D,[noc dim]); end
 
 % output dimension / initial projection matrix
-if prod(size(P))==1, 
+if numel(P)==1, 
   odim = P; 
   P = rand(noc,odim)-0.5; 
 else 

@@ -2981,7 +2981,7 @@ for c=1:length(csS),
   else ind = []; end
   complete = size(sS.data(ind,:),1);
   partial  = dlen - complete;
-  values   = prod(size(sS.data));
+  values   = numel(sS.data);
   missing  = sum(sum(isnan(sS.data))); 
 
   % level 1  

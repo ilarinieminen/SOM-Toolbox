@@ -186,7 +186,7 @@ switch arg
  case 'ret_mat'
   gui=findobj(get(0,'Children'),'Tag','SELECT_GUI');
   gui=get(gui,'UserData');
-  mat=reshape(gui.mat,prod(size(gui.mat)),1);
+  mat=reshape(gui.mat,numel(gui.mat),1);
   if ~isempty(gui.c_names)
     if isnumeric(gui.c_names), tmp=zeros(length(mat),1);
     else tmp=cell(length(mat),1);

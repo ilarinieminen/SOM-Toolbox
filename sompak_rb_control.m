@@ -143,7 +143,7 @@ switch str
                       data.ydim,...
                       data.topol,...
                       data.neigh);
-   if any(strcmp(data.out_var,{'ans','''ans'''})) || isstr(answer)
+   if any(strcmp(data.out_var,{'ans','''ans'''})) || ischar(answer)
      varargout{1}=answer; 
    else
      assignin('base',data.out_var,answer);
@@ -195,7 +195,7 @@ switch str
                        data.rlen,...
                        data.alpha,...
                        data.radius);
-   if any(strcmp(data.out_var,{'''ans''','ans'})) || isstr(answer)
+   if any(strcmp(data.out_var,{'''ans''','ans'})) || ischar(answer)
      varargout{1}=answer;
    else
      assignin('base',data.out_var,answer);
@@ -221,7 +221,7 @@ switch str
                         data.out_file,...
                         data.out_file_type,...
                         data.rlen);
-   if strcmp(data.out_var,'''ans''')||strcmp(data.out_var,'ans')||isstr(answer)
+   if strcmp(data.out_var,'''ans''')||strcmp(data.out_var,'ans')||ischar(answer)
      varargout{1}=answer;
    else
      assignin('base',data.out_var,answer);

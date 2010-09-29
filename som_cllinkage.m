@@ -134,9 +134,9 @@ while i<=length(varargin),
 end
 
 % check distance metric
-if prod(size(Md))==1, q = Md; Md = []; end
-if ~isempty(Md) && prod(size(Md))<dlen^2, Md = squareform(Md); end    
-if prod(size(Md))>0 && any(strcmp(linkage,{'ward','centroid'})),
+if numel(Md)==1, q = Md; Md = []; end
+if ~isempty(Md) && numel(Md)<dlen^2, Md = squareform(Md); end    
+if numel(Md)>0 && any(strcmp(linkage,{'ward','centroid'})),
   warning(['The linkage method ' linkage ' cannot be performed with precalculated distance matrix.']);
 end
 

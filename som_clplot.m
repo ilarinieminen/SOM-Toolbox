@@ -128,7 +128,7 @@ end
 
 % show
 if ischar(show), show = strcmp(show,'on'); end
-if prod(size(show)) == 1, show = ones(2*clen-1,1)*show; end
+if numel(show) == 1, show = ones(2*clen-1,1)*show; end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% initialize values

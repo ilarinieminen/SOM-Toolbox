@@ -136,7 +136,7 @@ form       = [repmat('%f',[1 dim-1]) '%f%[^ \t]'];
 
 while 1, 
   li = fgetl(fid);                         % read next line
-  if ~isstr(li), break, end;               % is this the end of file?
+  if ~ischar(li), break, end;               % is this the end of file?
 
   [data, c, err, n] = sscanf(li, form);
   if c < dim % if there were less numbers than dim on the input file line
