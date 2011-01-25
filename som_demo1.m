@@ -126,6 +126,7 @@ subplot(1,2,1)
 som_grid(sMap,'Coord',sMap.codebook)
 hold on, plot(D(:,1),D(:,2),'+r'), hold off
 title('Data and original map')
+axis([0 2 0 2]);
 
 %    The training is based on two principles: 
 %     
@@ -150,6 +151,7 @@ for i=1:60,
   som_grid(sMap,'Coord',sMap.codebook)
   hold on, plot(D(:,1),D(:,2),'+r'), hold off
   title(sprintf('%d/300 training steps',5*i))
+  axis([0 2 0 2]);
   drawnow
 end
 title('Sequential training after 300 steps')
