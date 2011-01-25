@@ -446,6 +446,8 @@ if tracking >  0, % initialize tracking
   qe = zeros(floor(trainlen/update_step),1);  
 end
 
+printedbytes = 0;
+
 for t = 1:trainlen, 
 
   % Every update_step, new values for sample indeces, neighborhood
@@ -491,7 +493,7 @@ for t = 1:trainlen,
     if ind==update_step, 
       n = ceil(t/update_step); 
       qe(n) = mean(track_table);
-      trackplot(M,D,tracking,start,n,qe);
+      printedbytes = trackplot(M,D,tracking,start,n,qe,printedbytes);
     end
   end
   
@@ -534,12 +536,15 @@ return;
 %% subfunctions
 
 %%%%%%%%
-function [] = trackplot(M,D,tracking,start,n,qe)
+function [count] = trackplot(M,D,tracking,start,n,qe, printedbytes)
 
   l = length(qe);
   elap_t = etime(clock,start); 
   tot_t = elap_t*l/n;
-  fprintf(1,'\rTraining: %3.0f/ %3.0f s',elap_t,tot_t)  
+  % Carriage return does not work as it should (even on UNIX) when printing
+  % to screen, so let's do this instead
+  fprintf(1, repmat('\b', 1, printedbytes));
+  count = fprintf(1,'Training: %3.0f/ %3.0f s',elap_t,tot_t);  
   switch tracking
    case 1, 
    case 2,       

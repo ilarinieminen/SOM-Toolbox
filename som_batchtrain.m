@@ -419,6 +419,8 @@ blen = min(munits,dlen);
 bmus = zeros(1,dlen); 
 ddists = zeros(1,dlen); 
 
+printedbytes = 0; % See tracking subfunction
+
 for t = 1:trainlen,  
 
   % batchy train - this is done a block of data (inds) at a time
@@ -443,7 +445,7 @@ for t = 1:trainlen,
     ddists = ddists+dconst; % add the constant term
     ddists(ddists<0) = 0;   % rounding errors...
     qe(t) = mean(sqrt(ddists));
-    trackplot(M,D,tracking,start,t,qe);
+    printedbytes = trackplot(M,D,tracking,start,t,qe,printedbytes);
   end
   
   % neighborhood 
@@ -512,17 +514,20 @@ end
 
 return;
 
-
+end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% subfunctions
 
 %%%%%%%%
-function [] = trackplot(M,D,tracking,start,n,qe)
+function [count] = trackplot(M,D,tracking,start,n,qe,printedbytes)
 
   l = length(qe);
   elap_t = etime(clock,start); 
   tot_t = elap_t*l/n;
-  fprintf(1,'\rTraining: %3.0f/ %3.0f s',elap_t,tot_t)  
+  % Carriage return does not work as it should (even on UNIX) when printing
+  % to screen, so let's do this instead
+  fprintf(1, repmat('\b', 1, printedbytes));
+  count = fprintf(1,'Training: %3.0f/ %3.0f s',elap_t,tot_t);  
   switch tracking
    case 1, 
    case 2,   
@@ -535,5 +540,8 @@ function [] = trackplot(M,D,tracking,start,n,qe)
     subplot(2,1,2), plot(M(:,1),M(:,2),'ro',D(:,1),D(:,2),'b+'); 
     title('First two components of map units (o) and data vectors (+)');
     drawnow
+    
   end
   % end of trackplot
+  tracking_in_progress = 1;
+end
