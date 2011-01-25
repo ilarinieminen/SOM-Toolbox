@@ -1,4 +1,3 @@
-
 %SOM_DEMO1 Basic properties and behaviour of the Self-Organizing Map.
 
 % Contributed to SOM Toolbox 2.0, February 11th, 2000 by Juha Vesanto
@@ -143,7 +142,7 @@ pause % Strike any key to train the map...
 echo off
 subplot(1,2,2)
 o = ones(5,1);
-r = (1-[1:60]/60);
+r = (1-(1:60)/60);
 for i=1:60,
   sMap = som_seqtrain(sMap,D,'tracking',0,...
 		      'trainlen',5,'samples',...
