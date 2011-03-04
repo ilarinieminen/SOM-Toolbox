@@ -22,34 +22,22 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this package (file License.txt); if not, write to the Free
+along with this package (file COPYING); if not, write to the Free
 Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 02111-1307, USA.
-
 
 LICENSING THE LIBRARY FOR PROPRIETARY PROGRAMS
 ----------------------------------------------
 
-As stated in the GNU General Public License (see License.txt) it is
-not possible to include this software library in a commercial
+As stated in the GNU General Public License (see the license in COPYING)
+it is not possible to include this software library in a commercial
 proprietary program without written permission from the owners of the
 copyright. If you wish to obtain such permission, you can reach us by
 paper mail:
 
-  SOM Toolbox team
-  Laboratory of Computer and Information Science
-  P.O.Box 5400
-  FIN-02015 HUT 
-  Finland
-  Europe 
-
-and by email:
-
-  somtlbx@mail.cis.hut.fi
-
-
-
-
-
-
-
+SOM Toolbox team
+Aalto University
+Department of Information and Computer Science
+PO Box 15400
+FI-00076 Aalto
+Finland
