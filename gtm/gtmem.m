@@ -131,6 +131,6 @@ for n = 1:niters
 end
 
 options(8) = -sum(log(gtmprob(net, t)));
-if (display >= 0)
-  disp(maxitmess);
-end
+%if (display >= 0)
+%  disp(maxitmess);
+%end
