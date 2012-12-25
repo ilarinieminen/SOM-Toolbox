@@ -292,10 +292,10 @@ function h=som_show(sMap, varargin)
 
 %% Check arguments %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-error(nargchk(1,Inf,nargin))     % check no. of input args
+narginchk(1,Inf)     % check no. of input args
 
 if isstruct(sMap),               % check map
-  [tmp,ok,tmp]=som_set(sMap);
+  [~,ok,~]=som_set(sMap);
   if all(ok) && strcmp(sMap.type,'som_map') 
   else
     error('Map struct is invalid!');
@@ -338,8 +338,8 @@ end
 
 try       
   [Plane, General]= check_varargin(varargin, munits, d, sMap.name);
-catch
-  error(lasterr);
+catch err
+  error(err);
 end
 
 % Set default values for missing ones
@@ -352,8 +352,8 @@ if isempty(Plane)
   % and again we go...
   try
     [Plane, General]= check_varargin(varargin, munits, d, sMap.name);
-  catch
-    error(lasterr);
+  catch err
+    error(err);
   end
 end
 
@@ -609,7 +609,7 @@ for i=1:2:length(args),
     %%% Check first the possible cell input
     
     if iscell(value),
-      if ndims(value) ~= 2 || any(size(value) ~= [1 2]) || ...
+      if ~ismatrix(value) || any(size(value) ~= [1 2]) || ...
 	    ~vis_valuetype(value{2},{'string'}),
 	error('Cell input for ''umat'' has to be of form {vector, string}.');
       else
@@ -653,7 +653,7 @@ for i=1:2:length(args),
     
     % Check first the possible cell input
     if iscell(value),
-      if ndims(value)~=2 || any(size(value) ~= [1 2]) || ...
+      if ~ismatrix(value) || any(size(value) ~= [1 2]) || ...
 	    ~vis_valuetype(value{2},{'string'}),
 	error([ 'Cell input for ''' identifier ...
 	      ''' has to be of form {M, string}.']);

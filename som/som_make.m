@@ -1,4 +1,6 @@
-function sMap = som_make(D, varargin)
+function [sMap,D] = som_make(D, varargin)
+
+% lisää impbatch algoritm-valinnaksi (default = batch)
 
 %SOM_MAKE Create, initialize and train Self-Organizing Map.
 %
@@ -21,7 +23,7 @@ function sMap = som_make(D, varargin)
 % which are unambiguous (marked with '*') can be given without the
 % preceeding argID.
 %   'init'       *(string) initialization: 'randinit' or 'lininit' (default)
-%   'algorithm'  *(string) training: 'seq' or 'batch' (default) or 'sompak'
+%   'algorithm'  *(string) training: 'seq' or 'batch' (default), 'imp' or 'sompak'
 %   'munits'      (scalar) the preferred number of map units
 %   'msize'       (vector) map grid size
 %   'mapsize'    *(string) do you want a 'small', 'normal' or 'big' map
@@ -84,8 +86,11 @@ function sMap = som_make(D, varargin)
 % instead.  After initialization, the SOM is trained in two phases:
 % first rough training and then fine-tuning. If the 'tracking'
 % argument is greater than zero, the average quantization error and
-% topographic error of the final map are calculated.
+% topographic error of the final map are calculated. If there are missing
+% values (NaNs) in the data, it may be wise to use the Imputation SOM 
+% algorithm ('imp' agrument).
 %
+% 
 % REQUIRED INPUT ARGUMENTS
 %
 %  D           The data to use in the training.
@@ -103,7 +108,6 @@ function sMap = som_make(D, varargin)
 % which are unambiguous (marked with '*') can be given without the
 % preceeding argID.
 %   'init'       *(string) initialization: 'randinit' or 'lininit' (default)
-%   'algorithm'  *(string) training: 'seq' or 'batch' (default) or 'sompak'
 %   'munits'      (scalar) the preferred number of map units
 %   'msize'       (vector) map grid size
 %   'mapsize'    *(string) do you want a 'small', 'normal' or 'big' map
@@ -161,11 +165,13 @@ function sMap = som_make(D, varargin)
 %  som_lininit      Linear initialization algorithm.
 %  som_seqtrain     Sequential training algorithm.
 %  som_batchtrain   Batch training algorithm.
+%  som_impbatch     The imputation SOM batch training algorithm.
 
-% Copyright (c) 1999-2000 by the SOM toolbox programming team.
+% Copyright (c) 1999-2012 by the SOM toolbox programming team.
 % http://www.cis.hut.fi/projects/somtoolbox/
 
 % Version 2.0beta juuso 111199
+% Version 2.1beta tommi 121212
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% check arguments
@@ -217,23 +223,23 @@ while i<=length(varargin),
                         i=i+1; sTopol = varargin{i}; munits = prod(sTopol.msize); 
      case 'neigh',      i=i+1; neigh = varargin{i};
      case 'tracking',   i=i+1; tracking = varargin{i};
-     case 'algorithm',  i=i+1; algorithm = varargin{i}; 
      case 'init',       i=i+1; initalg = varargin{i};
      case 'training',   i=i+1; training = varargin{i}; 
+     case 'mweight',    i=i+1; sTopol.mweight = varargin{i};
       % unambiguous values
      case {'hexa','rect'}, sTopol.lattice = varargin{i};
      case {'sheet','cyl','toroid'}, sTopol.shape = varargin{i}; 
      case {'gaussian','cutgauss','ep','bubble'}, neigh = varargin{i};
-     case {'seq','batch','sompak'}, algorithm = varargin{i}; 
+     case {'seq','batch','sompak','imp'}, algorithm = varargin{i}; 
      case {'small','normal','big'}, mapsize = varargin{i}; 
      case {'randinit','lininit'}, initalg = varargin{i};
      case {'short','default','long'}, training = varargin{i}; 
-     otherwise argok=0; 
+      otherwise, argok=0; 
     end
   elseif isstruct(varargin{i}) && isfield(varargin{i},'type'), 
     switch varargin{i}(1).type, 
      case 'som_topol', sTopol = varargin{i}; 
-     otherwise argok=0; 
+       otherwise, argok=0; 
     end
   else
     argok = 0; 
@@ -243,6 +249,11 @@ while i<=length(varargin),
   end
   i = i+1; 
 end
+
+if any(isnan(D(:))) && ~strcmp('imp',algorithm)
+  disp('Missing values in data. Consider using the Imputation SOM (see help)')
+end
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% make the map struct
@@ -291,7 +302,6 @@ sMap.trainhist(1) = som_set(sMap.trainhist(1),'data_name',data_name);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% training
-
 if tracking>0, fprintf(1,'Training using %s algorithm...\n',algorithm); end
 
 % rough train
@@ -309,7 +319,9 @@ switch func,
  case 'seq',    sMap = som_seqtrain(sMap,D,sTrain,'tracking',tracking,'mask',mask);
  case 'sompak', sMap = som_sompaktrain(sMap,D,sTrain,'tracking',tracking,'mask',mask);
  case 'batch',  sMap = som_batchtrain(sMap,D,sTrain,'tracking',tracking,'mask',mask);
+ case 'imp',    sMap = som_impbatch(sMap,D,sTrain,'tracking',tracking,'mask',mask);
 end
+
 
 % finetune
 if tracking>0, fprintf(1,'Finetuning phase...\n'); end
@@ -326,14 +338,15 @@ switch func,
  case 'seq',    sMap = som_seqtrain(sMap,D,sTrain,'tracking',tracking,'mask',mask);
  case 'sompak', sMap = som_sompaktrain(sMap,D,sTrain,'tracking',tracking,'mask',mask);
  case 'batch',  sMap = som_batchtrain(sMap,D,sTrain,'tracking',tracking,'mask',mask);
+ case 'imp',    sMap = som_impbatch(sMap,D,sTrain,'tracking',tracking,'mask',mask);
 end
 
 % quality
 if tracking>0, 
-  [mqe,tge] = som_quality(sMap,D);
-  fprintf(1,'Final quantization error: %5.3f\n',mqe)
-  fprintf(1,'Final topographic error:  %5.3f\n',tge)
+  [mqe,tge,cbe] = som_quality(sMap,D);
+  fprintf('Final quantization error: %5.3f\n',mqe)
+  fprintf('Final topographic error:  %5.3f\n',tge)
+  fprintf('Final combined error:  %5.3f\n',cbe)  
 end  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-

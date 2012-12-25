@@ -1,8 +1,9 @@
-function [mqe,tge] = som_quality(sMap, D)
+function [mqe,tge,cbe] = som_quality(sMap, D)
 
-%SOM_QUALITY Calculate the mean quantization and topographic error.
+%SOM_QUALITY Calculate the mean quantization, topographic
+%            and combined (Kaski and Lagus, 1996) error.
 %
-% [qe,te] = som_quality(sMap, D)
+% [qe,te,ce] = som_quality(sMap, D)
 %
 %  qe = som_quality(sMap,D);
 %  [qe,te] = som_quality(sMap,sD);
@@ -15,6 +16,7 @@ function [mqe,tge] = som_quality(sMap, D)
 %
 %   qe       (scalar) mean quantization error
 %   te       (scalar) topographic error
+%   ce      (scalar) combined error (Kaski and Lagus, 1996)
 %
 % The issue of SOM quality is a complicated one. Typically two
 % evaluation criterias are used: resolution and topology preservation.
@@ -102,11 +104,13 @@ function [mqe,tge] = som_quality(sMap, D)
 % 
 %  qe      (scalar) mean quantization error
 %  te      (scalar) topographic error
+%  ce      (scalar) combined error (Kaski and Lagus, 1996)
 %
 % EXAMPLES
 %
 %  qe = som_quality(sMap,D);
 %  [qe,te] = som_quality(sMap,sD);
+%  [qe,te,ce] = som_quality(sMap,sD);
 %
 % SEE ALSO
 % 
@@ -129,7 +133,10 @@ if isstruct(D), D = D.data; end
 [dlen dim] = size(D);
 
 % calculate topographic error, too?
-if nargout==1, b=1; else b=[1:2]; end
+if nargout==1, b=1; 
+elseif nargout==2, b=1:2;
+else b=1:3;
+end
 [bmus qerrs]= som_bmus(sMap,D,b);
 inds = find(~isnan(bmus(:,1)));
 bmus = bmus(inds,:);
@@ -140,7 +147,7 @@ if ~l, error('Empty data set.'); end
 % mean quantization error
 mqe = mean(qerrs(:,1));
 
-if length(b)==2, % topographic error
+if length(b)>1, % topographic error
   Ne = full(som_unit_neighs(sMap.topol));
   tge = 0;
   for i=1:l, tge = tge+(Ne(bmus(i,1),bmus(i,2)) ~= 1); end
@@ -149,8 +156,20 @@ else
   tge = NaN;
 end
 
+if length(b)==3, % combined error (Kaski and Lagus, 1996)
+  neigh = som_mdist(sMap.codebook).*som_unit_neighs(sMap);
+  [bmus qerrors] = som_bmus(sMap, D, [1 2]);
+  d = qerrors(:,1);
+  for k = 1:dlen
+    if neigh(bmus(k,1), bmus(k,2)) > 0
+      d(k) = d(k) + neigh(bmus(k,1), bmus(k,2));
+    else
+      d(k) = d(k) + dijkstraKay(neigh, bmus(k,1), bmus(k,2));
+    end
+  end
+  cbe = mean(d);
+end
+
 return;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-

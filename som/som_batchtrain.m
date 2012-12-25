@@ -440,6 +440,8 @@ for t = 1:trainlen,
     [ddists(inds), bmus(inds)] = min(Dist);
   end  
   
+  
+  
   % tracking
   if tracking > 0,
     ddists = ddists+dconst; % add the constant term
