@@ -1,0 +1,9 @@
+This directory contains functions which have been contributed by external authors and haven't been integrated to the core package.
+
+rsom/
+gmlvq/
+rneural_gas.m
+
+Metric learning for LVQ (see http://dx.doi.org/10.1162/neco.2009.11-08-908 ) and relational topographic maps (see 
+http://dx.doi.org/10.1162/NECO_a_00012) have been contributed by Alexander Schulz from the TCS group (head Barbara Hammer) at CITEC centre of 
+excellence, Bielefeld, Germany.
