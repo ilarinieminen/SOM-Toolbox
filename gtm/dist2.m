@@ -14,6 +14,7 @@ function n2 = dist2(x, c)
 %
 
 %	Copyright (c) Ian T Nabney (1996-2001)
+% Modified by Tommi Vatanen 2012 (compatibility with missing data)
 
 [ndata, dimx] = size(x);
 [ncentres, dimc] = size(c);

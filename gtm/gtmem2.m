@@ -1,6 +1,6 @@
-function [net, options, errlog] = gtmem_imputation(net, t, options)
-%function [net, data_rec, options, errlog] = gtmem_imputation(net, t, imp_method, options)
-%GTMEM	EM algorithm for Generative Topographic Mapping.
+function [net, options, errlog] = gtmem2(net, t, options)
+
+%GTMEM	EM algorithm for Generative Topographic Mapping with missing data.
 %
 %	Description
 %	[NET, OPTIONS, ERRLOG] = GTMEM(NET, T, OPTIONS) uses the Expectation
@@ -31,6 +31,7 @@ function [net, options, errlog] = gtmem_imputation(net, t, options)
 %
 
 %	Copyright (c) Ian T Nabney (1996-2001)
+% Modified by Tommi Vatanen (2012, support for missing data)
 
 % Check that inputs are consistent
 errstring = consist(net, 'gtm', t);
@@ -38,22 +39,8 @@ if ~isempty(errstring)
   error(errstring);
 end
 
-% % check imputation method
-% switch imp_method
-%   case {'sample', 'Sample'}
-%     imp = 1;
-%   case {'map', 'MAP', 'Map'}
-%     imp = 2;
-%   case {'expectation', 'expect', 'Expectation', 'Expect', 'exp', 'Exp'}
-%     imp = 3;
-%   case {'nosamp', 'Nosamp', 'noimp', 'Noimp'}
-%     imp = 4;
-%   otherwise
-%     error('Invalid imputation method')
-% end
-
 % Sort out the options
-if (options(14))
+if options(14)
   niters = options(14);
 else
   niters = 100;
@@ -96,27 +83,7 @@ for n = 1:niters
   % Calculate responsibilities
   [R, act] = gtmpost(net, t);
 
-  % update missing values
-%   switch imp
-%     case 1 % sampling
-%       sample_m = sum(repmat(rand(ndata,1), [1, size(R,2)])>cumsum(R,2),2)+1;
-%       M = Phi*W;
-%       centers = M(sample_m,:);
-%       t(missing) = centers(missing) + randn(1,sum(missing(:)))'*sqrt(variance);
-% 
-%     case 2 % MAP
-%       R_tmp = zeros(size(R));
-%       R_max = repmat(max(R,[],2), [1 size(R,2)]);
-%       R_tmp(R==R_max) = 1;
-%       rec = R_tmp*Phi*W;
-%       data_rec(missing) = rec(missing)
-% 
-%     case 3 % expectation
-%       rec = R*Phi*W;
-%       data_rec(missing) = rec(missing);
-%   end
-    
-  % Calculate error value if needed
+ % Calculate error value if needed
   if (display || store || test)
     prob = act*(net.gmmnet.priors)';
     % Error value is negative log likelihood of data
@@ -138,8 +105,7 @@ for n = 1:niters
   end
  
   % Calculate matrix be inverted (Phi'*G*Phi + alpha*I in the papers).
-  % Sparse representation of G normally executes faster and saves
-  % memory
+  % Sparse representation of G normally executes faster and saves memory
   if (net.rbfnet.alpha > 0)
     A = full(PhiT*spdiags(sum(R)', 0, K, K)*Phi + ...
       (Alpha.*net.gmmnet.covars(1)));
@@ -151,8 +117,7 @@ for n = 1:niters
   % (PhiT*(R*t)) is computed right-to-left, as R
   % and t are normally (much) larger than PhiT.
   
-  % make R'*t using expectations of missing values
-  %  Rt = R'*t;
+  % compose R'*t using expectations of missing values
   PhiW = Phi*W;
   Rt = zeros(K,tdim);
   data_temp = t;
@@ -168,21 +133,15 @@ for n = 1:niters
       fprintf(1, ...
         'gtmem: Warning -- M-Step matrix singular, using pinv.\n');
     end
-    %W = pinv(A)*(PhiT*(R'*t));
     W = pinv(A)*(PhiT*(Rt));
   else
-    %W = cholDcmp \ (cholDcmp' \ (PhiT*(R'*t)));
     W = cholDcmp \ (cholDcmp' \ (PhiT*(Rt)));
   end
   % Put new weights into network to calculate responsibilities
-  % net.rbfnet = netunpak(net.rbfnet, W);
   net.rbfnet.w2 = W(1:net.rbfnet.nhidden, :);
   net.rbfnet.b2 = W(net.rbfnet.nhidden+1, :);
-  % Calculate new distances
-  %d = dist2(t, Phi*W);
   
   % Calculate new value for variance
-  %variance = (sum(sum(d.*R))/ND);
   variance = gtmvariance(t, Phi*W, ND, variance, R);
   net.gmmnet.covars = ones(1, net.gmmnet.ncentres)*variance;
   

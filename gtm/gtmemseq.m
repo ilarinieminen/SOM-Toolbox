@@ -1,8 +1,8 @@
-function [net, options, errlog] = gtmem_new(net, t, options)
-%GTMEM	EM algorithm for Generative Topographic Mapping.
+function [net, options, errlog] = gtmemseq(net, t, options)
+%GTMEM	Sequential EM algorithm for Generative Topographic Mapping.
 %
 %	Description
-%	[NET, OPTIONS, ERRLOG] = GTMEM(NET, T, OPTIONS) uses the Expectation
+%	[NET, OPTIONS, ERRLOG] = GTMEM(NET, T, OPTIONS) uses sequential Expectation
 %	Maximization algorithm to estimate the parameters of a GTM defined by
 %	a data structure NET. The matrix T represents the data whose
 %	expectation is maximized, with each row corresponding to a vector.
@@ -30,9 +30,12 @@ function [net, options, errlog] = gtmem_new(net, t, options)
 %	See also
 %	GTM, GTMINIT
 %
-% [1] tänne viittaus
+% [1] Tommi Vatanen. Missing value imputation using subspace methods with 
+% applications on survey data. Master's thesis, Aalto University, 
+% Espoo, Finland, 2012.
 
 %	Copyright (c) Ian T Nabney (1996-2001)
+% Modified by Tommi Vatanen (2012)
 
 % Check that inputs are consistent
 errstring = consist(net, 'gtm', t);
@@ -109,8 +112,7 @@ for n = 1:niters
     end
   end
   
-  
-  % Sequential train - learning is done a block of data (inds) at a time
+  % Sequential training - learning is done a block of data (inds) at a time
   % rather than in a single sweep to save memory consumption. (see [1])
   R_old = R;  
   i0 = 0;     
@@ -125,22 +127,17 @@ for n = 1:niters
     act(inds,:) = act_new;
     
     % update estimate of G and R*X
-    % there may be a faster way to do this?
-    %keyboard
+    % there might be a faster way to do this(?)
     if length(inds) > 1
       G = G + spdiags(sum(R(inds,:) - R_old(inds,:))', 0, K, K);
     else
       G = G + spdiags((R(inds,:) - R_old(inds,:))', 0, K, K);
     end
-    %G_alt = spdiags(sum(R)', 0, K, K);
-    %G_diff = diag(full(G_alt))-diag(full(G))
     
     Rt = Rt + (R(inds,:) - R_old(inds,:))'*t(inds,:);
-    %Rt_alt = R'*t;
     
     % Calculate matrix be inverted (Phi'*G*Phi + alpha*I in the papers).
-    % Sparse representation of G normally executes faster and saves
-    % memory
+    % Sparse representation of G normally executes faster and saves memory
     if (net.rbfnet.alpha > 0)
       A = full(PhiT*G*Phi + (Alpha.*net.gmmnet.covars(1)));
     else
@@ -165,17 +162,11 @@ for n = 1:niters
     net.rbfnet.b2 = W(net.rbfnet.nhidden+1, :);
     % Calculate new distances
     
-    %d_new = dist2(t(inds,:), Phi*W);
     d(inds,:) = dist2(t(inds,:), Phi*W);
     
-    %keyboard
     % Calculate new value for beta
-    %variance = variance + (sum(sum(d_new.*R_new)) - ... 
-    %  sum(sum(d(inds,:).*R_old(inds,:))))/ND;
     variance = sum(sum(d.*R))/ND;
     net.gmmnet.covars = ones(1, net.gmmnet.ncentres)*variance;
-    %d(inds,:) = d_new;
-    %keyboard
   end
 end
 

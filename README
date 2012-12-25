@@ -5,6 +5,9 @@ SOM Toolbox 2.0, a software library for Matlab 5 implementing the
 Self-Organizing Map algorithm is Copyright (C) 1999 by Esa Alhoniemi,
 Johan Himberg, Jukka Parviainen and Juha Vesanto.
 
+SOM Toolbox 2.1 is a revision to the SOM Toolbox made in 
+December 2012. 
+
 This package is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 2

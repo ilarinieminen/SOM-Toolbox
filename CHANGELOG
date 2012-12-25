@@ -1,3 +1,17 @@
-- 
-- 
-- 
+v2.1
+
+- som_impbatch.m implemets the Imputation SOM 
+- som_make.m updates
+  - option to use the Imputation SOM 
+- som_quality.m updates
+  - implements "combined error"
+- gtm_make.m and gtm_show.m for rudimentary gtm functionality
+- gtm functions from Netlab package in gtm/
+  - added gtm_demo1.m with wine dataset
+  - added gtmexpimpute.m and gtmmapumpute.m for missing value imputation
+  - added gtminit2.m for initialization with given reference vectors
+  - added gtmem2.m GTM training with missing data
+  - added gtmemseq.m sequential training for GTM
+  - added gtmvariance.m helper function for gtmem2.m
+  - dist2.m updated to work with missing data
+  - 

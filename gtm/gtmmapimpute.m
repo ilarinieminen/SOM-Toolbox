@@ -1,19 +1,16 @@
 function [data_rec] = gtmmapimputate(net, data)
-%GTMPOST Latent space responsibility for data in a GTM.
+
+%GTMEXPIMPUTE Impute missing data using GTM MAP estimates
 %
 %	Description
-%	 POST = GTMPOST(NET, DATA) takes a GTM structure NET, and computes
-%	the  responsibility at each latent space sample point NET.X for each
-%	data point in DATA.
-%
-%	[POST, A] = GTMPOST(NET, DATA) also returns the activations A of the
-%	GMM NET.GMMNET as computed by GMMPOST.
+%	 DATA_REC = GTMEXPIMPUTE(NET, DATA) takes a GTM structure NET, and
+%	imputes the missing values in DATA according to MAP estimates of hidden
+% variables given observed data.
 %
 %	See also
-%	GTM, GTMEM, GTMLMEAN, GMLMODE, GMMPROB
-%
+%	GTMEXPIMPUTE, GTM, GTMEM, GTMLMEAN, GMLMODE, GMMPROB
 
-%	Copyright (c) Ian T Nabney (1996-2001)
+% Copyright (c) Tommi Vatanen (2012)
 
 % Check for consistency
 errstring = consist(net, 'gtm', data);

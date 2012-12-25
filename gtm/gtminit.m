@@ -29,7 +29,7 @@ function net = gtminit(net, options, data, samp_type, varargin)
 %	variance of the targets along the first L principal components.
 %
 %	See also
-%	GTM, GTMEM, PCA, RBFSETBF, RBFSETFW
+%	GTMINIT2, GTM, GTMEM, PCA, RBFSETBF, RBFSETFW
 %
 
 %	Copyright (c) Ian T Nabney (1996-2001)

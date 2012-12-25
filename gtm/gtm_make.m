@@ -39,77 +39,6 @@ function net = gtm_make(D, varargin)
 %
 % For more help, try 'type gtm_make' or check out online documentation.
 % See also SOM_MAKE, SOM_MAP_STRUCT, SOM_TOPOL_STRUCT, SOM_LININIT
-
-%%%%%%%%%%%%% DETAILED DESCRIPTION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% gtm_make
-%
-% PURPOSE
-%
-% Creates, initializes and trains a GTM using default parameters.
-%
-% SYNTAX
-%
-%  gMap = gtm_make(D);
-%  gMap = gtm_make(...,'argID',value,...);
-%  gMap = gtm_make(...,value,...);
-%
-% DESCRIPTION
-%
-% Creates, initializes and trains a GTM with default parameters. Uses functions
-% SOM_TOPOL_STRUCT, SOM_TRAIN_STRUCT, SOM_DATA_STRUCT and SOM_MAP_STRUCT to come
-% up with the default values.
-%
-% First, the number of map units is determined. Unless they are
-% explicitly defined, function SOM_TOPOL_STRUCT is used to determine this.
-% It uses a heuristic formula of 'munits = 5*dlen^0.54321'. The 'mapsize'
-% argument influences the final number of map units: a 'big' map has 
-% x4 the default number of map units and a 'small' map has x0.25 the
-% default number of map units. 
-%
-% After the number of map units has been determined, the map size is 
-% determined. Basically, the two biggest eigenvalues of the training
-% data are calculated and the ratio between sidelengths of the map grid
-% is set to this ratio. The actual sidelengths are then set so that 
-% their product is as close to the desired number of map units as
-% possible.
-%
-% Then the GTM is initialized. First, linear initialization along two
-% greatest eigenvectors is tried, but if this can't be done (the
-% eigenvectors cannot be calculated), random initialization is used
-% instead.  After initialization, the SOM is trained in two phases:
-% first rough training and then fine-tuning. If the 'tracking'
-% argument is greater than zero, the average quantization error and
-% topographic error of the final map are calculated.
-%
-% REQUIRED INPUT ARGUMENTS
-%
-%  D           The data to use in the training.
-%     (struct) A data struct. If a struct is given, '.comp_names' field as 
-%              well as '.comp_norm' field is copied to the map struct.
-%     (matrix) A data matrix, size dlen x dim. The data matrix may
-%              contain unknown values, indicated by NaNs. 
-%  
-% OPTIONAL INPUT ARGUMENTS 
-%
-%  argID (string) Argument identifier string (see below).
-%  value (varies) Value for the argument (see below).
-%
-% Here are the valid argument IDs and corresponding values. The values 
-% which are unambiguous (marked with '*') can be given without the
-% preceeding argID.
-%   'init'       *(string) initialization: 'randinit' or 'lininit' (default)
-%   'munits'      (scalar) the preferred number of map units
-%   'msize'       (vector) map grid size
-%   'mapsize'    *(string) do you want a 'small', 'normal' or 'big' map
-%                          Any explicit settings of munits or msize override this.
-%   'topol'      *(struct) topology struct
-%   'comp_names'  (string array / cellstr) component names, size dim x 1
-%   'tracking'    (scalar) how much to report, default = 1
-%
-% OUTPUT ARGUMENTS
-% 
-%  gMap (struct) the trained map struct
 %
 % EXAMPLES
 %
@@ -135,15 +64,11 @@ function net = gtm_make(D, varargin)
 % SEE ALSO
 %  
 %  som_make         Create, initialize and train a SOM.
-%  som_map_struct   Create a map struct.
-%  som_topol_struct Default values for SOM topology.
-%  som_train_struct Default values for SOM training parameters.
-%  som_randinint    Random initialization algorithm.
-
-% Copyright (c) 1999-2000 by the SOM toolbox programming team.
-% http://
-
-% Version 2.0beta juuso 111199
+%
+% Copyright (c) 1999-2012 by the SOM toolbox programming team.
+% 
+%
+% Version 2.1 by Tommi Vatanen
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% check arguments
@@ -256,6 +181,9 @@ latentShapeGTM = fliplr(sTopol.msize);
 if rbfgrid == 0
   rbfgrid = [ceil(log(max(sTopol.msize))) ceil(log(max(sTopol.msize)))];
   numRbfCenters = prod(rbfgrid);
+  if tracking>0, 
+    fprintf(' rbf grid [%d, %d]\n',rbfgrid(1), rbfgrid(2));   
+  end
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -270,23 +198,23 @@ switch initalg,
     if missingData
       sMapInit = som_map_struct(dim,sTopol);
       sMapInit = som_lininit(D, sMapInit);
-      [net, ~] = gtminit_imputation(net, initopt, D, 'units', ...
-        sMapInit.codebook,'regular',latentShapeGTM,rbfgrid);  
+      [net, ~] = gtminit2(net, initopt, D, sMapInit.codebook, 'regular' ...
+        ,latentShapeGTM,rbfgrid);  
     else
       net = gtminit(net, initopt, D, 'regular', latentShapeGTM, rbfgrid);
     end
   case 'sominit'
     sMapInit = som_map_struct(dim,sTopol); 
     sMapInit = som_lininit(D, sMapInit); 
-    sTrain = som_train_struct(sMapInit,'dlen',dlen,'algorithm','batch','phase','rough');
+    sTrain = som_train_struct(sMapInit,'dlen',dlen,'algorithm','imp','phase','rough');
     if missingData
-      if tracking>0, fprintf(1,'initializing with imputation SOM\n'); end
+      if tracking>0, fprintf(1,'initializing with Imputation SOM\n'); end
       sMapInit = som_impbatch(sMapInit,D,sTrain,'tracking',tracking);
     else
       sMapInit = som_batchtrain(sMapInit,D,sTrain,'tracking',tracking);
     end
-    [net, ~] = gtminit_imputation(net, initopt, D, 'units', ...
-      sMapInit.codebook,'regular',latentShapeGTM,rbfgrid);
+    [net, ~] = gtminit2(net, initopt, D, sMapInit.codebook, 'regular', ...
+      latentShapeGTM, rbfgrid);
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -295,11 +223,11 @@ end
 switch algorithm
   case 'sequential'
     if tracking>0, fprintf(1,'Training using sequential EM algorithm...\n'); end
-    [net,~,errlog] = gtmem_new(net, D, emopt);
+    [net,~,errlog] = gtmemseq(net, D, emopt);
   case 'batch'
     if missingData
       if tracking>0, fprintf(1,'Training using batch EM algorithm for sparse data...\n'); end
-      [net,~,errlog] = gtmem_imputation(net, D, emopt);
+      [net,~,errlog] = gtmem2(net, D, emopt);
     else
       if tracking>0, fprintf(1,'Training using batch EM algorithm...\n'); end        
       [net,~,errlog] = gtmem(net, D, emopt);

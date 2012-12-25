@@ -1,7 +1,7 @@
 SOM-Toolbox
 ===========
 
-A Matlab toolbox for Self-Organizing Maps and others.
+A Matlab toolbox for Self-Organizing Maps (SOM) and others.
 
 SOM Toolbox 2.0, a software library for Matlab 5 implementing the
 Self-Organizing Map algorithm is Copyright (C) 1999 by Esa Alhoniemi,
@@ -17,6 +17,22 @@ Setup
 2. addpath(genpath('SOM-Toolbox'));
 
 This will add SOM-Toolbox and all subfolders into matlabpath.
+
+Directories included in the toolbox
+-----------------------------------
+
+`som/`      - SOM functionality included in SOM Toolbox 2.0 (revised for this version)
+
+`gtm/`      - GTM functionality eploiting Netlab GTM functions.
+
+`contrib/`  - External contributions to SOM Toolbox
+
+`demo/`     - Demo scripts
+
+`data/`     - Data for demo scripts
+
+`dijkstra/` - Dijkstra algorithm from pmtk3 package (used by som_quality)
+
 
 COPYRIGHT
 ---------

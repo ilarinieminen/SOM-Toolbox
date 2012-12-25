@@ -1,11 +1,13 @@
 
-function [net, data] = gtminit_imputation(net, options, data, init, initparam, samp_type, varargin)
-%GTMINIT Initialise the weights and latent sample in a GTM.
+function [net, data] = gtminit2(net, options, data, init, samp_type, varargin)
+%GTMINIT Initialise the weights and latent sample in a GTM given reference vectors.
 %
 %	Description
-%	NET = GTMINIT(NET, OPTIONS, DATA, SAMPTYPE) takes a GTM NET and
+%	NET = GTMINIT(NET, OPTIONS, DATA, INIT, SAMPTYPE) takes a GTM NET and
 %	generates a sample of latent data points and sets the centres (and
 %	widths if appropriate) of NET.RBFNET.
+%
+% INIT defines initial locations of reference vectors (Gaussian means).
 %
 %	If the SAMPTYPE is 'REGULAR', then regular grids of latent data
 %	points and RBF centres are created.  The dimension of the latent data
@@ -30,10 +32,11 @@ function [net, data] = gtminit_imputation(net, options, data, init, initparam, s
 %	variance of the targets along the first L principal components.
 %
 %	See also
-%	GTM, GTMEM, PCA, RBFSETBF, RBFSETFW
+%	GTMINIT, GTM, GTMEM, PCA, RBFSETBF, RBFSETFW
 %
 
 %	Copyright (c) Ian T Nabney (1996-2001)
+% Modified by Tommi Vatanen (2012)
 
 % Check for consistency
 errstring = consist(net, 'gtm', data);
@@ -57,7 +60,7 @@ nhidden = net.rbfnet.nhidden;
 
 switch samp_type
 case 'regular'
-   if nargin ~= 8
+   if nargin ~= 7
       error('Regular type must specify latent and RBF shapes');
    end
    l_samp_size = varargin{1};
@@ -66,12 +69,12 @@ case 'regular'
       error('Latent sample specification must contain integers')
    end
    % Check existence and size of rbf specification
-   if any(size(rbf_samp_size) ~= [1 net.dim_latent]) | ...
+   if any(size(rbf_samp_size) ~= [1 net.dim_latent]) || ...
          prod(rbf_samp_size) ~= nhidden
       error('Incorrect specification of RBF centres')
    end
    % Check dimension and type of latent data specification
-   if any(size(l_samp_size) ~= [1 net.dim_latent]) | ...
+   if any(size(l_samp_size) ~= [1 net.dim_latent]) || ...
          prod(l_samp_size) ~= nlatent
       error('Incorrect dimension of latent sample spec.')
    end
@@ -97,76 +100,28 @@ case {'uniform', 'gaussian'}
    end   
    net.rbfnet = rbfsetbf(net.rbfnet, options, net.X);
    
-  case {'special'}
-    net.X = [-0.5 sqrt(3)/2;0.5 sqrt(3)/2;0 0];
-    net.rbfnet.c = [-0.5 sqrt(3)/2;0.5 sqrt(3)/2;0 0];
-    %net.rbfnet.c = [-0.25 0;-0.25 0.5;-0.25 1;...
-    %                0.25 0;0.25 0.5;0.25 1];
-    net.rbfnet = rbfsetfw(net.rbfnet, options(7));
+%   case {'special'}
+%     net.X = [-0.5 sqrt(3)/2;0.5 sqrt(3)/2;0 0];
+%     net.rbfnet.c = [-0.5 sqrt(3)/2;0.5 sqrt(3)/2;0 0];
+%     net.rbfnet = rbfsetfw(net.rbfnet, options(7));
 otherwise
    % Shouldn't get here
    error('Invalid sample type');
 end
 
-switch init
-  case {'pca', 'PCA'}
-    opts = struct('rmsstop', [ 100 1e-4 1e-3 ], ...
-                  'verbose', 0);
-    ncomp = 2;
-    [A, S, Mu] = pcaimput( data', ncomp, opts );
-    data_rec = (repmat(Mu,1,size(data,1)) + A*S)';
-    data(isnan(data)) = data_rec(isnan(data));
+% use given unit vectors as the initial reference vectors
+[~, Phi] = rbffwd(net.rbfnet, net.X);
+% initparam are the reference vectors
+net.rbfnet.w2 = Phi \ init; 
+net.rbfnet.b2 = zeros(1,size(data,2));
 
-    % Latent data sample and basis function parameters chosen.
-    % Now set output weights
-    [PCcoeff, PCvec] = pca(data);
-
-    % Scale PCs by eigenvalues
-    A = PCvec(:, 1:net.dim_latent)*diag(sqrt(PCcoeff(1:net.dim_latent)));
-    [~, Phi] = rbffwd(net.rbfnet, net.X);
-    % Normalise X to ensure 1:1 mapping of variances and calculate weights
-    % as solution of Phi*W = normX*A'
-    normX = (net.X - ones(size(net.X))*diag(mean(net.X)))*diag(1./std(net.X));
-    net.rbfnet.w2 = Phi \ (normX*A');
-    % Bias is mean of target data
-    net.rbfnet.b2 = mean(data);
+net.gmmnet.centres = rbffwd(net.rbfnet, net.X);
+d = dist2(net.gmmnet.centres, net.gmmnet.centres) + ...
+  diag(ones(net.gmmnet.ncentres, 1)*realmax);
+sigma = mean(min(d))/2;
     
-    % Must also set initial value of variance
-    % Find average distance between nearest centres
-    % Ensure that distance of centre to itself is excluded by setting diagonal
-    % entries to realmax
-    net.gmmnet.centres = rbffwd(net.rbfnet, net.X);
-    d = dist2(net.gmmnet.centres, net.gmmnet.centres) + ...
-      diag(ones(net.gmmnet.ncentres, 1)*realmax);
-    sigma = mean(min(d))/2;
-    % Now set covariance to minimum of this and next largest eigenvalue
-    if net.dim_latent < size(data, 2)
-      sigma = min(sigma, PCcoeff(net.dim_latent+1));
-    end
-    
-  case {'units', 'Units'}
-    % use given unit vectors as the initial reference vectors
-    [~, Phi] = rbffwd(net.rbfnet, net.X);
-    % initparam are the reference vectors
-    net.rbfnet.w2 = Phi \ initparam; 
-    % mean of data ignoring NaNs
-%     data_tmp = data;
-%     count_notnan = sum(~isnan(data));
-%     data_tmp(isnan(data)) = 0;
-%     net.rbfnet.b2 = sum(data_tmp)./count_notnan;
-    net.rbfnet.b2 = zeros(1,size(data,2));
-
-    % Some duplicate script here sinse eigenvalues are not available
-    % (see PCA initialization above)
-    net.gmmnet.centres = rbffwd(net.rbfnet, net.X);
-    d = dist2(net.gmmnet.centres, net.gmmnet.centres) + ...
-      diag(ones(net.gmmnet.ncentres, 1)*realmax);
-    sigma = mean(min(d))/2;
-    
-  otherwise
-    error('Unknown initialization method.')
-end
 net.gmmnet.covars = sigma*ones(1, net.gmmnet.ncentres);
+
 
 % Sub-function to create the sample data in 2d
 function sample = gtm_rctg(samp_size)
