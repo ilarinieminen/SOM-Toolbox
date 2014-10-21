@@ -293,16 +293,22 @@ for i=1:length(handles),                   % MAIN LOOP BEGINS
     set(h_(i),Tick,tickValues{i});                 % set ticks and labels
     set(h_(i),Label,labelValues{i});            
     
-    if comps(i)>0, 
-      % Label the colorbar with letter 'n' if normalized, with letter 'd' 
-      % if denormalized and 'u' if the labels are user specified  
-      mem_axes=gca; axes(h_(i));
+    if comps(i)>0,
+      % Label the colorbar with letter 'n' if normalized, with letter 'd'
+      % if denormalized and 'u' if the labels are user specified 
       ch='  ';
       if strcmp(scale,'normalized'),   ch(1)='n'; end
       if strcmp(scale,'denormalized'), ch(1)='d'; end
       if strcmp(labels,'explicit'),    ch(2)='u'; end
-      xlabel(ch); 
-      axes(mem_axes);
+      if verLessThan('matlab', '8.4')
+          mem_axes = gca();
+          axes(h_(i));
+          xlabel(ch);
+          axes(mem_axes);
+      else
+          lbl = get(h_(i), 'Label');
+          lbl.String = ch;
+      end
     end
   end
 end                                              % MAIN LOOP ENDS 
