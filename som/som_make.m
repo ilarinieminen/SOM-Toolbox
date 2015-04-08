@@ -1,7 +1,5 @@
 function [sMap,D] = som_make(D, varargin)
 
-% lisää impbatch algoritm-valinnaksi (default = batch)
-
 %SOM_MAKE Create, initialize and train Self-Organizing Map.
 %
 % sMap = som_make(D, [[argID,] value, ...])
@@ -41,6 +39,7 @@ function [sMap,D] = som_make(D, varargin)
 %   'training'    (string) 'short', 'default', 'long'
 %                 (vector) size 1 x 2, first length of rough training in epochs, 
 %                          and then length of finetuning in epochs
+%
 %
 % For more help, try 'type som_make' or check out online documentation.
 % See also SOM_MAP_STRUCT, SOM_TOPOL_STRUCT, SOM_TRAIN_STRUCT,
