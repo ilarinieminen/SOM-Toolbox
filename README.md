@@ -64,6 +64,4 @@ LICENSING THE LIBRARY FOR PROPRIETARY PROGRAMS
 As stated in the GNU General Public License (see the license in COPYING)
 it is not possible to include this software library in a commercial
 proprietary program without written permission from the owners of the
-copyright. If you wish to obtain such permission, please contact us by email.
-
-Tommi Vatanen / Timo Honkela (first.last@aalto.fi)
+copyright.
