@@ -404,7 +404,8 @@ end
 % learning rate
 if length(alpha)>1, 
   sTrain.alpha_type ='user defined';
-  if length(alpha) ~= trainlen, 
+  if ~(abs(length(alpha)-trainlen) < ...
+          1e4*eps(min(abs(length(alpha)),abs(trainlen)))),
     error('Trainlen and length of neighborhood radius vector do not match.')
   end
   if any(isnan(alpha)), 
