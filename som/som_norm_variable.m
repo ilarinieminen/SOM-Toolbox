@@ -245,16 +245,17 @@ if ischar(method)
   if any(strcmp(method,{'var','range','log','logistic','histD','histC'})), 
     sNorm = som_set('som_norm','method',method);
   else 
-    method = cellstr(method); 
+    method = cellstr(method);
   end
-end
-if iscell(method), 
+elseif iscell(method),
   if length(method)==1 && isstruct(method{1}), sNorm = method{1}; 
   else
-    if length(method)==1 || isempty(method{2}), method{2} = 'x'; end
+    if length(method)==1 || isempty(method{2}), 
+      method{2} = 'x'; 
+    end
     sNorm = som_set('som_norm','method','eval','params',method);
   end
-else 
+else
   sNorm = method; 
 end
 
