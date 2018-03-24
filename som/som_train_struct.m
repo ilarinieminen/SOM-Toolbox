@@ -240,7 +240,7 @@ while i<=length(varargin),
 	  sTprev = varargin{i}.trainhist(end); 
 	  msize = varargin{i}.topol.msize; 
 	end
-	if ~isempty(varargin{i}.neigh) && isempty(sTrain.neigh), 
+	if ~isempty(varargin{i}.neigh) 
 	  sTrain.neigh = varargin{i}.neigh; 
 	end
 	if ~isempty(varargin{i}.mask) && isempty(sTrain.mask),  
