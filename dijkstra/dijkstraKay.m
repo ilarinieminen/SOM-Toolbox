@@ -1,4 +1,4 @@
-function [D,P] = dijkstra(A,s,t)
+function [D,P] = dijkstraKay(A,s,t)
 %DIJK Shortest paths from nodes 's' to nodes 't' using Dijkstra algorithm.
 % [D,p] = dijk(A,s,t)
 %     A = n x n node-node weighted adjacency matrix of arc lengths
