@@ -110,6 +110,6 @@ for i = 1:length(s)
    D(i,:) = Di(t)';
 end
 
-if nargout > 1 & length(s) == 1 & length(t) == 1
+if nargout > 1 && length(s) == 1 && length(t) == 1
    P = pred2path(P,s,t);
 end
