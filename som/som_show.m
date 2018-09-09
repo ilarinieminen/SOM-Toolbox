@@ -491,7 +491,11 @@ for i=1:n,                         % main loop
   %%% Draw colorbars if they are turned on and the plane is umat or c-plane
 
   if General.comp(i)> -1 && ~strcmp(General.colorbardir,'none'),
-    h_colorbar(i,1)=colorbar(General.colorbardir);           % colorbars
+    try
+      h_colorbar(i,1)=colorbar(General.colorbardir);           % colorbars
+    catch
+      h_colorbar(i,1)=colorbar();           % colorbars
+    end
   else
     %COMPATIBILITY HACK: This if...else... structure fixes a compatibility
     %problem. In versions of MATLAB prior to 2014b colorbars returned a
@@ -501,7 +505,11 @@ for i=1:n,                         % main loop
     if verLessThan('matlab','8.4')
         h_colorbar(i,1)=-1;
     else
-        h_colorbar(i,1)=colorbar(General.colorbardir);           % colorbars
+        try
+          h_colorbar(i,1)=colorbar(General.colorbardir);           % colorbars
+        catch
+          h_colorbar(i,1)=colorbar();           % colorbars
+        end
         h_colorbar(i,1).Visible='off';
     end
     %END OF COMPATIBILITY HACK
