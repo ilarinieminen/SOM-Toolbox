@@ -158,7 +158,7 @@ end
 
 [handles, msg, lattice, msize, dim, normalization, comps]= ...
     vis_som_show_data(p, gcf);
-error(msg);                                       
+error(strcat(msg));
 
 if nargin < 2 || isempty(ticks)                   % default tick mode is 'auto'
   ticks = 'auto';
@@ -300,7 +300,7 @@ for i=1:length(handles),                   % MAIN LOOP BEGINS
       if strcmp(scale,'normalized'),   ch(1)='n'; end
       if strcmp(scale,'denormalized'), ch(1)='d'; end
       if strcmp(labels,'explicit'),    ch(2)='u'; end
-      if verLessThan('matlab', '8.4')
+      if MATLABverLessThan('8.4')
           mem_axes = gca();
           axes(h_(i));
           xlabel(ch);

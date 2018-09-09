@@ -1,4 +1,4 @@
-function [D,P] = dijkstra(A,s,t)
+function [D,P] = dijkstraKay(A,s,t)
 %DIJK Shortest paths from nodes 's' to nodes 't' using Dijkstra algorithm.
 % [D,p] = dijk(A,s,t)
 %     A = n x n node-node weighted adjacency matrix of arc lengths
@@ -110,6 +110,6 @@ for i = 1:length(s)
    D(i,:) = Di(t)';
 end
 
-if nargout > 1 & length(s) == 1 & length(t) == 1
+if nargout > 1 && length(s) == 1 && length(t) == 1
    P = pred2path(P,s,t);
 end
