@@ -502,7 +502,7 @@ for i=1:n,                         % main loop
     %numeric handle. From 2014b onwards they return a structure, and they
     %break backwards compatibility. At some point the numeric compatibility
     %should be dropped, but for the time being this is a necessary small hack.
-    if verLessThan('matlab','8.4')
+    if MATLABverLessThan('8.4')
         h_colorbar(i,1)=-1;
     else
         try
