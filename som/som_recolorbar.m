@@ -158,7 +158,7 @@ end
 
 [handles, msg, lattice, msize, dim, normalization, comps]= ...
     vis_som_show_data(p, gcf);
-error(msg);                                       
+error(strcat(msg));
 
 if nargin < 2 || isempty(ticks)                   % default tick mode is 'auto'
   ticks = 'auto';
